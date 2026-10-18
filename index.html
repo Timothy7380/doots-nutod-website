@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DOOTS Nutod Nigeria Limited — Premium Nigerian Agro-Commodities</title>
+<meta name="description" content="Buy cocoa, soya beans, sesame and cashew direct from DOOTS Nutod Nigeria Limited, Ibadan. Secure online payments, verified farmer marketplace, local delivery and export.">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<meta property="og:title" content="DOOTS Nutod Nigeria Limited">
+<meta property="og:description" content="Premium Nigerian cocoa, soya beans, sesame and cashew. Secure payments, verified farmer marketplace, local delivery and export.">
+<meta property="og:image" content="assets/cocoa_tree.jpg">
+<meta name="theme-color" content="#123012">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#123012; --green:#1d4a1c; --leaf:#2f6b2a; --lime:#cdf24c; --lime-d:#b5dc2f;
+  --gold:#b07c1a; --gold-l:#f3e6c8;
+  --bg:#f4f4ef; --card:#ffffff; --ink:#132313; --sage:#6c7a68; --line:#e2e4dc;
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+  --shadow:0 10px 40px -12px rgba(18,48,18,.18);
+  --sans:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --serif:'Instrument Serif',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1240px,100% - 32px);margin-inline:auto}
+.serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:99px;background:#fff;color:var(--ink)}
+.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--leaf)}
+.tag.dark{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#e8efe2}
+.tag.dark::before{background:var(--lime)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 24px;border-radius:99px;font-weight:500;font-size:15px;transition:.2s;white-space:nowrap}
+.btn-lime{background:var(--lime);color:var(--forest)}
+.btn-lime:hover{background:var(--lime-d)}
+.btn-ghost{border:1px solid rgba(255,255,255,.55);color:#fff}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
+.btn-dark{background:var(--forest);color:#fff}
+.btn-dark:hover{background:var(--green)}
+.btn-line{border:1px solid var(--line);background:#fff}
+.btn-line:hover{border-color:var(--forest)}
+.btn-sm{height:40px;padding:0 18px;font-size:14px}
+.arrow{width:16px;height:16px}
+h1,h2,h3{font-weight:500;letter-spacing:-.025em;line-height:1.05}
+h2{font-size:clamp(34px,4.6vw,58px)}
+.lead{color:var(--sage);font-size:17px;max-width:520px}
+section{padding:110px 0}
+
+/* demo bar */
+.demo{background:var(--forest);color:#dfe9d6;font-size:13px;text-align:center;padding:8px 16px}
+.demo b{color:var(--lime);font-weight:600}
+.demo .ds{display:none}
+@media (max-width:640px){.demo .dl{display:none}.demo .ds{display:inline}}
+
+/* NAV */
+header.nav{position:absolute;left:0;right:0;z-index:40;padding-top:22px}
+.nav.solid{position:fixed;top:0;padding:12px 0;background:rgba(244,244,239,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);animation:drop .3s}
+@keyframes drop{from{transform:translateY(-100%)}}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;font-weight:600;font-size:17px;letter-spacing:-.01em}
+.logo img{height:46px;width:auto}
+.logo small{display:block;font-size:11px;font-weight:500;opacity:.75;letter-spacing:.04em}
+.nav.solid .logo{color:var(--ink)}
+.navpill{display:flex;gap:2px;padding:5px;border-radius:99px;background:rgba(255,255,255,.16);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.22)}
+.navpill a{padding:8px 16px;border-radius:99px;font-size:14px;color:rgba(255,255,255,.88);transition:.2s}
+.navpill a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.navpill a.on{background:#fff;color:var(--forest);font-weight:500}
+.nav.solid .navpill{background:#fff;border-color:var(--line)}
+.nav.solid .navpill a{color:var(--sage)}
+.nav.solid .navpill a.on{background:var(--forest);color:#fff}
+.navr{display:flex;align-items:center;gap:8px}
+.iconbtn{position:relative;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);color:#fff;backdrop-filter:blur(10px)}
+.nav.solid .iconbtn{background:#fff;border-color:var(--line);color:var(--ink)}
+.iconbtn svg{width:20px;height:20px}
+.badge{position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:var(--lime);color:var(--forest);font-size:11px;font-weight:700;display:grid;place-items:center}
+.badge:empty,.badge[data-n="0"]{display:none}
+.acct{height:46px;padding:0 20px;border-radius:99px;background:#fff;color:var(--forest);font-weight:500;font-size:14px;display:flex;align-items:center;gap:8px}
+.nav.solid .acct{background:var(--forest);color:#fff}
+.burger{display:none}
+
+/* HERO */
+.hero{padding:120px 0 0;position:relative;min-height:100svh;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;border-radius:0 0 var(--r-lg) var(--r-lg)}
+.hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,30,10,.45) 0%,rgba(10,30,10,.05) 30%,rgba(10,30,10,.35) 60%,rgba(8,26,8,.85) 100%)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(42px,6.4vw,86px);max-width:1000px}
+.hero p{max-width:520px;margin:22px 0 32px;color:rgba(255,255,255,.85);font-size:17px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.herobar{margin-top:72px;border-top:1px solid rgba(255,255,255,.2);padding:22px 0 28px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:14px}
+.herobar .scroll{letter-spacing:.12em;display:flex;align-items:center;gap:8px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:10px;padding:7px 16px 7px 7px;border-radius:99px;background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18)}
+.chip .dot{width:32px;height:32px;border-radius:50%;background:var(--lime);color:var(--forest);display:grid;place-items:center;font-weight:700;font-size:12px}
+.chip .av{display:flex}
+.chip .av img{width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid #fff;margin-left:-10px}
+.chip .av img:first-child{margin-left:0}
+
+/* TRUST */
+.trust{padding:40px 0}
+.trust .wrap{display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:space-between}
+.trust p{font-size:14px;color:var(--sage);line-height:1.35}
+.trust p b{color:var(--ink);font-weight:500}
+.marks{display:flex;gap:44px;flex-wrap:wrap;align-items:center}
+.mark{font-weight:700;font-size:20px;color:#9aa596;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.mark span{font-weight:500;font-size:11px;letter-spacing:.04em;line-height:1.2;text-transform:uppercase}
+
+/* STATEMENT */
+.statement{padding:70px 0 110px}
+.statement h2{font-size:clamp(28px,3.7vw,48px);line-height:1.18;margin-top:22px;max-width:1120px;color:var(--ink)}
+.statement h2 .fade{color:#8a9887}
+.inl{display:inline-block;width:1.9em;height:.95em;border-radius:99px;vertical-align:-.08em;object-fit:cover;margin:0 .1em}
+
+/* ABOUT */
+.about{background:#fff;border-radius:var(--r-lg)}
+.split{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end}
+.about h2{margin-top:18px}
+.about h2 .serif{display:block;color:var(--leaf)}
+.svc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:64px}
+.svc article{border-radius:var(--r-md);overflow:hidden;background:var(--bg);display:flex;flex-direction:column}
+.svc article img{height:210px;width:100%;object-fit:cover}
+.svc article div{padding:22px}
+.svc h3{font-size:20px;margin-bottom:8px}
+.svc p{font-size:14px;color:var(--sage)}
+.svc .n{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.06em;margin-bottom:10px;display:block}
+
+/* SHOP */
+.shophead{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.shophead h2{margin-top:18px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:28px;justify-content:space-between}
+.tools>*{min-width:0;max-width:100%}
+.tabs{display:flex;gap:6px;scrollbar-width:none;flex-wrap:wrap;padding:5px;background:#fff;border-radius:99px;border:1px solid var(--line)}
+.tabs button{padding:9px 18px;border-radius:99px;font-size:14px;color:var(--sage)}
+.tabs button.on{background:var(--forest);color:#fff}
+.search{display:flex;align-items:center;gap:8px;height:48px;padding:0 18px;border-radius:99px;background:#fff;border:1px solid var(--line);min-width:260px}
+.search input{border:0;outline:0;background:none;width:100%;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.prod{background:#fff;border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column;transition:.25s;border:1px solid transparent}
+.prod:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.prod .ph{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--gold-l);cursor:pointer}
+.prod .ph img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.prod:hover .ph img{transform:scale(1.05)}
+.prod .pill{position:absolute;top:12px;left:12px;font-size:12px;padding:5px 11px;border-radius:99px;background:rgba(255,255,255,.92);font-weight:500}
+.prod .pill.ex{left:auto;right:12px;background:var(--lime);color:var(--forest)}
+.prod .bd{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.prod h3{font-size:19px;letter-spacing:-.01em}
+.prod .meta{font-size:13px;color:var(--sage)}
+.prod .seller{font-size:12px;color:var(--leaf);display:flex;align-items:center;gap:6px}
+.prod .seller svg{width:14px;height:14px}
+.prod .row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:14px}
+.price{font-weight:600;font-size:19px}
+.price small{font-weight:400;font-size:12px;color:var(--sage)}
+.add{width:44px;height:44px;border-radius:50%;background:var(--forest);color:#fff;display:grid;place-items:center;transition:.2s}
+.add:hover{background:var(--lime);color:var(--forest)}
+.add svg{width:18px;height:18px}
+.ph-none{display:grid;place-items:center;height:100%;background:linear-gradient(135deg,#f3e6c8,#e8d3a3);color:#8a6416;text-align:center;font-size:13px;padding:20px}
+.ph-none svg{width:64px;height:64px;margin:0 auto 8px}
+.empty{padding:60px;text-align:center;color:var(--sage);grid-column:1/-1}
+
+/* PAY */
+.pay{background:var(--forest);color:#e9f0e3;border-radius:var(--r-lg);position:relative;overflow:hidden}
+.pay h2 .serif{color:var(--lime)}
+.pay .lead{color:#a9b9a3}
+.paygrid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:40px}
+.method{padding:22px;border-radius:var(--r-md);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.method svg{width:26px;height:26px;color:var(--lime);margin-bottom:14px}
+.method h4{font-weight:500;font-size:16px;margin-bottom:4px;color:#fff}
+.method p{font-size:13px;color:#a9b9a3}
+.paycard{background:#fff;color:var(--ink);border-radius:var(--r-lg);padding:28px;box-shadow:0 30px 80px -20px rgba(0,0,0,.5);max-width:440px;margin-left:auto}
+.paycard .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.paycard .amt{font-size:40px;font-weight:600;letter-spacing:-.03em}
+.steps{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:14px}
+.steps li{display:flex;gap:14px;align-items:flex-start;font-size:14px}
+.steps li i{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:600;background:var(--bg)}
+.steps li.done i{background:var(--lime);color:var(--forest)}
+.steps li span small{display:block;color:var(--sage);font-size:12px}
+.escrow{margin-top:22px;padding:14px 16px;border-radius:var(--r-sm);background:var(--bg);font-size:13px;display:flex;gap:10px;align-items:center}
+.escrow svg{flex:none;width:20px;height:20px;color:var(--leaf)}
+
+/* MARKET */
+.how{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:48px 0 64px}
+.how div{padding:26px;border-radius:var(--r-md);background:#fff}
+.how b{display:block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:44px;color:var(--gold);line-height:1;margin-bottom:16px}
+.how h4{font-weight:500;font-size:17px;margin-bottom:6px}
+.how p{font-size:14px;color:var(--sage)}
+.sellers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.sel{background:#fff;border-radius:var(--r-md);padding:22px;display:flex;gap:16px;align-items:center}
+.sel img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+.sel h4{font-weight:500;font-size:16px}
+.sel p{font-size:13px;color:var(--sage)}
+.ver{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--leaf);font-weight:500}
+.ver svg{width:14px;height:14px}
+.sellcta{margin-top:18px;border-radius:var(--r-lg);overflow:hidden;position:relative;color:#fff;min-height:320px;display:flex;align-items:flex-end}
+.sellcta img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sellcta::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,30,10,.9),rgba(10,30,10,.35))}
+.sellcta .in{position:relative;z-index:2;padding:48px;max-width:640px}
+.sellcta h3{font-size:clamp(30px,3.6vw,46px);margin:16px 0 12px}
+.sellcta p{color:rgba(255,255,255,.8);margin-bottom:24px}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats div{padding:40px 28px;border-right:1px solid var(--line)}
+.stats div:last-child{border:0}
+.stats em{font-style:normal}
+.stats b{display:block;font-size:clamp(40px,5vw,64px);font-weight:500;letter-spacing:-.04em;line-height:1}
+.stats b sup{font-size:.45em;color:var(--gold);vertical-align:top;margin-left:2px}
+.stats span{font-size:14px;color:var(--sage);margin-top:10px;display:block}
+
+/* FOUNDER */
+.founder{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.fphoto{position:relative;border-radius:var(--r-lg);overflow:hidden;background:#fff;aspect-ratio:4/5}
+.fphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.fphoto .cap{position:absolute;left:18px;bottom:18px;right:18px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-radius:var(--r-md);padding:14px 18px;font-size:14px}
+.fphoto .cap b{display:block;font-weight:600}
+blockquote{font-size:clamp(22px,2.4vw,30px);line-height:1.3;letter-spacing:-.015em;margin:24px 0}
+blockquote .serif{color:var(--leaf)}
+.values{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.values span{padding:8px 16px;border-radius:99px;background:#fff;border:1px solid var(--line);font-size:14px}
+.vm{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.vm div{background:#fff;border-radius:var(--r-md);padding:22px}
+.vm h4{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:600}
+.vm p{font-size:14px;color:var(--sage)}
+
+/* GALLERY */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:12px;margin-top:48px}
+.gal img{width:100%;height:100%;object-fit:cover;border-radius:var(--r-md)}
+.gal .a{grid-column:span 2;grid-row:span 2}
+.gal .b{grid-column:span 2}
+
+/* CONTACT / FOOTER */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cbox{background:#fff;border-radius:var(--r-lg);padding:40px}
+.cbox h2{margin:18px 0 24px}
+.cinfo{display:flex;flex-direction:column;gap:18px;margin-top:20px}
+.cinfo div{display:flex;gap:14px;font-size:15px;overflow-wrap:anywhere}
+.cinfo svg{flex:none;width:22px;height:22px;color:var(--leaf);margin-top:2px}
+.cinfo small{display:block;color:var(--sage);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+form .f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+form label,.lbl{font-size:13px;color:var(--sage);font-weight:500}
+.inp{height:50px;border-radius:var(--r-sm);border:1px solid var(--line);background:var(--bg);padding:0 16px;outline:0;transition:.2s;width:100%}
+textarea.inp{height:110px;padding:14px 16px;resize:vertical}
+.inp:focus{border-color:var(--leaf);background:#fff}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var(--r-lg) var(--r-lg) 0 0;padding:80px 0 30px}
+.fbig{font-size:clamp(40px,7vw,100px);color:#fff;letter-spacing:-.04em;line-height:1;font-weight:500}
+.fbig .serif{color:var(--lime)}
+.fcols{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin:64px 0 48px}
+.fcols h5{color:#fff;font-weight:500;font-size:14px;margin-bottom:14px}
+.fcols a,.fcols p{display:block;font-size:14px;margin-bottom:8px;color:#a9b9a3}
+.fcols a:hover{color:var(--lime)}
+.fbot{border-top:1px solid rgba(255,255,255,.12);padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8fa289}
+.news{display:flex;gap:8px;margin-top:20px;max-width:420px}
+.news .inp{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:#fff;border-radius:99px}
+
+/* DRAWER / MODAL */
+.scrim{position:fixed;inset:0;background:rgba(10,24,10,.5);backdrop-filter:blur(3px);z-index:80;opacity:0;pointer-events:none;transition:.25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--bg);z-index:90;transform:translateX(100%);transition:.35s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhd{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+.dhd h3{font-size:22px}
+.x{width:40px;height:40px;border-radius:50%;background:#fff;border:1px solid var(--line);display:grid;place-items:center}
+.x svg{width:16px;height:16px}
+.dbody{flex:1;overflow:auto;padding:20px 24px}
+.dft{padding:20px 24px;border-top:1px solid var(--line);background:#fff}
+.ci{display:flex;gap:14px;padding:14px;background:#fff;border-radius:var(--r-md);margin-bottom:10px;align-items:center}
+.ci img,.ci .ph-none{width:72px;height:72px;border-radius:var(--r-sm);object-fit:cover;flex:none;padding:0}
+.ci .ph-none svg{width:30px;height:30px;margin:0}
+.ci h4{font-weight:500;font-size:15px}
+.ci .u{font-size:12px;color:var(--sage)}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:99px;margin-top:8px}
+.qty button{width:30px;height:30px;font-size:16px}
+.qty span{min-width:26px;text-align:center;font-size:14px;font-weight:500}
+.ci .rm{margin-left:auto;align-self:flex-start;color:var(--sage);font-size:12px;text-decoration:underline}
+.tot{display:flex;justify-content:space-between;font-size:14px;color:var(--sage);margin-bottom:6px}
+.tot.big{font-size:20px;color:var(--ink);font-weight:600;margin:10px 0 16px}
+.w100{width:100%}
+.modal{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;pointer-events:none}
+.mbox{background:var(--bg);border-radius:var(--r-lg);width:min(900px,100%);max-height:calc(100svh - 32px);overflow:auto;transform:translateY(20px) scale(.98);opacity:0;transition:.3s;pointer-events:none;position:relative}
+.modal.on .mbox{transform:none;opacity:1;pointer-events:auto}
+.mbox.sm{width:min(480px,100%)}
+.mbox .x{position:absolute;top:16px;right:16px;z-index:3}
+.pd{display:grid;grid-template-columns:1fr 1fr}
+.pd .im{min-height:420px;background:var(--gold-l)}
+.pd .im img{width:100%;height:100%;object-fit:cover}
+.pd .tx{padding:40px 36px}
+.pd h3{font-size:34px;margin:14px 0 8px}
+.spec{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+.spec div{background:#fff;border-radius:var(--r-sm);padding:12px 14px;font-size:14px}
+.spec small{display:block;color:var(--sage);font-size:12px}
+.mpad{padding:36px}
+.mpad h3{font-size:28px;margin-bottom:6px}
+.seg{display:flex;padding:4px;background:#fff;border-radius:99px;border:1px solid var(--line);margin:20px 0}
+.seg button{flex:1;padding:10px;border-radius:99px;font-size:14px;color:var(--sage)}
+.seg button.on{background:var(--forest);color:#fff}
+.opt{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;margin-bottom:10px;cursor:pointer;font-size:14px}
+.opt:has(input:checked){border-color:var(--leaf);box-shadow:0 0 0 3px rgba(47,107,42,.12)}
+.opt input{accent-color:var(--leaf);width:18px;height:18px}
+.opt b{font-weight:500;display:block}
+.opt small{color:var(--sage)}
+.opt .r{margin-left:auto;font-weight:500}
+.stepper{display:flex;gap:8px;margin-bottom:24px}
+.stepper span{flex:1;height:4px;border-radius:4px;background:var(--line)}
+.stepper span.on{background:var(--leaf)}
+.ok{text-align:center;padding:20px 0}
+.ok .ic{width:76px;height:76px;border-radius:50%;background:var(--lime);display:grid;place-items:center;margin:0 auto 20px}
+.ok .ic svg{width:34px;height:34px;color:var(--forest)}
+.spin{width:22px;height:22px;border:3px solid rgba(18,48,18,.25);border-top-color:var(--forest);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--forest);color:#fff;padding:14px 22px;border-radius:99px;font-size:14px;z-index:120;transition:.35s;display:flex;gap:10px;align-items:center;box-shadow:var(--shadow);opacity:0;max-width:calc(100% - 32px);white-space:nowrap}
+.toast.on{transform:translate(-50%,0);opacity:1}
+.toast i{width:8px;height:8px;border-radius:50%;background:var(--lime)}
+.orders .o{background:#fff;border-radius:var(--r-md);padding:16px;margin-bottom:10px;font-size:14px}
+.orders .o .t{display:flex;justify-content:space-between;font-weight:500}
+.st{font-size:12px;padding:3px 10px;border-radius:99px;background:var(--gold-l);color:#7a5610}
+.note{font-size:12px;color:var(--sage);margin-top:10px;line-height:1.5}
+.mobnav{display:none}
+
+/* large screens */
+@media (min-width:1700px){
+  .wrap{width:min(1480px,100% - 96px)}
+  .hero h1{font-size:100px;max-width:1150px}
+  h2{font-size:64px}
+  .lead,.hero p{font-size:19px}
+  .statement h2{font-size:54px}
+  .gal{grid-auto-rows:240px}
+}
+/* short landscape screens */
+@media (max-height:560px) and (orientation:landscape){
+  .hero{padding-top:96px}
+  .hero h1{font-size:clamp(34px,5.5vw,56px)}
+  .hero p{margin:14px 0 20px}
+  .herobar{margin-top:28px;padding:14px 0 18px}
+  .mobnav a{font-size:24px;padding:8px 0}
+}
+@media (hover:none){.prod:hover{transform:none;box-shadow:none}.prod:hover .ph img{transform:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+.dft{padding-bottom:max(20px,env(safe-area-inset-bottom))}
+/* reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media (max-width:1020px){
+  .navpill{display:none}
+  .burger{display:grid}
+  .svc{grid-template-columns:1fr 1fr}
+  .paygrid,.split,.founder,.contact{grid-template-columns:1fr}
+  .paycard{margin:0}
+  .how{grid-template-columns:1fr 1fr}
+  .sellers{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .stats div:nth-child(2){border-right:0}
+  .stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .fcols{grid-template-columns:1fr 1fr}
+  .pd{grid-template-columns:1fr}
+  .pd .im{min-height:260px;max-height:300px}
+  .gal{grid-template-columns:repeat(2,1fr)}
+  .mobnav{position:fixed;inset:0;z-index:100;background:var(--forest);color:#fff;padding:24px;display:flex;flex-direction:column;transform:translateY(-100%);transition:transform .35s,visibility 0s .35s;overflow-y:auto;visibility:hidden}
+  .mobnav.on{transform:none;visibility:visible;transition:transform .35s}
+  .fphoto{max-width:520px;width:100%}
+  .paycard{max-width:520px}
+  .mobnav a{font-size:34px;letter-spacing:-.02em;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+}
+@media (max-width:640px){
+  section{padding:76px 0}
+  .acct span{display:none}
+  .acct{width:46px;padding:0;justify-content:center}
+  .logo small,.logo .nm{display:none}
+  .svc,.how,.sellers,.methods,.vm,.two,.spec{grid-template-columns:1fr}
+  .tools{flex-direction:column;align-items:stretch}
+  .tabs{overflow-x:auto;flex-wrap:nowrap;border-radius:99px}
+  .tabs button{flex:none}
+  .search{min-width:0}
+  .grid{grid-template-columns:1fr 1fr;gap:10px}
+  .prod .bd{padding:12px}
+  .prod h3{font-size:15px}
+  .prod .meta{display:none}
+  .price{font-size:15px}
+  .add{width:38px;height:38px}
+  .prod .pill.ex{display:none}
+  .gal{grid-auto-rows:140px}
+  .marks{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+  .mark{font-size:17px}
+  .sellcta .in{padding:28px}
+  .cbox{padding:26px}
+  .mpad,.pd .tx{padding:26px}
+  .fcols{grid-template-columns:1fr}
+  .herobar .scroll{display:none}
+  .hero p{font-size:16px}
+  .chip{font-size:13px}
+  .stats div{padding:28px 16px}
+}
+@media (max-width:380px){
+  .marks{grid-template-columns:1fr!important}
+  .grid{grid-template-columns:1fr!important}
+  .prod .meta{display:block!important}
+  .hero h1{font-size:38px}
+  .cbox{padding:20px!important}
+}
+</style>
+</head>
+<body>
+
+<div class="demo"><b>Prototype</b> · <span class="dl">Prices, sample sellers and payments are for demonstration. No real charges are made.</span><span class="ds">Demo prices &amp; payments only</span></div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><img src="assets/logo.png" alt="DOOTS Nutod Nig. Ltd. logo"><span class="nm">DOOTS Nutod<small>NIGERIA LIMITED</small></span></a>
+    <nav class="navpill" id="navpill">
+      <a href="#top" class="on">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#marketplace">Marketplace</a>
+      <a href="#payments">Payments</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="navr">
+      <button class="iconbtn" aria-label="Open cart" onclick="openCart()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="badge" id="cartCount" data-n="0">0</span>
+      </button>
+      <button class="acct" id="acctBtn" onclick="acctClick()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        <span id="acctLbl">Sign in</span>
+      </button>
+      <button class="iconbtn burger" aria-label="Menu" onclick="toggleMob(true)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobnav" id="mobnav">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px">
+    <img src="assets/logo.png" alt="" style="height:46px">
+    <button class="x" onclick="toggleMob(false)" aria-label="Close menu" style="color:var(--ink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <a href="#top" onclick="toggleMob(false)">Home</a>
+  <a href="#shop" onclick="toggleMob(false)">Shop produce</a>
+  <a href="#marketplace" onclick="toggleMob(false)">Marketplace</a>
+  <a href="#payments" onclick="toggleMob(false)">Payments</a>
+  <a href="#about" onclick="toggleMob(false)">About us</a>
+  <a href="#contact" onclick="toggleMob(false)">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <img src="assets/hero.jpg" alt="DOOTS Nutod plantation nursery in Ibadan">
+  <div class="wrap">
+    <span class="tag dark">Ibadan · Nigeria · Est. 2023</span>
+    <h1 style="margin-top:20px">Premium Nigerian Produce for <span class="serif">Global Markets</span></h1>
+    <p>Buy cocoa, soya beans, sesame and cashew straight from the source. Verified quality, secure online payments and delivery from Ibadan to the world.</p>
+    <div class="ctas">
+      <a href="#shop" class="btn btn-lime">Shop Produce <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+      <a href="#marketplace" class="btn btn-ghost">Sell on DOOTS</a>
+    </div>
+    <div class="herobar">
+      <span class="scroll">SCROLL <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M6 13l6 6 6-6"/></svg></span>
+      <div class="chips">
+        <span class="chip"><span class="dot">7</span>Export &amp; regional markets</span>
+        <span class="chip"><span class="av"><img src="assets/farmer.jpg" alt=""><img src="assets/training.jpg" alt=""><img src="assets/trade.jpg" alt=""></span>82 Partner cooperatives</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="wrap">
+    <p>Recognised for excellence in<br><b>agricultural innovation</b></p>
+    <div class="marks">
+      <span class="mark">IITA <span>Int'l Institute of<br>Tropical Agriculture</span></span>
+      <span class="mark">ICARDA <span>Agricultural Research<br>in the Dry Areas</span></span>
+      <span class="mark">IATF 2025 <span>AfCFTA<br>Marketplace</span></span>
+      <span class="mark">RC 7251206 <span>CAC Registered<br>Company</span></span>
+    </div>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="wrap rv">
+    <span class="tag">Nurturing Growth, Sustaining the Future</span>
+    <h2>We connect Nigerian farms to buyers at home and abroad, <span class="fade">delivering <img class="inl" src="assets/cocoa.jpg" alt=""> quality produce, fair prices for farmers and payments you can trust, from cultivation to export.</span></h2>
+  </div>
+</div>
+
+<!-- ABOUT / SERVICES -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="split rv">
+      <div>
+        <span class="tag">About DOOTS Nutod</span>
+        <h2>Agro-Commodities Solutions <span class="serif">That Deliver Real Value</span></h2>
+      </div>
+      <p class="lead">DOOTS Nutod Nigeria Limited is an innovation-driven agricultural company headquartered in Ibadan. We combine traditional farming knowledge with modern agronomy (smart irrigation, drone mapping and soil analysis) to add value across the whole chain, from cultivation and processing to distribution and export.</p>
+    </div>
+    <div class="svc">
+      <article class="rv"><img src="assets/seedlings.jpg" alt="Crop seedlings"><div><span class="n">01</span><h3>Crop Production</h3><p>Staple and cash crops grown with precision agriculture and sustainable techniques.</p></div></article>
+      <article class="rv"><img src="assets/silo.jpg" alt="Processing silos"><div><span class="n">02</span><h3>Agro-Processing</h3><p>Cleaning, processing, packaging and branding of produce for local and export markets.</p></div></article>
+      <article class="rv"><img src="assets/sacks.jpg" alt="Bagged produce ready for shipping"><div><span class="n">03</span><h3>Distribution &amp; Export</h3><p>Premium raw and processed commodities supplied through an efficient supply chain.</p></div></article>
+      <article class="rv"><img src="assets/training.jpg" alt="Farmer training session"><div><span class="n">04</span><h3>Consultancy &amp; Training</h3><p>Advisory and capacity building for farmers, cooperatives and agribusinesses.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="wrap">
+    <div class="shophead rv">
+      <div><span class="tag">Shop Produce</span><h2>Fresh From the Farm, <span class="serif">Ready to Ship</span></h2></div>
+      <p class="lead">Order by the bag or by the tonne. Every lot is quality-checked before dispatch. Export buyers can request a USD quote.</p>
+    </div>
+    <div class="tools">
+      <div class="tabs" id="tabs">
+        <button class="on" data-c="all">All produce</button>
+        <button data-c="cash">Cash crops</button>
+        <button data-c="grain">Grains &amp; seeds</button>
+        <button data-c="fresh">Fresh produce</button>
+      </div>
+      <label class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" placeholder="Search cocoa, sesame, cashew…" aria-label="Search products"></label>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- PAYMENTS -->
+<section class="pay" id="payments">
+  <div class="wrap paygrid">
+    <div class="rv">
+      <span class="tag dark">DOOTS Pay</span>
+      <h2 style="margin-top:18px">Secure Payments, <span class="serif">Built for Agro-Trade</span></h2>
+      <p class="lead" style="margin-top:20px">One payment platform for buyers, farmers and exporters. Pay the way you prefer. On bulk orders, funds are held in escrow until you confirm delivery.</p>
+      <div class="methods">
+        <div class="method"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg><h4>Card payments</h4><p>Verve, Mastercard and Visa, with 3-D Secure.</p></div>
+        <div class="method"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10 12 4l9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/></svg><h4>Bank transfer &amp; USSD</h4><p>Instant transfer to a dedicated account per order.</p></div>
+        <div class="method"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg><h4>Escrow protection</h4><p>Funds released to sellers only after delivery is confirmed.</p></div>
+        <div class="method"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><h4>Export payments</h4><p>USD wire and letter of credit for international buyers.</p></div>
+      </div>
+    </div>
+    <div class="paycard rv">
+      <div class="hd"><span class="tag">Order #DN-20481</span><span class="st">In escrow</span></div>
+      <small style="color:var(--sage)">Amount secured</small>
+      <div class="amt">₦9,600,000</div>
+      <small style="color:var(--sage)">20 × 50kg Cocoa Beans · Grade 1</small>
+      <ul class="steps">
+        <li class="done"><i>✓</i><span>Payment received<small>Card · 3-D Secure verified</small></span></li>
+        <li class="done"><i>✓</i><span>Quality check passed<small>Moisture 7.2% · Bean count 98/100g</small></span></li>
+        <li><i>3</i><span>In transit to Lagos<small>Est. delivery in 2 days</small></span></li>
+        <li><i>4</i><span>Confirm delivery &amp; release funds<small>Seller paid instantly</small></span></li>
+      </ul>
+      <div class="escrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Your money is protected until your goods arrive.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETPLACE -->
+<section id="marketplace">
+  <div class="wrap">
+    <div class="split rv">
+      <div><span class="tag">Marketplace</span><h2 style="margin-top:18px">Trade Directly With <span class="serif">Verified Farmers</span></h2></div>
+      <p class="lead">Our network of partner cooperatives lists produce on DOOTS. We verify every seller, inspect every lot and handle payment, so buyers get quality and farmers get paid fairly and fast.</p>
+    </div>
+    <div class="how">
+      <div class="rv"><b>01</b><h4>Create an account</h4><p>Sign up as a buyer or seller in under a minute.</p></div>
+      <div class="rv"><b>02</b><h4>List or browse produce</h4><p>Sellers post lots with grade, quantity and location.</p></div>
+      <div class="rv"><b>03</b><h4>Pay securely</h4><p>Buyer payments are held in escrow by DOOTS Pay.</p></div>
+      <div class="rv"><b>04</b><h4>Deliver &amp; get paid</h4><p>Funds are released to the farmer once delivery is confirmed.</p></div>
+    </div>
+    <div class="sellers" id="sellers"></div>
+    <div class="sellcta rv">
+      <img src="assets/field.jpg" alt="">
+      <div class="in">
+        <span class="tag dark">For farmers &amp; cooperatives</span>
+        <h3>Sell your harvest to <span class="serif">buyers worldwide</span></h3>
+        <p>List cocoa, soya, sesame, cashew and more. Get paid directly into your bank account, with no middlemen and no delays.</p>
+        <button class="btn btn-lime" onclick="openAuth('signup','seller')">Become a seller <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="wrap">
+  <div class="stats rv">
+    <div><b><em data-count="150">0</em><sup>+</sup></b><span>Hectares under sustainable management</span></div>
+    <div><b><em data-count="82">0</em></b><span>Partner farming cooperatives</span></div>
+    <div><b><em data-count="7">0</em></b><span>Regional &amp; export markets</span></div>
+    <div><b><em data-count="2023">0</em></b><span>Incorporated · RC 7251206</span></div>
+  </div>
+</div>
+
+<!-- FOUNDER -->
+<section>
+  <div class="wrap founder">
+    <div class="fphoto rv">
+      <img src="assets/founder.jpg" alt="Adedotun Olusiji Iyiola, Founder">
+      <div class="cap"><b>Adedotun Olusiji Iyiola</b>Founder &amp; Managing Director</div>
+    </div>
+    <div class="rv">
+      <span class="tag">Our Vision</span>
+      <blockquote>“To cultivate a sustainable future where innovation and responsible farming <span class="serif">nourish communities, empower farmers,</span> and preserve the planet for generations to come.”</blockquote>
+      <p class="lead">Founded to transform Africa’s agricultural system, DOOTS Nutod provides quality food and industrial raw materials, empowers farmers with improved seedlings and technology, and creates jobs for young Nigerians.</p>
+      <div class="vm">
+        <div><h4>Mission</h4><p>Advance modern agriculture through sustainable practices, innovative technologies and community partnerships.</p></div>
+        <div><h4>What’s next</h4><p>A renewable-powered agro-processing plant, a farmer training centre and stronger export partnerships across West Africa.</p></div>
+      </div>
+      <div class="values"><span>Sustainability</span><span>Innovation</span><span>Integrity</span><span>Community Empowerment</span><span>Excellence</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="split rv">
+      <div><span class="tag">On the Ground</span><h2 style="margin-top:18px">From Our Farms <span class="serif">&amp; Partners</span></h2></div>
+      <p class="lead">Drone-assisted spraying, nursery operations, farmer training and trade missions, including the AfCFTA Intra-African Trade Fair 2025.</p>
+    </div>
+    <div class="gal rv">
+      <img class="a" src="assets/drone.jpg" alt="Agricultural drone spraying crops">
+      <img class="b" src="assets/cocoa_tree.jpg" alt="Cocoa pods on the tree">
+      <img src="assets/palm.jpg" alt="Harvested palm fruit">
+      <img src="assets/expo.jpg" alt="Delegation at AfCFTA Marketplace">
+      <img class="b" src="assets/tomato.jpg" alt="Fresh tomatoes in crates">
+      <img src="assets/greenhouse.jpg" alt="Nursery greenhouse">
+      <img src="assets/trade.jpg" alt="DOOTS team at IATF 2025" style="object-position:top">
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top:0">
+  <div class="wrap contact">
+    <div class="cbox rv">
+      <span class="tag">Contact Us</span>
+      <h2>Let’s Talk <span class="serif">Trade</span></h2>
+      <p class="lead">Bulk orders, export quotes, partnerships or farmer onboarding. Our team responds within one business day.</p>
+      <div class="cinfo">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span><small>Head office</small>No. 3 Professor Jimoh Close, off Sagbe Road, Oyo–Ilorin Expressway, Ibadan, Oyo State</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><span><small>Phone</small><a href="tel:+2348032621531">+234 803 262 1531</a> · <a href="tel:+2348101098798">+234 810 109 8798</a></span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span><small>Email</small><a href="mailto:dootsnutodnigerialimited@gmail.com">dootsnutodnigerialimited@gmail.com</a></span></div>
+      </div>
+    </div>
+    <div class="cbox rv">
+      <form id="cform" onsubmit="return sendContact(event)">
+        <div class="two">
+          <div class="f"><label for="cn">Full name</label><input class="inp" id="cn" required></div>
+          <div class="f"><label for="ce">Email</label><input class="inp" id="ce" type="email" required></div>
+        </div>
+        <div class="two">
+          <div class="f"><label for="cp">Phone</label><input class="inp" id="cp" type="tel"></div>
+          <div class="f"><label for="ct">I’m interested in</label>
+            <select class="inp" id="ct"><option>Bulk / export order</option><option>Selling my produce</option><option>Partnership</option><option>Consultancy &amp; training</option><option>Other</option></select></div>
+        </div>
+        <div class="f"><label for="cm">Message</label><textarea class="inp" id="cm" placeholder="Commodity, quantity, destination…" required></textarea></div>
+        <button class="btn btn-dark w100">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbig">Nurturing Growth,<br><span class="serif">Sustaining the Future.</span></div>
+    <div class="fcols">
+      <div>
+        <img src="assets/logo.png" alt="DOOTS Nutod logo" style="height:64px;margin-bottom:16px">
+        <p>Export and import of high-quality agro-commodities from Nigeria to global markets.</p>
+        <form class="news" onsubmit="event.preventDefault();toast('Subscribed to market updates');this.reset()"><input class="inp" type="email" placeholder="Email for price updates" required aria-label="Email"><button class="btn btn-lime btn-sm" style="height:50px">Subscribe</button></form>
+      </div>
+      <div><h5>Shop</h5><a href="#shop" onclick="setCat('cash')">Cocoa beans</a><a href="#shop" onclick="setCat('grain')">Soya beans</a><a href="#shop" onclick="setCat('grain')">Sesame seeds</a><a href="#shop" onclick="setCat('cash')">Cashew nuts</a></div>
+      <div><h5>Company</h5><a href="#about">About us</a><a href="#marketplace">Marketplace</a><a href="#payments">DOOTS Pay</a><a href="#contact">Contact</a></div>
+      <div><h5>Account</h5><a href="#" onclick="event.preventDefault();openAuth('signin')">Sign in</a><a href="#" onclick="event.preventDefault();openAuth('signup','buyer')">Create account</a><a href="#" onclick="event.preventDefault();openAuth('signup','seller')">Sell on DOOTS</a><a href="#" onclick="event.preventDefault();openCart()">Cart</a></div>
+    </div>
+    <div class="fbot"><span>© 2026 DOOTS Nutod Nigeria Limited · RC 7251206</span><span>Ibadan, Oyo State, Nigeria</span></div>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="scrim" id="scrim" onclick="closeAll()"></div>
+<aside class="drawer" id="cart" aria-label="Cart">
+  <div class="dhd"><h3>Your cart</h3><button class="x" onclick="closeAll()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="dbody" id="cartBody"></div>
+  <div class="dft" id="cartFt"></div>
+</aside>
+
+<!-- ACCOUNT DRAWER -->
+<aside class="drawer" id="acct" aria-label="Account">
+  <div class="dhd"><h3 id="acctTitle">My account</h3><button class="x" onclick="closeAll()" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="dbody" id="acctBody"></div>
+</aside>
+
+<!-- MODAL -->
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+
+<div class="toast" id="toast"><i></i><span id="toastT"></span></div>
+
+<script>
+const ICON_CASHEW='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 14c-8 6-9 22 2 32 10 9 26 8 30-2 3-8-6-10-12-8-6 2-12-2-12-9 0-6-2-16-8-13Z"/><path d="M27 28c2 5 6 7 11 6"/></svg>';
+const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>';
+const PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>';
+const X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+
+// Indicative prices — to be confirmed by client
+let products=[
+ {id:1,name:'Cocoa Beans',grade:'Grade 1 · Fermented & sun-dried',cat:'cash',img:'assets/cocoa.jpg',price:480000,unit:'50kg bag',moq:1,origin:'Ondo / Oyo',seller:'DOOTS Nutod',export:true,stock:'In stock · 120 bags',desc:'Well-fermented, sun-dried Nigerian cocoa beans with low moisture and high bean count, ideal for processors and exporters.',specs:[['Moisture','≤ 7.5%'],['Bean count','≤ 100 / 100g'],['Defects','< 3%'],['Packaging','50kg jute bag']]},
+ {id:2,name:'Soya Beans',grade:'Machine-cleaned · Feed & food grade',cat:'grain',img:'assets/soya.jpg',price:46000,unit:'50kg bag',moq:5,origin:'Oyo / Kwara',seller:'DOOTS Nutod',export:true,stock:'In stock · 400 bags',desc:'Clean, uniform soya beans for oil milling, feed mills and food processing. Bulk and container loads available.',specs:[['Moisture','≤ 12%'],['Oil content','18–20%'],['Foreign matter','≤ 2%'],['Packaging','50kg PP bag']]},
+ {id:3,name:'Sesame Seeds',grade:'Natural white / mixed · Sortex cleaned',cat:'grain',img:'assets/sesame.jpg',price:96000,unit:'50kg bag',moq:5,origin:'Nasarawa / Benue',seller:'DOOTS Nutod',export:true,stock:'In stock · 260 bags',desc:'High-oil sesame seeds cleaned for export. Popular with buyers in Asia and the Middle East.',specs:[['Purity','99%'],['Oil content','≥ 48%'],['Moisture','≤ 6%'],['Packaging','50kg PP bag']]},
+ {id:4,name:'Raw Cashew Nuts',grade:'In-shell · KOR 47–49 lbs',cat:'cash',img:'',price:82000,unit:'80kg bag',moq:5,origin:'Oyo / Kwara',seller:'DOOTS Nutod',export:true,stock:'Seasonal · Pre-order',desc:'Raw cashew nuts sourced from partner farms in Oyo and Kwara, graded by out-turn (KOR) and nut count.',specs:[['Out-turn (KOR)','47–49 lbs'],['Nut count','≤ 200 / kg'],['Moisture','≤ 10%'],['Packaging','80kg jute bag']]},
+ {id:5,name:'Palm Fruit Bunches',grade:'Fresh fruit bunches · Tenera',cat:'cash',img:'assets/palm.jpg',price:350000,unit:'tonne',moq:1,origin:'Oyo',seller:'Oyo Growers Union',export:false,stock:'In stock',desc:'Freshly harvested Tenera palm fruit bunches for oil mills.',specs:[['Variety','Tenera'],['Delivery','Within 48 hrs'],['Min. order','1 tonne'],['Loading','Truck']]},
+ {id:6,name:'Maize (Yellow)',grade:'Dried & shelled',cat:'grain',img:'assets/maize.jpg',price:38000,unit:'50kg bag',moq:10,origin:'Oyo',seller:'Sagbe Farmers Cooperative',export:false,stock:'In stock · 900 bags',desc:'Dry yellow maize for feed mills and food processors.',specs:[['Moisture','≤ 13%'],['Broken grains','≤ 3%'],['Aflatoxin','Tested'],['Packaging','50kg PP bag']]},
+ {id:7,name:'Cassava Tubers',grade:'Fresh · Processing grade',cat:'fresh',img:'assets/cassava.jpg',price:120000,unit:'tonne',moq:2,origin:'Oyo / Ogun',seller:'Sagbe Farmers Cooperative',export:false,stock:'In stock',desc:'Fresh cassava roots for garri, starch and flour processing.',specs:[['Age','12–14 months'],['Starch','High'],['Delivery','Within 24 hrs'],['Loading','Truck']]},
+ {id:8,name:'Pineapples',grade:'Sweet · Smooth cayenne',cat:'fresh',img:'assets/pineapple.jpg',price:28000,unit:'crate (20 pcs)',moq:5,origin:'Ogun',seller:'Ogun Fruit Collective',export:false,stock:'In stock',desc:'Sweet, juicy pineapples for retail, juice and hospitality buyers.',specs:[['Size','1.2–1.8kg'],['Brix','14–16°'],['Pack','Crate of 20'],['Delivery','Same/next day']]},
+ {id:9,name:'Fresh Tomatoes',grade:'Greenhouse grown',cat:'fresh',img:'assets/tomato.jpg',price:42000,unit:'crate (25kg)',moq:3,origin:'Ibadan',seller:'DOOTS Nutod',export:false,stock:'In stock',desc:'Firm, ripe tomatoes from our greenhouse partners in Ibadan.',specs:[['Variety','Roma'],['Weight','25kg crate'],['Grown','Greenhouse'],['Delivery','Next day']]},
+ {id:10,name:'Bell & Hot Peppers',grade:'Mixed colours',cat:'fresh',img:'assets/pepper.jpg',price:36000,unit:'basket (20kg)',moq:2,origin:'Ibadan',seller:'DOOTS Nutod',export:false,stock:'In stock',desc:'Assorted bell peppers and scotch bonnets, harvested to order.',specs:[['Mix','Red · Yellow · Green'],['Weight','20kg'],['Grown','Greenhouse'],['Delivery','Next day']]}
+];
+const sellers=[
+ {name:'DOOTS Nutod Farms',loc:'Ibadan, Oyo',img:'assets/seedlings.jpg',items:'Cocoa · Sesame · Soya',v:true},
+ {name:'Sagbe Farmers Cooperative',loc:'Sagbe, Oyo',img:'assets/farmer.jpg',items:'Maize · Cassava',v:true},
+ {name:'Oyo Growers Union',loc:'Oyo town, Oyo',img:'assets/palm.jpg',items:'Palm fruit · Cashew',v:true},
+ {name:'Ogun Fruit Collective',loc:'Abeokuta, Ogun',img:'assets/pineapple.jpg',items:'Pineapples · Citrus',v:true},
+ {name:'Kwara Grain Alliance',loc:'Ilorin, Kwara',img:'assets/sacks.jpg',items:'Soya · Maize',v:true},
+ {name:'Ibadan Greenhouse Hub',loc:'Ibadan, Oyo',img:'assets/greenhouse.jpg',items:'Tomatoes · Peppers',v:true}
+];
+
+const S={cart:[],user:null,orders:[],cat:'all',q:''};
+const fmt=n=>'₦'+Math.round(n).toLocaleString('en-NG');
+const $=s=>document.querySelector(s);
+const img=(p,cls='')=>p.img?`<img src="${p.img}" alt="${p.name}" loading="lazy" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
+
+function renderGrid(){
+  const q=S.q.toLowerCase();
+  const list=products.filter(p=>(S.cat==='all'||p.cat===S.cat)&&(!q||(p.name+p.grade+p.seller+p.origin).toLowerCase().includes(q)));
+  $('#grid').innerHTML=list.length?list.map(p=>`
+    <article class="prod">
+      <div class="ph" onclick="openProduct(${p.id})">${img(p)}<span class="pill">${p.origin}</span>${p.export?'<span class="pill ex">Export ready</span>':''}</div>
+      <div class="bd">
+        <span class="seller">${CHECK}${p.seller}</span>
+        <h3>${p.name}</h3>
+        <span class="meta">${p.grade}</span>
+        <div class="row"><span class="price">${fmt(p.price)} <small>/ ${p.unit}</small></span>
+        <button class="add" aria-label="Add ${p.name} to cart" onclick="addToCart(${p.id},${p.moq})">${PLUS}</button></div>
+      </div>
+    </article>`).join(''):'<div class="empty">No produce matches your search.</div>';
+}
+function renderSellers(){
+  $('#sellers').innerHTML=sellers.map(s=>`<div class="sel rv in"><img src="${s.img}" alt=""><div><h4>${s.name}</h4><p>${s.loc} · ${s.items}</p><span class="ver">${CHECK} Verified seller</span></div></div>`).join('');
+}
+function setCat(c){S.cat=c;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.c===c));renderGrid()}
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setCat(b.dataset.c)});
+$('#q').addEventListener('input',e=>{S.q=e.target.value;renderGrid()});
+
+/* CART */
+function addToCart(id,qty=1){
+  const p=products.find(x=>x.id===id);const it=S.cart.find(x=>x.id===id);
+  if(it)it.qty+=qty;else S.cart.push({id,qty:Math.max(qty,p.moq)});
+  updateCart();toast(`${p.name} added to cart`);
+}
+function setQty(id,d){const it=S.cart.find(x=>x.id===id);const p=products.find(x=>x.id===id);it.qty=Math.max(p.moq,it.qty+d);updateCart()}
+function rmItem(id){S.cart=S.cart.filter(x=>x.id!==id);updateCart()}
+function totals(){const sub=S.cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0);const fee=Math.round(sub*0.015);return{sub,fee,total:sub+fee}}
+function updateCart(){
+  const n=S.cart.reduce((s,i)=>s+i.qty,0);const b=$('#cartCount');b.textContent=n;b.dataset.n=n;
+  if(!S.cart.length){$('#cartBody').innerHTML='<div class="empty" style="padding:60px 10px">Your cart is empty.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Browse produce</a></div>';$('#cartFt').innerHTML='';return}
+  $('#cartBody').innerHTML=S.cart.map(i=>{const p=products.find(x=>x.id===i.id);return`
+    <div class="ci">${img(p)}<div><h4>${p.name}</h4><div class="u">${fmt(p.price)} / ${p.unit} · min ${p.moq}</div>
+    <div class="qty"><button onclick="setQty(${p.id},-1)" aria-label="Decrease">−</button><span>${i.qty}</span><button onclick="setQty(${p.id},1)" aria-label="Increase">+</button></div></div>
+    <button class="rm" onclick="rmItem(${p.id})">Remove</button></div>`}).join('');
+  const t=totals();
+  $('#cartFt').innerHTML=`<div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div><div class="tot"><span>Escrow &amp; processing (1.5%)</span><span>${fmt(t.fee)}</span></div><div class="tot big"><span>Total</span><span>${fmt(t.total)}</span></div><button class="btn btn-dark w100" onclick="checkout()">Checkout securely</button><p class="note">Delivery is quoted at checkout. Export orders can be paid in USD.</p>`;
+}
+function openCart(){closeAll();updateCart();$('#cart').classList.add('on');$('#scrim').classList.add('on')}
+function closeAll(){document.querySelectorAll('.drawer,.scrim,.modal').forEach(e=>e.classList.remove('on'))}
+function openModal(html,sm){document.querySelectorAll('.drawer').forEach(d=>d.classList.remove('on'));const m=$('#mbox');m.className='mbox'+(sm?' sm':'');m.innerHTML=`<button class="x" onclick="closeAll()" aria-label="Close">${X}</button>`+html;$('#modal').classList.add('on');$('#scrim').classList.add('on');m.scrollTop=0}
+
+/* PRODUCT */
+function openProduct(id){
+  const p=products.find(x=>x.id===id);
+  openModal(`<div class="pd"><div class="im">${img(p)}</div><div class="tx">
+    <span class="tag">${p.stock}</span><h3>${p.name}</h3><p style="color:var(--sage)">${p.grade}</p>
+    <p style="margin-top:14px;font-size:15px">${p.desc}</p>
+    <div class="spec">${p.specs.map(s=>`<div><small>${s[0]}</small>${s[1]}</div>`).join('')}</div>
+    <div class="tot"><span>Sold by</span><span class="ver">${CHECK} ${p.seller}</span></div>
+    <div class="tot"><span>Origin</span><span>${p.origin}</span></div>
+    <div class="tot"><span>Minimum order</span><span>${p.moq} × ${p.unit}</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 14px;flex-wrap:wrap">
+      <span class="price" style="font-size:26px">${fmt(p.price)} <small>/ ${p.unit}</small></span>
+      <div class="qty" style="margin:0"><button onclick="pq(-1,${p.moq})">−</button><span id="pq">${p.moq}</span><button onclick="pq(1,${p.moq})">+</button></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-dark" style="flex:1" onclick="addToCart(${p.id},+$('#pq').textContent);closeAll();openCart()">Add to cart</button>
+    ${p.export?`<button class="btn btn-line" onclick="quote('${p.name}')">Export quote (USD)</button>`:''}</div>
+  </div></div>`);
+}
+function pq(d,m){const e=$('#pq');e.textContent=Math.max(m,+e.textContent+d)}
+function quote(n){closeAll();$('#ct').value='Bulk / export order';$('#cm').value=`Hello, I’d like a USD export quote for ${n}. Quantity: ___ MT. Destination port: ___.`;location.hash='#contact';toast('Tell us your quantity and destination')}
+
+/* CHECKOUT */
+let co={};
+function checkout(){
+  if(!S.cart.length)return;
+  co={name:S.user?.name||'',email:S.user?.email||'',phone:'',addr:'',state:'Oyo',ship:'pickup',pay:'card'};
+  coStep1();
+}
+const shipOpts=[['pickup','Pick up · Ibadan warehouse','Free',0],['local','Delivery within Nigeria','From ₦25,000',25000],['export','Export · FOB Lagos (Apapa)','Quoted per container',0]];
+function coStep1(){
+  const t=totals();
+  openModal(`<div class="mpad"><div class="stepper"><span class="on"></span><span></span><span></span></div>
+  <h3>Delivery details</h3><p class="note" style="margin:0 0 20px">Order total ${fmt(t.total)} · ${S.cart.length} item(s)</p>
+  <form onsubmit="return coNext(event)">
+    <div class="two"><div class="f"><label>Full name</label><input class="inp" id="k_name" required value="${co.name}"></div>
+    <div class="f"><label>Phone</label><input class="inp" id="k_phone" type="tel" required value="${co.phone}" placeholder="080…"></div></div>
+    <div class="f"><label>Email</label><input class="inp" id="k_email" type="email" required value="${co.email}"></div>
+    <div class="two"><div class="f"><label>Address / Company</label><input class="inp" id="k_addr" value="${co.addr}"></div>
+    <div class="f"><label>State / Country</label><input class="inp" id="k_state" value="${co.state}"></div></div>
+    <span class="lbl" style="display:block;margin:6px 0 10px">Delivery method</span>
+    ${shipOpts.map(o=>`<label class="opt"><input type="radio" name="ship" value="${o[0]}" ${co.ship===o[0]?'checked':''}><span><b>${o[1]}</b></span><span class="r">${o[2]}</span></label>`).join('')}
+    <button class="btn btn-dark w100" style="margin-top:12px">Continue to payment</button>
+  </form></div>`,true);
+}
+function coNext(e){e.preventDefault();['name','phone','email','addr','state'].forEach(k=>co[k]=$('#k_'+k).value);co.ship=document.querySelector('input[name=ship]:checked').value;coStep2();return false}
+const payOpts=[['card','Debit / credit card','Verve · Mastercard · Visa'],['transfer','Bank transfer','Pay into a one-time account number'],['ussd','USSD','*737#, *894#, *919# and more'],['escrow','Escrow (bulk orders)','Funds held until delivery confirmed']];
+function coStep2(){
+  const t=totals();const ship=shipOpts.find(o=>o[0]===co.ship)[3];const total=t.total+ship;co.total=total;
+  openModal(`<div class="mpad"><div class="stepper"><span class="on"></span><span class="on"></span><span></span></div>
+  <h3>Payment</h3><p class="note" style="margin:0 0 20px">Secured by DOOTS Pay</p>
+  ${payOpts.map(o=>`<label class="opt"><input type="radio" name="pay" value="${o[0]}" ${co.pay===o[0]?'checked':''}><span><b>${o[1]}</b><small>${o[2]}</small></span></label>`).join('')}
+  <div style="background:#fff;border-radius:var(--r-md);padding:16px;margin:16px 0">
+    <div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div>
+    <div class="tot"><span>Escrow &amp; processing</span><span>${fmt(t.fee)}</span></div>
+    <div class="tot"><span>Delivery</span><span>${co.ship==='export'?'Quoted separately':ship?fmt(ship):'Free'}</span></div>
+    <div class="tot big" style="margin-bottom:0"><span>Total</span><span>${fmt(total)}</span></div>
+  </div>
+  <button class="btn btn-lime w100" id="payBtn" onclick="pay()">Pay ${fmt(total)} securely</button>
+  <button class="btn w100" style="margin-top:6px;color:var(--sage)" onclick="coStep1()">← Back</button>
+  <p class="note" style="text-align:center">🔒 Card details are entered on the payment provider’s secure page and never stored by DOOTS. (Prototype: no real payment is taken.)</p></div>`,true);
+}
+function pay(){
+  co.pay=document.querySelector('input[name=pay]:checked').value;
+  const b=$('#payBtn');b.innerHTML='<span class="spin"></span> Processing…';b.disabled=true;
+  setTimeout(()=>{
+    const id='DN-'+Math.floor(20000+Math.random()*79999);
+    const items=S.cart.map(i=>{const p=products.find(x=>x.id===i.id);return`${i.qty} × ${p.name}`}).join(', ');
+    S.orders.unshift({id,items,total:co.total,status:co.pay==='escrow'?'In escrow':'Paid · Processing',date:new Date().toLocaleDateString('en-GB')});
+    S.cart=[];updateCart();
+    openModal(`<div class="mpad ok"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5 9-10"/></svg></div>
+    <div class="stepper" style="max-width:200px;margin:0 auto 20px"><span class="on"></span><span class="on"></span><span class="on"></span></div>
+    <h3>Payment successful</h3><p style="color:var(--sage);margin:8px 0 20px">Order <b style="color:var(--ink)">${id}</b> · ${fmt(co.total)}<br>A receipt has been sent to ${co.email}.</p>
+    <p class="note">${items}</p>
+    <div style="display:flex;gap:10px;margin-top:22px"><button class="btn btn-line" style="flex:1" onclick="closeAll()">Keep shopping</button><button class="btn btn-dark" style="flex:1" onclick="${S.user?'openAcct()':"openAuth('signup','buyer')"}">${S.user?'Track order':'Create account to track'}</button></div></div>`,true);
+  },1600);
+}
+
+/* AUTH */
+let authRole='buyer';
+function openAuth(mode='signin',role='buyer'){
+  authRole=role;
+  const up=mode==='signup';
+  openModal(`<div class="mpad"><img src="assets/logo.png" alt="" style="height:54px;margin-bottom:18px">
+  <h3>${up?'Create your account':'Welcome back'}</h3><p class="note" style="margin:0">${up?'Buy produce, track orders and get paid as a seller.':'Sign in to track orders and manage listings.'}</p>
+  <div class="seg"><button class="${!up?'on':''}" onclick="openAuth('signin')">Sign in</button><button class="${up?'on':''}" onclick="openAuth('signup','${role}')">Create account</button></div>
+  <form onsubmit="return doAuth(event,${up})">
+    ${up?`<span class="lbl" style="display:block;margin-bottom:8px">I want to</span>
+    <div class="two" style="margin-bottom:14px">
+      <label class="opt" style="margin:0"><input type="radio" name="role" value="buyer" ${role==='buyer'?'checked':''}><span><b>Buy produce</b></span></label>
+      <label class="opt" style="margin:0"><input type="radio" name="role" value="seller" ${role==='seller'?'checked':''}><span><b>Sell produce</b></span></label>
+    </div>
+    <div class="f"><label>Full name / Business name</label><input class="inp" id="a_name" required></div>
+    <div class="f"><label>Phone</label><input class="inp" id="a_phone" type="tel" required></div>`:''}
+    <div class="f"><label>Email</label><input class="inp" id="a_email" type="email" required></div>
+    <div class="f"><label>Password</label><input class="inp" id="a_pw" type="password" required minlength="6"></div>
+    <button class="btn btn-dark w100" style="margin-top:6px">${up?'Create account':'Sign in'}</button>
+  </form></div>`,true);
+}
+function doAuth(e,up){
+  e.preventDefault();
+  const email=$('#a_email').value;
+  const role=up?document.querySelector('input[name=role]:checked').value:'buyer';
+  const name=up?$('#a_name').value:email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  S.user={name,email,role,listings:[]};
+  $('#acctLbl').textContent=name.split(' ')[0];
+  closeAll();toast(up?`Welcome to DOOTS, ${name.split(' ')[0]}!`:`Signed in as ${name}`);
+  setTimeout(openAcct,350);return false;
+}
+function acctClick(){S.user?openAcct():openAuth('signin')}
+function openAcct(){
+  closeAll();const u=S.user;if(!u)return openAuth('signin');
+  $('#acctTitle').textContent='Hi, '+u.name.split(' ')[0];
+  $('#acctBody').innerHTML=`
+    <div class="seg" style="margin-top:0"><button class="on" id="t1" onclick="acctTab(1)">Orders</button><button id="t2" onclick="acctTab(2)">${u.role==='seller'?'My listings':'Profile'}</button></div>
+    <div id="acctPane"></div>
+    <button class="btn btn-line w100" style="margin-top:20px" onclick="signOut()">Sign out</button>`;
+  acctTab(1);$('#acct').classList.add('on');$('#scrim').classList.add('on');
+}
+function acctTab(n){
+  const u=S.user;$('#t1').classList.toggle('on',n===1);$('#t2').classList.toggle('on',n===2);
+  if(n===1){$('#acctPane').innerHTML=S.orders.length?`<div class="orders">${S.orders.map(o=>`<div class="o"><div class="t"><span>${o.id}</span><span>${fmt(o.total)}</span></div><p class="note" style="margin:6px 0">${o.items}</p><div style="display:flex;justify-content:space-between;align-items:center"><span class="st">${o.status}</span><small style="color:var(--sage)">${o.date}</small></div></div>`).join('')}</div>`:'<div class="empty" style="padding:40px 10px">No orders yet.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Start shopping</a></div>';return}
+  if(u.role!=='seller'){$('#acctPane').innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${u.name}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${u.email}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="S.user.role='seller';acctTab(2)">Upgrade to seller account</button>`;return}
+  $('#acctPane').innerHTML=`${u.listings.length?`<div class="orders">${u.listings.map(l=>`<div class="o"><div class="t"><span>${l.name}</span><span>${fmt(l.price)}</span></div><p class="note" style="margin:6px 0">per ${l.unit} · ${l.origin}</p><span class="st" style="background:#e3f5c4;color:#2f5a10">Live on marketplace</span></div>`).join('')}</div>`:''}
+  <form onsubmit="return addListing(event)" style="background:#fff;border-radius:var(--r-md);padding:18px">
+    <h4 style="font-weight:500;margin-bottom:14px">List new produce</h4>
+    <div class="f"><label>Commodity</label><select class="inp" id="l_name"><option>Cocoa Beans</option><option>Soya Beans</option><option>Sesame Seeds</option><option>Raw Cashew Nuts</option><option>Maize</option><option>Other</option></select></div>
+    <div class="two"><div class="f"><label>Price (₦)</label><input class="inp" id="l_price" type="number" min="1" required placeholder="e.g. 450000"></div>
+    <div class="f"><label>Per</label><select class="inp" id="l_unit"><option>50kg bag</option><option>80kg bag</option><option>tonne</option></select></div></div>
+    <div class="two"><div class="f"><label>Quantity available</label><input class="inp" id="l_qty" type="number" min="1" required></div>
+    <div class="f"><label>Location</label><input class="inp" id="l_loc" required placeholder="Town, State"></div></div>
+    <button class="btn btn-dark w100">Publish listing</button>
+    <p class="note">Listings go live after a DOOTS quality inspection. Payouts are made to your verified bank account.</p>
+  </form>`;
+}
+function addListing(e){
+  e.preventDefault();const u=S.user;const name=$('#l_name').value;
+  const base=products.find(p=>p.name.startsWith(name.split(' ')[0]));
+  const p={id:Date.now(),name,grade:`Listed by ${u.name}`,cat:base?base.cat:'grain',img:base?base.img:'',price:+$('#l_price').value,unit:$('#l_unit').value,moq:1,origin:$('#l_loc').value,seller:u.name,export:false,stock:`Available · ${$('#l_qty').value} units`,desc:`Listed on the DOOTS marketplace by ${u.name}.`,specs:[['Seller',u.name],['Location',$('#l_loc').value],['Quantity',$('#l_qty').value],['Inspection','Pending']]};
+  products.unshift(p);u.listings.unshift(p);renderGrid();acctTab(2);toast('Listing published to the marketplace');return false;
+}
+function signOut(){S.user=null;$('#acctLbl').textContent='Sign in';closeAll();toast('Signed out')}
+
+/* MISC */
+function sendContact(e){e.preventDefault();toast('Thanks! Our team will reply within 1 business day.');e.target.reset();return false}
+let tt;function toast(t){$('#toastT').textContent=t;$('#toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('#toast').classList.remove('on'),2600)}
+function toggleMob(o){$('#mobnav').classList.toggle('on',o)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAll();toggleMob(false)}});
+
+// sticky nav + active link
+const nav=$('#nav');
+const secs=['top','shop','marketplace','payments','about','contact'].map(id=>document.getElementById(id));
+addEventListener('scroll',()=>{
+  nav.classList.toggle('solid',scrollY>innerHeight*.8);
+  let cur='top';secs.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.4)cur=s.id});
+  document.querySelectorAll('#navpill a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+
+// reveal + counters
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;en.target.classList.add('in');
+  en.target.querySelectorAll('[data-count]').forEach(el=>{const to=+el.dataset.count,from=to>1000?1990:0,t0=performance.now();
+    const step=t=>{const k=Math.min(1,(t-t0)/1400),v=from+(to-from)*(1-Math.pow(1-k,3));el.textContent=Math.round(v);if(k<1)requestAnimationFrame(step)};requestAnimationFrame(step)});
+  io.unobserve(en.target)}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+renderGrid();renderSellers();updateCart();
+</script>
+</body>
+</html>

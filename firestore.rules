@@ -1,0 +1,58 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() && request.auth.token.email_verified == true
+        && request.auth.token.email in ['timmyberry738@gmail.com', 'dootsnutodnigerialimited@gmail.com'];
+    }
+    function isSeller() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'seller';
+    }
+
+    // Buyer / seller profiles: each person manages their own
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.role in ['buyer', 'seller'];
+      allow delete: if isAdmin();
+    }
+
+    // Products: anyone can see live ones; sellers submit listings for approval; admins manage all
+    match /products/{pid} {
+      allow read: if resource.data.status == 'live'
+        || (signedIn() && (resource.data.sellerUid == request.auth.uid || isAdmin()));
+      allow create: if isAdmin()
+        || (isSeller()
+            && request.resource.data.sellerUid == request.auth.uid
+            && request.resource.data.status == 'pending'
+            && request.resource.data.official == false
+            && request.resource.data.price is number && request.resource.data.price > 0);
+      allow update: if isAdmin()
+        || (isSeller() && resource.data.sellerUid == request.auth.uid
+            && request.resource.data.sellerUid == request.auth.uid
+            && request.resource.data.official == false
+            && request.resource.data.status in ['pending', 'hidden']);
+      allow delete: if isAdmin() || (signedIn() && resource.data.sellerUid == request.auth.uid);
+    }
+
+    // Orders: buyers create and see their own; sellers see orders containing their produce; admins manage all
+    match /orders/{oid} {
+      allow read: if signedIn() && (resource.data.buyerUid == request.auth.uid
+        || isAdmin() || request.auth.uid in resource.data.sellerUids);
+      allow create: if signedIn()
+        && request.resource.data.buyerUid == request.auth.uid
+        && request.resource.data.status == 'awaiting_payment'
+        && request.resource.data.items is list && request.resource.data.items.size() > 0
+        && request.resource.data.total is number && request.resource.data.total > 0;
+      allow update: if isAdmin()
+        || (signedIn() && resource.data.buyerUid == request.auth.uid
+            && resource.data.status == 'awaiting_payment'
+            && request.resource.data.status in ['payment_submitted', 'cancelled']
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['status', 'payRef', 'payChannel', 'paidAt']));
+      allow delete: if isAdmin();
+    }
+  }
+}

@@ -284,6 +284,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 .mbox{background:var(--bg);border-radius:var(--r-lg);width:min(900px,100%);max-height:calc(100svh - 32px);overflow:auto;transform:translateY(20px) scale(.98);opacity:0;transition:.3s;pointer-events:none;position:relative}
 .modal.on .mbox{transform:none;opacity:1;pointer-events:auto}
 .mbox.sm{width:min(480px,100%)}
+.mbox.lg{width:min(760px,100%)}
 .mbox .x{position:absolute;top:16px;right:16px;z-index:3}
 .pd{display:grid;grid-template-columns:1fr 1fr}
 .pd .im{min-height:420px;background:var(--gold-l)}
@@ -426,7 +427,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 </head>
 <body>
 
-<div class="demo"><b>Prototype</b> · <span class="dl">Prices, sample sellers and payments are for demonstration. No real charges are made.</span><span class="ds">Demo prices &amp; payments only</span></div>
+<div class="demo" id="demo"><b>Test mode</b> · <span class="dl">Prices are placeholders and payments run in test mode. No real money is charged.</span><span class="ds">Test prices &amp; payments</span></div>
 
 <!-- NAV -->
 <header class="nav" id="nav">
@@ -727,159 +728,203 @@ const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-w
 const PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>';
 const X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 
-// Indicative prices — to be confirmed by client
-let products=[
- {id:1,name:'Cocoa Beans',grade:'Grade 1 · Fermented & sun-dried',cat:'cash',img:'assets/cocoa.jpg',price:480000,unit:'50kg bag',moq:1,origin:'Ondo / Oyo',seller:'DOOTS Nutod',export:true,stock:'In stock · 120 bags',desc:'Well-fermented, sun-dried Nigerian cocoa beans with low moisture and high bean count, ideal for processors and exporters.',specs:[['Moisture','≤ 7.5%'],['Bean count','≤ 100 / 100g'],['Defects','< 3%'],['Packaging','50kg jute bag']]},
- {id:2,name:'Soya Beans',grade:'Machine-cleaned · Feed & food grade',cat:'grain',img:'assets/soya.jpg',price:46000,unit:'50kg bag',moq:5,origin:'Oyo / Kwara',seller:'DOOTS Nutod',export:true,stock:'In stock · 400 bags',desc:'Clean, uniform soya beans for oil milling, feed mills and food processing. Bulk and container loads available.',specs:[['Moisture','≤ 12%'],['Oil content','18–20%'],['Foreign matter','≤ 2%'],['Packaging','50kg PP bag']]},
- {id:3,name:'Sesame Seeds',grade:'Natural white / mixed · Sortex cleaned',cat:'grain',img:'assets/sesame.jpg',price:96000,unit:'50kg bag',moq:5,origin:'Nasarawa / Benue',seller:'DOOTS Nutod',export:true,stock:'In stock · 260 bags',desc:'High-oil sesame seeds cleaned for export. Popular with buyers in Asia and the Middle East.',specs:[['Purity','99%'],['Oil content','≥ 48%'],['Moisture','≤ 6%'],['Packaging','50kg PP bag']]},
- {id:4,name:'Raw Cashew Nuts',grade:'In-shell · KOR 47–49 lbs',cat:'cash',img:'',price:82000,unit:'80kg bag',moq:5,origin:'Oyo / Kwara',seller:'DOOTS Nutod',export:true,stock:'Seasonal · Pre-order',desc:'Raw cashew nuts sourced from partner farms in Oyo and Kwara, graded by out-turn (KOR) and nut count.',specs:[['Out-turn (KOR)','47–49 lbs'],['Nut count','≤ 200 / kg'],['Moisture','≤ 10%'],['Packaging','80kg jute bag']]},
- {id:5,name:'Palm Fruit Bunches',grade:'Fresh fruit bunches · Tenera',cat:'cash',img:'assets/palm.jpg',price:350000,unit:'tonne',moq:1,origin:'Oyo',seller:'Oyo Growers Union',export:false,stock:'In stock',desc:'Freshly harvested Tenera palm fruit bunches for oil mills.',specs:[['Variety','Tenera'],['Delivery','Within 48 hrs'],['Min. order','1 tonne'],['Loading','Truck']]},
- {id:6,name:'Maize (Yellow)',grade:'Dried & shelled',cat:'grain',img:'assets/maize.jpg',price:38000,unit:'50kg bag',moq:10,origin:'Oyo',seller:'Sagbe Farmers Cooperative',export:false,stock:'In stock · 900 bags',desc:'Dry yellow maize for feed mills and food processors.',specs:[['Moisture','≤ 13%'],['Broken grains','≤ 3%'],['Aflatoxin','Tested'],['Packaging','50kg PP bag']]},
- {id:7,name:'Cassava Tubers',grade:'Fresh · Processing grade',cat:'fresh',img:'assets/cassava.jpg',price:120000,unit:'tonne',moq:2,origin:'Oyo / Ogun',seller:'Sagbe Farmers Cooperative',export:false,stock:'In stock',desc:'Fresh cassava roots for garri, starch and flour processing.',specs:[['Age','12–14 months'],['Starch','High'],['Delivery','Within 24 hrs'],['Loading','Truck']]},
- {id:8,name:'Pineapples',grade:'Sweet · Smooth cayenne',cat:'fresh',img:'assets/pineapple.jpg',price:28000,unit:'crate (20 pcs)',moq:5,origin:'Ogun',seller:'Ogun Fruit Collective',export:false,stock:'In stock',desc:'Sweet, juicy pineapples for retail, juice and hospitality buyers.',specs:[['Size','1.2–1.8kg'],['Brix','14–16°'],['Pack','Crate of 20'],['Delivery','Same/next day']]},
- {id:9,name:'Fresh Tomatoes',grade:'Greenhouse grown',cat:'fresh',img:'assets/tomato.jpg',price:42000,unit:'crate (25kg)',moq:3,origin:'Ibadan',seller:'DOOTS Nutod',export:false,stock:'In stock',desc:'Firm, ripe tomatoes from our greenhouse partners in Ibadan.',specs:[['Variety','Roma'],['Weight','25kg crate'],['Grown','Greenhouse'],['Delivery','Next day']]},
- {id:10,name:'Bell & Hot Peppers',grade:'Mixed colours',cat:'fresh',img:'assets/pepper.jpg',price:36000,unit:'basket (20kg)',moq:2,origin:'Ibadan',seller:'DOOTS Nutod',export:false,stock:'In stock',desc:'Assorted bell peppers and scotch bonnets, harvested to order.',specs:[['Mix','Red · Yellow · Green'],['Weight','20kg'],['Grown','Greenhouse'],['Delivery','Next day']]}
-];
-const sellers=[
- {name:'DOOTS Nutod Farms',loc:'Ibadan, Oyo',img:'assets/seedlings.jpg',items:'Cocoa · Sesame · Soya',v:true},
- {name:'Sagbe Farmers Cooperative',loc:'Sagbe, Oyo',img:'assets/farmer.jpg',items:'Maize · Cassava',v:true},
- {name:'Oyo Growers Union',loc:'Oyo town, Oyo',img:'assets/palm.jpg',items:'Palm fruit · Cashew',v:true},
- {name:'Ogun Fruit Collective',loc:'Abeokuta, Ogun',img:'assets/pineapple.jpg',items:'Pineapples · Citrus',v:true},
- {name:'Kwara Grain Alliance',loc:'Ilorin, Kwara',img:'assets/sacks.jpg',items:'Soya · Maize',v:true},
- {name:'Ibadan Greenhouse Hub',loc:'Ibadan, Oyo',img:'assets/greenhouse.jpg',items:'Tomatoes · Peppers',v:true}
-];
+// ===== CONFIG =====
+// Paystack PUBLIC key (pk_test_… for testing, pk_live_… for real payments). Never put the secret key here.
+const PAYSTACK_PK='';
+// Accounts that can open the Admin panel (must sign in with this verified email)
+const ADMIN_EMAILS=['timmyberry738@gmail.com','dootsnutodnigerialimited@gmail.com'];
+const FEE_RATE=0.015;
 
-const S={cart:[],user:null,orders:[],cat:'all',q:''};
-const fmt=n=>'₦'+Math.round(n).toLocaleString('en-NG');
+// Starter catalogue: imported into the database from the Admin panel. Prices are placeholders for the client to confirm.
+const STARTER=[
+ {id:'cocoa-beans',name:'Cocoa Beans',grade:'Grade 1 · Fermented & sun-dried',cat:'cash',img:'assets/cocoa.jpg',price:480000,unit:'50kg bag',moq:1,origin:'Ondo / Oyo',export:true,stock:'In stock · 120 bags',desc:'Well-fermented, sun-dried Nigerian cocoa beans with low moisture and high bean count, ideal for processors and exporters.',specs:[['Moisture','≤ 7.5%'],['Bean count','≤ 100 / 100g'],['Defects','< 3%'],['Packaging','50kg jute bag']]},
+ {id:'soya-beans',name:'Soya Beans',grade:'Machine-cleaned · Feed & food grade',cat:'grain',img:'assets/soya.jpg',price:46000,unit:'50kg bag',moq:5,origin:'Oyo / Kwara',export:true,stock:'In stock · 400 bags',desc:'Clean, uniform soya beans for oil milling, feed mills and food processing. Bulk and container loads available.',specs:[['Moisture','≤ 12%'],['Oil content','18–20%'],['Foreign matter','≤ 2%'],['Packaging','50kg PP bag']]},
+ {id:'sesame-seeds',name:'Sesame Seeds',grade:'Natural white / mixed · Sortex cleaned',cat:'grain',img:'assets/sesame.jpg',price:96000,unit:'50kg bag',moq:5,origin:'Nasarawa / Benue',export:true,stock:'In stock · 260 bags',desc:'High-oil sesame seeds cleaned for export. Popular with buyers in Asia and the Middle East.',specs:[['Purity','99%'],['Oil content','≥ 48%'],['Moisture','≤ 6%'],['Packaging','50kg PP bag']]},
+ {id:'raw-cashew-nuts',name:'Raw Cashew Nuts',grade:'In-shell · KOR 47–49 lbs',cat:'cash',img:'',price:82000,unit:'80kg bag',moq:5,origin:'Oyo / Kwara',export:true,stock:'Seasonal · Pre-order',desc:'Raw cashew nuts sourced from partner farms in Oyo and Kwara, graded by out-turn (KOR) and nut count.',specs:[['Out-turn (KOR)','47–49 lbs'],['Nut count','≤ 200 / kg'],['Moisture','≤ 10%'],['Packaging','80kg jute bag']]},
+ {id:'palm-fruit-bunches',name:'Palm Fruit Bunches',grade:'Fresh fruit bunches · Tenera',cat:'cash',img:'assets/palm.jpg',price:350000,unit:'tonne',moq:1,origin:'Oyo',export:false,stock:'In stock',desc:'Freshly harvested Tenera palm fruit bunches for oil mills.',specs:[['Variety','Tenera'],['Delivery','Within 48 hrs'],['Min. order','1 tonne'],['Loading','Truck']]},
+ {id:'maize-yellow',name:'Maize (Yellow)',grade:'Dried & shelled',cat:'grain',img:'assets/maize.jpg',price:38000,unit:'50kg bag',moq:10,origin:'Oyo',export:false,stock:'In stock · 900 bags',desc:'Dry yellow maize for feed mills and food processors.',specs:[['Moisture','≤ 13%'],['Broken grains','≤ 3%'],['Aflatoxin','Tested'],['Packaging','50kg PP bag']]},
+ {id:'cassava-tubers',name:'Cassava Tubers',grade:'Fresh · Processing grade',cat:'fresh',img:'assets/cassava.jpg',price:120000,unit:'tonne',moq:2,origin:'Oyo / Ogun',export:false,stock:'In stock',desc:'Fresh cassava roots for garri, starch and flour processing.',specs:[['Age','12–14 months'],['Starch','High'],['Delivery','Within 24 hrs'],['Loading','Truck']]},
+ {id:'pineapples',name:'Pineapples',grade:'Sweet · Smooth cayenne',cat:'fresh',img:'assets/pineapple.jpg',price:28000,unit:'crate (20 pcs)',moq:5,origin:'Ogun',export:false,stock:'In stock',desc:'Sweet, juicy pineapples for retail, juice and hospitality buyers.',specs:[['Size','1.2–1.8kg'],['Brix','14–16°'],['Pack','Crate of 20'],['Delivery','Same/next day']]},
+ {id:'fresh-tomatoes',name:'Fresh Tomatoes',grade:'Greenhouse grown',cat:'fresh',img:'assets/tomato.jpg',price:42000,unit:'crate (25kg)',moq:3,origin:'Ibadan',export:false,stock:'In stock',desc:'Firm, ripe tomatoes from our greenhouse partners in Ibadan.',specs:[['Variety','Roma'],['Weight','25kg crate'],['Grown','Greenhouse'],['Delivery','Next day']]},
+ {id:'bell-hot-peppers',name:'Bell & Hot Peppers',grade:'Mixed colours',cat:'fresh',img:'assets/pepper.jpg',price:36000,unit:'basket (20kg)',moq:2,origin:'Ibadan',export:false,stock:'In stock',desc:'Assorted bell peppers and scotch bonnets, harvested to order.',specs:[['Mix','Red · Yellow · Green'],['Weight','20kg'],['Grown','Greenhouse'],['Delivery','Next day']]}
+].map(p=>({...p,seller:'DOOTS Nutod',sellerUid:'',official:true,status:'live'}));
+const COMMODITIES={'Cocoa Beans':['cash','assets/cocoa.jpg'],'Soya Beans':['grain','assets/soya.jpg'],'Sesame Seeds':['grain','assets/sesame.jpg'],'Raw Cashew Nuts':['cash',''],'Maize':['grain','assets/maize.jpg'],'Palm Fruit':['cash','assets/palm.jpg'],'Cassava':['fresh','assets/cassava.jpg'],'Pineapples':['fresh','assets/pineapple.jpg'],'Tomatoes':['fresh','assets/tomato.jpg'],'Peppers':['fresh','assets/pepper.jpg'],'Other':['grain','']};
+
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const S={cart:store.get('dn_cart',[]),user:null,orders:[],cat:'all',q:'',catalogue:'loading'};
+let products=STARTER.slice();
+const fmt=n=>'₦'+Math.round(+n||0).toLocaleString('en-NG');
 const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=u=>/^(https:\/\/|assets\/)[^\s"'<>]+$/.test(u||'')?u:'';
 const IMGW={"cassava":[480,1000],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1812],"maize":[480,710],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
-function rs(path,sizes){const n=path.replace(/^assets\/|\.jpg$/g,'');const w=IMGW[n];if(!w)return `src="${path}"`;return `src="assets/${n}-${w[Math.min(1,w.length-1)]}.webp" srcset="${w.map(x=>`assets/${n}-${x}.webp ${x}w`).join(', ')}" sizes="${sizes}"`}
-const img=(p,cls='')=>p.img?`<img ${rs(p.img,'(max-width:640px) 50vw, (max-width:1020px) 34vw, 300px')} alt="${p.name}" loading="lazy" decoding="async" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
+function rs(path,sizes){path=safeUrl(path);const n=path.replace(/^assets\/|\.jpg$/g,'');const w=IMGW[n];if(!w)return `src="${esc(path)}"`;return `src="assets/${n}-${w[Math.min(1,w.length-1)]}.webp" srcset="${w.map(x=>`assets/${n}-${x}.webp ${x}w`).join(', ')}" sizes="${sizes}"`}
+const img=(p,cls='')=>safeUrl(p.img)?`<img ${rs(p.img,'(max-width:640px) 50vw, (max-width:1020px) 34vw, 300px')} alt="${esc(p.name)}" loading="lazy" decoding="async" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
+const isAdmin=()=>!!(S.user&&S.user.admin);
+const pById=id=>products.find(x=>x.id===id);
 
+/* CATALOGUE */
+async function loadProducts(){
+  if(!window.db)return;
+  try{
+    const live=await db.liveProducts();
+    if(live.length){products=live.sort((a,b)=>(b.official?1:0)-(a.official?1:0)||(a.name>b.name?1:-1));S.catalogue='db'}
+    else S.catalogue='starter';
+  }catch(e){console.warn(e);S.catalogue='starter'}
+  S.cart=S.cart.filter(i=>pById(i.id));updateCart();renderGrid();renderSellers();
+}
 function renderGrid(){
   const q=S.q.toLowerCase();
   const list=products.filter(p=>(S.cat==='all'||p.cat===S.cat)&&(!q||(p.name+p.grade+p.seller+p.origin).toLowerCase().includes(q)));
-  $('#grid').innerHTML=list.length?list.map(p=>`
+  const note=isAdmin()&&S.catalogue==='starter'?`<div class="empty" style="grid-column:1/-1;padding:18px;background:var(--gold-l);border-radius:var(--r-md);color:#6b4a0c">Admin: the shop is showing the built-in starter catalogue. Open <b>Admin → Products → Import starter catalogue</b> to put it in the database.</div>`:'';
+  $('#grid').innerHTML=note+(list.length?list.map(p=>`
     <article class="prod">
-      <div class="ph" onclick="openProduct(${p.id})">${img(p)}<span class="pill">${p.origin}</span>${p.export?'<span class="pill ex">Export ready</span>':''}</div>
+      <div class="ph" onclick="openProduct('${esc(p.id)}')">${img(p)}<span class="pill">${esc(p.origin)}</span>${p.export?'<span class="pill ex">Export ready</span>':''}</div>
       <div class="bd">
-        <span class="seller">${CHECK}${p.seller}</span>
-        <h3>${p.name}</h3>
-        <span class="meta">${p.grade}</span>
-        <div class="row"><span class="price">${fmt(p.price)} <small>/ ${p.unit}</small></span>
-        <button class="add" aria-label="Add ${p.name} to cart" onclick="addToCart(${p.id},${p.moq})">${PLUS}</button></div>
+        <span class="seller">${CHECK}${esc(p.seller)}</span>
+        <h3>${esc(p.name)}</h3>
+        <span class="meta">${esc(p.grade)}</span>
+        <div class="row"><span class="price">${fmt(p.price)} <small>/ ${esc(p.unit)}</small></span>
+        <button class="add" aria-label="Add ${esc(p.name)} to cart" onclick="addToCart('${esc(p.id)}',${+p.moq||1})">${PLUS}</button></div>
       </div>
-    </article>`).join(''):'<div class="empty">No produce matches your search.</div>';
+    </article>`).join(''):'<div class="empty">No produce matches your search.</div>');
 }
 function renderSellers(){
-  $('#sellers').innerHTML=sellers.map(s=>`<div class="sel rv in"><img ${rs(s.img,'64px')} alt="" loading="lazy"><div><h4>${s.name}</h4><p>${s.loc} · ${s.items}</p><span class="ver">${CHECK} Verified seller</span></div></div>`).join('');
+  const by={};
+  products.forEach(p=>{const k=p.seller||'Seller';(by[k]=by[k]||{name:k,official:p.official,origins:new Set(),items:new Set(),img:p.img}).items.add(p.name);if(p.origin)by[k].origins.add(p.origin);if(!safeUrl(by[k].img)&&safeUrl(p.img))by[k].img=p.img});
+  const list=Object.values(by).sort((a,b)=>(b.official?1:0)-(a.official?1:0));
+  $('#sellers').innerHTML=list.map(s=>`<div class="sel rv in">${safeUrl(s.img)?`<img ${rs(s.img,'64px')} alt="" loading="lazy">`:`<div class="ph-none" style="width:64px;height:64px;border-radius:50%;padding:0"></div>`}<div><h4>${esc(s.official?'DOOTS Nutod Farms':s.name)}</h4><p>${esc([...s.origins].slice(0,2).join(' · '))} · ${esc([...s.items].slice(0,3).join(' · '))}</p><span class="ver">${CHECK} Verified seller</span></div></div>`).join('');
 }
 function setCat(c){S.cat=c;document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.c===c));renderGrid()}
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setCat(b.dataset.c)});
 $('#q').addEventListener('input',e=>{S.q=e.target.value;renderGrid()});
 
 /* CART */
+function saveCart(){store.set('dn_cart',S.cart)}
 function addToCart(id,qty=1){
-  const p=products.find(x=>x.id===id);const it=S.cart.find(x=>x.id===id);
-  if(it)it.qty+=qty;else S.cart.push({id,qty:Math.max(qty,p.moq)});
-  updateCart();toast(`${p.name} added to cart`);
+  const p=pById(id);if(!p)return;const it=S.cart.find(x=>x.id===id);
+  if(it)it.qty+=qty;else S.cart.push({id,qty:Math.max(qty,+p.moq||1)});
+  saveCart();updateCart();toast(`${p.name} added to cart`);
 }
-function setQty(id,d){const it=S.cart.find(x=>x.id===id);const p=products.find(x=>x.id===id);it.qty=Math.max(p.moq,it.qty+d);updateCart()}
-function rmItem(id){S.cart=S.cart.filter(x=>x.id!==id);updateCart()}
-function totals(){const sub=S.cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0);const fee=Math.round(sub*0.015);return{sub,fee,total:sub+fee}}
+function setQty(id,d){const it=S.cart.find(x=>x.id===id);const p=pById(id);if(!it||!p)return;it.qty=Math.max(+p.moq||1,it.qty+d);saveCart();updateCart()}
+function rmItem(id){S.cart=S.cart.filter(x=>x.id!==id);saveCart();updateCart()}
+function totals(){const sub=S.cart.reduce((s,i)=>{const p=pById(i.id);return s+(p?p.price*i.qty:0)},0);const fee=Math.round(sub*FEE_RATE);return{sub,fee,total:sub+fee}}
 function updateCart(){
   const n=S.cart.reduce((s,i)=>s+i.qty,0);const b=$('#cartCount');b.textContent=n;b.dataset.n=n;
   if(!S.cart.length){$('#cartBody').innerHTML='<div class="empty" style="padding:60px 10px">Your cart is empty.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Browse produce</a></div>';$('#cartFt').innerHTML='';return}
-  $('#cartBody').innerHTML=S.cart.map(i=>{const p=products.find(x=>x.id===i.id);return`
-    <div class="ci">${img(p)}<div><h4>${p.name}</h4><div class="u">${fmt(p.price)} / ${p.unit} · min ${p.moq}</div>
-    <div class="qty"><button onclick="setQty(${p.id},-1)" aria-label="Decrease">−</button><span>${i.qty}</span><button onclick="setQty(${p.id},1)" aria-label="Increase">+</button></div></div>
-    <button class="rm" onclick="rmItem(${p.id})">Remove</button></div>`}).join('');
+  $('#cartBody').innerHTML=S.cart.map(i=>{const p=pById(i.id);if(!p)return'';return`
+    <div class="ci">${img(p)}<div><h4>${esc(p.name)}</h4><div class="u">${fmt(p.price)} / ${esc(p.unit)} · min ${+p.moq||1}</div>
+    <div class="qty"><button onclick="setQty('${esc(p.id)}',-1)" aria-label="Decrease">−</button><span>${i.qty}</span><button onclick="setQty('${esc(p.id)}',1)" aria-label="Increase">+</button></div></div>
+    <button class="rm" onclick="rmItem('${esc(p.id)}')">Remove</button></div>`}).join('');
   const t=totals();
-  $('#cartFt').innerHTML=`<div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div><div class="tot"><span>Escrow &amp; processing (1.5%)</span><span>${fmt(t.fee)}</span></div><div class="tot big"><span>Total</span><span>${fmt(t.total)}</span></div><button class="btn btn-dark w100" onclick="checkout()">Checkout securely</button><p class="note">Delivery is quoted at checkout. Export orders can be paid in USD.</p>`;
+  $('#cartFt').innerHTML=`<div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div><div class="tot"><span>Payment processing (1.5%)</span><span>${fmt(t.fee)}</span></div><div class="tot big"><span>Total</span><span>${fmt(t.total)}</span></div><button class="btn btn-dark w100" onclick="checkout()">Checkout securely</button><p class="note">Delivery is quoted separately. Export orders can be invoiced in USD.</p>`;
 }
 function openCart(){closeAll();updateCart();$('#cart').classList.add('on');$('#scrim').classList.add('on')}
 function closeAll(){document.querySelectorAll('.drawer,.scrim,.modal').forEach(e=>e.classList.remove('on'))}
-function openModal(html,sm){document.querySelectorAll('.drawer').forEach(d=>d.classList.remove('on'));const m=$('#mbox');m.className='mbox'+(sm?' sm':'');m.innerHTML=`<button class="x" onclick="closeAll()" aria-label="Close">${X}</button>`+html;$('#modal').classList.add('on');$('#scrim').classList.add('on');m.scrollTop=0}
+function openModal(html,sm){document.querySelectorAll('.drawer').forEach(d=>d.classList.remove('on'));const m=$('#mbox');m.className='mbox'+(sm===true?' sm':sm==='lg'?' lg':'');m.innerHTML=`<button class="x" onclick="closeAll()" aria-label="Close">${X}</button>`+html;$('#modal').classList.add('on');$('#scrim').classList.add('on');m.scrollTop=0}
 
 /* PRODUCT */
 function openProduct(id){
-  const p=products.find(x=>x.id===id);
+  const p=pById(id);if(!p)return;const specs=(p.specs||[]).filter(s=>s&&s[0]);
   openModal(`<div class="pd"><div class="im">${img(p)}</div><div class="tx">
-    <span class="pilltag">${p.stock}</span><h3>${p.name}</h3><p style="color:var(--sage)">${p.grade}</p>
-    <p style="margin-top:14px;font-size:15px">${p.desc}</p>
-    <div class="spec">${p.specs.map(s=>`<div><small>${s[0]}</small>${s[1]}</div>`).join('')}</div>
-    <div class="tot"><span>Sold by</span><span class="ver">${CHECK} ${p.seller}</span></div>
-    <div class="tot"><span>Origin</span><span>${p.origin}</span></div>
-    <div class="tot"><span>Minimum order</span><span>${p.moq} × ${p.unit}</span></div>
+    <span class="pilltag">${esc(p.stock||'Available')}</span><h3>${esc(p.name)}</h3><p style="color:var(--sage)">${esc(p.grade)}</p>
+    <p style="margin-top:14px;font-size:15px">${esc(p.desc)}</p>
+    ${specs.length?`<div class="spec">${specs.map(s=>`<div><small>${esc(s[0])}</small>${esc(s[1])}</div>`).join('')}</div>`:'<div style="height:16px"></div>'}
+    <div class="tot"><span>Sold by</span><span class="ver">${CHECK} ${esc(p.seller)}</span></div>
+    <div class="tot"><span>Origin</span><span>${esc(p.origin)}</span></div>
+    <div class="tot"><span>Minimum order</span><span>${+p.moq||1} × ${esc(p.unit)}</span></div>
     <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 14px;flex-wrap:wrap">
-      <span class="price" style="font-size:26px">${fmt(p.price)} <small>/ ${p.unit}</small></span>
-      <div class="qty" style="margin:0"><button onclick="pq(-1,${p.moq})">−</button><span id="pq">${p.moq}</span><button onclick="pq(1,${p.moq})">+</button></div>
+      <span class="price" style="font-size:26px">${fmt(p.price)} <small>/ ${esc(p.unit)}</small></span>
+      <div class="qty" style="margin:0"><button onclick="pq(-1,${+p.moq||1})">−</button><span id="pq">${+p.moq||1}</span><button onclick="pq(1,${+p.moq||1})">+</button></div>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-dark" style="flex:1" onclick="addToCart(${p.id},+$('#pq').textContent);closeAll();openCart()">Add to cart</button>
-    ${p.export?`<button class="btn btn-line" onclick="quote('${p.name}')">Export quote (USD)</button>`:''}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-dark" style="flex:1" onclick="addToCart('${esc(p.id)}',+$('#pq').textContent);closeAll();openCart()">Add to cart</button>
+    ${p.export?`<button class="btn btn-line" onclick="quote('${esc(p.name).replace(/&#39;/g,'')}')">Export quote (USD)</button>`:''}</div>
   </div></div>`);
 }
 function pq(d,m){const e=$('#pq');e.textContent=Math.max(m,+e.textContent+d)}
 function quote(n){closeAll();$('#ct').value='Bulk / export order';$('#cm').value=`Hello, I’d like a USD export quote for ${n}. Quantity: ___ MT. Destination port: ___.`;location.hash='#contact';toast('Tell us your quantity and destination')}
 
 /* CHECKOUT */
-let co={};
+let co={},afterAuth=null;
 function checkout(){
   if(!S.cart.length)return;
-  co={name:S.user?.name||'',email:S.user?.email||'',phone:'',addr:'',state:'Oyo',ship:'pickup',pay:'card'};
+  if(!S.user){afterAuth=checkout;toast('Please sign in or create an account to check out');return openAuth('signin')}
+  co={name:S.user.name||'',email:S.user.email||'',phone:S.user.phone||'',addr:'',state:'Oyo',ship:'pickup',pay:PAYSTACK_PK?'paystack':'invoice'};
   coStep1();
 }
-const shipOpts=[['pickup','Pick up · Ibadan warehouse','Free',0],['local','Delivery within Nigeria','From ₦25,000',25000],['export','Export · FOB Lagos (Apapa)','Quoted per container',0]];
+const shipOpts=[['pickup','Pick up · Ibadan warehouse','Free'],['local','Delivery within Nigeria','Quoted after order'],['export','Export · FOB Lagos (Apapa)','Quoted per container']];
 function coStep1(){
   const t=totals();
   openModal(`<div class="mpad"><div class="stepper"><span class="on"></span><span></span><span></span></div>
   <h3>Delivery details</h3><p class="note" style="margin:0 0 20px">Order total ${fmt(t.total)} · ${S.cart.length} item(s)</p>
   <form onsubmit="return coNext(event)">
-    <div class="two"><div class="f"><label>Full name</label><input class="inp" id="k_name" required value="${co.name}"></div>
-    <div class="f"><label>Phone</label><input class="inp" id="k_phone" type="tel" required value="${co.phone}" placeholder="080…"></div></div>
-    <div class="f"><label>Email</label><input class="inp" id="k_email" type="email" required value="${co.email}"></div>
-    <div class="two"><div class="f"><label>Address / Company</label><input class="inp" id="k_addr" value="${co.addr}"></div>
-    <div class="f"><label>State / Country</label><input class="inp" id="k_state" value="${co.state}"></div></div>
+    <div class="two"><div class="f"><label for="k_name">Full name</label><input class="inp" id="k_name" required value="${esc(co.name)}" autocomplete="name"></div>
+    <div class="f"><label for="k_phone">Phone</label><input class="inp" id="k_phone" type="tel" required value="${esc(co.phone)}" placeholder="080…" autocomplete="tel"></div></div>
+    <div class="f"><label for="k_email">Email</label><input class="inp" id="k_email" type="email" required value="${esc(co.email)}" autocomplete="email"></div>
+    <div class="two"><div class="f"><label for="k_addr">Address / Company</label><input class="inp" id="k_addr" value="${esc(co.addr)}" autocomplete="street-address"></div>
+    <div class="f"><label for="k_state">State / Country</label><input class="inp" id="k_state" value="${esc(co.state)}"></div></div>
     <span class="lbl" style="display:block;margin:6px 0 10px">Delivery method</span>
     ${shipOpts.map(o=>`<label class="opt"><input type="radio" name="ship" value="${o[0]}" ${co.ship===o[0]?'checked':''}><span><b>${o[1]}</b></span><span class="r">${o[2]}</span></label>`).join('')}
     <button class="btn btn-dark w100" style="margin-top:12px">Continue to payment</button>
   </form></div>`,true);
 }
-function coNext(e){e.preventDefault();['name','phone','email','addr','state'].forEach(k=>co[k]=$('#k_'+k).value);co.ship=document.querySelector('input[name=ship]:checked').value;coStep2();return false}
-const payOpts=[['card','Debit / credit card','Verve · Mastercard · Visa'],['transfer','Bank transfer','Pay into a one-time account number'],['ussd','USSD','*737#, *894#, *919# and more'],['escrow','Escrow (bulk orders)','Funds held until delivery confirmed']];
+function coNext(e){e.preventDefault();['name','phone','email','addr','state'].forEach(k=>co[k]=$('#k_'+k).value.trim());co.ship=document.querySelector('input[name=ship]:checked').value;coStep2();return false}
 function coStep2(){
-  const t=totals();const ship=shipOpts.find(o=>o[0]===co.ship)[3];const total=t.total+ship;co.total=total;
+  const t=totals();co.total=t.total;
+  const live=!!PAYSTACK_PK;
   openModal(`<div class="mpad"><div class="stepper"><span class="on"></span><span class="on"></span><span></span></div>
-  <h3>Payment</h3><p class="note" style="margin:0 0 20px">Secured by DOOTS Pay</p>
-  ${payOpts.map(o=>`<label class="opt"><input type="radio" name="pay" value="${o[0]}" ${co.pay===o[0]?'checked':''}><span><b>${o[1]}</b><small>${o[2]}</small></span></label>`).join('')}
+  <h3>Payment</h3><p class="note" style="margin:0 0 20px">${PAYSTACK_PK.startsWith('pk_test')?'Paystack test mode: use a Paystack test card, no real money moves.':'Secured by Paystack'}</p>
+  <div class="err" id="payErr" role="alert"></div>
+  <label class="opt" ${live?'':'style="opacity:.55;cursor:not-allowed"'}><input type="radio" name="pay" value="paystack" ${co.pay==='paystack'?'checked':''} ${live?'':'disabled'}><span><b>Pay online now</b><small>${live?'Card, bank transfer or USSD via Paystack':'Online payment is being set up. Please use invoice for now.'}</small></span></label>
+  <label class="opt"><input type="radio" name="pay" value="invoice" ${co.pay==='invoice'?'checked':''}><span><b>Request an invoice</b><small>For bulk and export orders. We confirm stock and send bank details.</small></span></label>
   <div style="background:#fff;border-radius:var(--r-md);padding:16px;margin:16px 0">
-    <div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div>
-    <div class="tot"><span>Escrow &amp; processing</span><span>${fmt(t.fee)}</span></div>
-    <div class="tot"><span>Delivery</span><span>${co.ship==='export'?'Quoted separately':ship?fmt(ship):'Free'}</span></div>
-    <div class="tot big" style="margin-bottom:0"><span>Total</span><span>${fmt(total)}</span></div>
+    ${S.cart.map(i=>{const p=pById(i.id);return p?`<div class="tot"><span>${i.qty} × ${esc(p.name)}</span><span>${fmt(p.price*i.qty)}</span></div>`:''}).join('')}
+    <div class="tot"><span>Payment processing</span><span>${fmt(t.fee)}</span></div>
+    <div class="tot"><span>Delivery</span><span>${co.ship==='pickup'?'Free':'Quoted separately'}</span></div>
+    <div class="tot big" style="margin-bottom:0"><span>Total</span><span>${fmt(t.total)}</span></div>
   </div>
-  <button class="btn btn-lime w100" id="payBtn" onclick="pay()">Pay ${fmt(total)} securely</button>
+  <button class="btn btn-lime w100" id="payBtn" onclick="placeOrder()">Place order · ${fmt(t.total)}</button>
   <button class="btn w100" style="margin-top:6px;color:var(--sage)" onclick="coStep1()">← Back</button>
-  <p class="note" style="text-align:center">🔒 Card details are entered on the payment provider’s secure page and never stored by DOOTS. (Prototype: no real payment is taken.)</p></div>`,true);
+  <p class="note" style="text-align:center">🔒 Card details go straight to Paystack’s secure checkout and are never stored by DOOTS.</p></div>`,true);
 }
-function pay(){
-  co.pay=document.querySelector('input[name=pay]:checked').value;
-  const b=$('#payBtn');b.innerHTML='<span class="spin"></span> Processing…';b.disabled=true;
-  setTimeout(()=>{
-    const id='DN-'+Math.floor(20000+Math.random()*79999);
-    const items=S.cart.map(i=>{const p=products.find(x=>x.id===i.id);return`${i.qty} × ${p.name}`}).join(', ');
-    S.orders.unshift({id,items,total:co.total,status:co.pay==='escrow'?'In escrow':'Paid · Processing',date:new Date().toLocaleDateString('en-GB')});saveUser();
-    S.cart=[];updateCart();
-    openModal(`<div class="mpad ok"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5 9-10"/></svg></div>
-    <div class="stepper" style="max-width:200px;margin:0 auto 20px"><span class="on"></span><span class="on"></span><span class="on"></span></div>
-    <h3>Payment successful</h3><p style="color:var(--sage);margin:8px 0 20px">Order <b style="color:var(--ink)">${id}</b> · ${fmt(co.total)}<br>A receipt has been sent to ${co.email}.</p>
-    <p class="note">${items}</p>
-    <div style="display:flex;gap:10px;margin-top:22px"><button class="btn btn-line" style="flex:1" onclick="closeAll()">Keep shopping</button><button class="btn btn-dark" style="flex:1" onclick="${S.user?'openAcct()':"openAuth('signup','buyer')"}">${S.user?'Track order':'Create account to track'}</button></div></div>`,true);
-  },1600);
+function payErr(m){const el=$('#payErr');if(el){el.textContent=m||'';el.classList.toggle('on',!!m)}else if(m)toast(m)}
+async function placeOrder(){
+  payErr('');co.pay=(document.querySelector('input[name=pay]:checked')||{}).value||'invoice';
+  if(!window.db)return payErr('Still connecting. Please try again in a moment.');
+  const b=$('#payBtn');busy(b,true,'Placing order…');
+  const t=totals();
+  const items=S.cart.map(i=>{const p=pById(i.id);return{pid:p.id,name:p.name,qty:i.qty,price:p.price,unit:p.unit,seller:p.seller||'DOOTS Nutod',sellerUid:p.sellerUid||''}});
+  const order={buyerUid:S.user.uid,buyerName:co.name,buyerEmail:co.email,phone:co.phone,address:co.addr,state:co.state,ship:co.ship,items,
+    sellerUids:[...new Set(items.map(i=>i.sellerUid).filter(Boolean))],subtotal:t.sub,fee:t.fee,total:t.total,payMethod:co.pay,status:'awaiting_payment'};
+  let id;
+  try{id=await db.createOrder(order)}catch(e){console.warn(e);busy(b,false);return payErr('Could not place your order. Check your connection and try again.')}
+  S.cart=[];saveCart();updateCart();
+  if(co.pay==='paystack')return payOrder(id,t.total,co.email);
+  orderDone(id,t.total,'invoice');
 }
+function loadPaystack(){return new Promise((ok,no)=>{if(window.PaystackPop)return ok();const s=document.createElement('script');s.src='https://js.paystack.co/v2/inline.js';s.onload=ok;s.onerror=()=>no(new Error('paystack'));document.head.appendChild(s)})}
+async function payOrder(id,total,email){
+  try{await loadPaystack()}catch(e){return orderDone(id,total,'unpaid')}
+  const pop=new PaystackPop();
+  pop.newTransaction({key:PAYSTACK_PK,email:email||S.user.email,amount:Math.round(total*100),currency:'NGN',reference:id+'-'+Date.now().toString(36),
+    metadata:{order_id:id,custom_fields:[{display_name:'Order',variable_name:'order_id',value:id}]},
+    onSuccess:async tx=>{try{await db.updateOrder(id,{status:'payment_submitted',payRef:tx.reference||tx.trxref||'',payChannel:'paystack',paidAt:new Date().toISOString()})}catch(e){console.warn(e)}orderDone(id,total,'paid')},
+    onCancel:()=>orderDone(id,total,'unpaid'),
+    onError:()=>orderDone(id,total,'unpaid')});
+}
+function orderDone(id,total,kind){
+  const head={paid:'Payment received',invoice:'Order placed',unpaid:'Order saved, payment not completed'}[kind];
+  const body={paid:'We’re confirming your payment with Paystack. You’ll get an email once it’s verified.',invoice:'Our team will confirm stock and email your invoice within 1 business day.',unpaid:'Your order is saved. You can pay any time from <b>My account → Orders</b>.'}[kind];
+  openModal(`<div class="mpad ok"><div class="ic" ${kind==='unpaid'?'style="background:var(--gold-l)"':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="${kind==='unpaid'?'M12 8v5M12 16.5v.5':'m5 12 5 5 9-10'}"/></svg></div>
+  <div class="stepper" style="max-width:200px;margin:0 auto 20px"><span class="on"></span><span class="on"></span><span class="${kind==='unpaid'?'':'on'}"></span></div>
+  <h3>${head}</h3><p style="color:var(--sage);margin:8px 0 20px">Order <b style="color:var(--ink)">${esc(shortId(id))}</b> · ${fmt(total)}<br>${body}</p>
+  <div style="display:flex;gap:10px;margin-top:22px"><button class="btn btn-line" style="flex:1" onclick="closeAll()">Keep shopping</button><button class="btn btn-dark" style="flex:1" onclick="openAcct()">View my orders</button></div></div>`,true);
+}
+const shortId=id=>'DN-'+String(id).slice(0,6).toUpperCase();
+const STATUS={awaiting_payment:['Awaiting payment','#f3e6c8','#7a5610'],payment_submitted:['Payment received · verifying','#e3f0ff','#1d4f91'],paid:['Paid','#e3f5c4','#2f5a10'],processing:['Processing','#e3f5c4','#2f5a10'],shipped:['Shipped','#e3f5c4','#2f5a10'],delivered:['Delivered','#d9f2d0','#1f4d14'],cancelled:['Cancelled','#fdecea','#8a1c12']};
+const badge=s=>{const v=STATUS[s]||[s,'#eee','#333'];return `<span class="st" style="background:${v[1]};color:${v[2]}">${esc(v[0])}</span>`};
 
 /* AUTH (Firebase) */
-const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const EYE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
 const EYE_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 5.1A10.9 10.9 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>';
 const GLOGO='<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
@@ -956,56 +1001,137 @@ async function googleAuth(){
   try{await fb.google()}catch(err){pendingProfile=null;busy(b,false);if(err.code!=='auth/popup-closed-by-user')authErr(authMsg(err))}
 }
 let pendingProfile=null,firstAuth=true;
-function onAuth(fu){
+async function onAuth(fu){
   const wasIn=!!S.user;
-  if(!fu){S.user=null;$('#acctLbl').textContent='Sign in';if(wasIn)toast('Signed out');firstAuth=false;return}
-  const key='dn_profile_'+fu.uid,prof=store.get(key,{});
-  if(pendingProfile){if(pendingProfile.google){if(!prof.role)prof.role=pendingProfile.role}else Object.assign(prof,pendingProfile);store.set(key,prof)}
+  if(!fu){S.user=null;S.orders=[];$('#acctLbl').textContent='Sign in';if(wasIn)toast('Signed out');firstAuth=false;renderGrid();return}
+  const pend=pendingProfile;pendingProfile=null;
+  let prof={};
+  try{
+    prof=(await db.getUser(fu.uid))||{};
+    const patch={};
+    if(pend&&!pend.google){Object.assign(patch,pend)}
+    if(pend&&pend.google&&!prof.role)patch.role=pend.role||'buyer';
+    if(!prof.role&&!patch.role)patch.role='buyer';
+    if(!prof.email)patch.email=fu.email;
+    if(!prof.name&&!patch.name)patch.name=fu.displayName||fu.email.split('@')[0];
+    if(Object.keys(patch).length){if(!prof.createdAt)patch.createdAt=new Date().toISOString();await db.setUser(fu.uid,patch);Object.assign(prof,patch)}
+  }catch(e){console.warn('profile',e);if(pend)Object.assign(prof,pend)}
   const name=fu.displayName||prof.name||fu.email.split('@')[0];
-  S.user={uid:fu.uid,name,email:fu.email,phone:prof.phone||'',role:prof.role||'buyer',verified:fu.emailVerified,google:fu.providerData.some(p=>p.providerId==='google.com'),listings:store.get('dn_listings_'+fu.uid,[])};
-  const saved=store.get('dn_orders_'+fu.uid,[]);S.orders=[...S.orders.filter(o=>!saved.some(x=>x.id===o.id)),...saved];store.set('dn_orders_'+fu.uid,S.orders);
-  S.user.listings.forEach(l=>{if(!products.some(p=>p.id===l.id))products.unshift(l)});renderGrid();
-  $('#acctLbl').textContent=name.split(' ')[0];
-  const justIn=!!pendingProfile;pendingProfile=null;
-  if(justIn||(!firstAuth&&!wasIn)){closeAll();toast(`Welcome${justIn&&!wasIn?'':' back'}, ${name.split(' ')[0]}!`);setTimeout(openAcct,350)}
+  S.user={uid:fu.uid,name,email:fu.email,phone:prof.phone||'',role:prof.role||'buyer',verified:fu.emailVerified,
+    google:fu.providerData.some(p=>p.providerId==='google.com'),
+    admin:fu.emailVerified&&ADMIN_EMAILS.includes((fu.email||'').toLowerCase())};
+  $('#acctLbl').textContent=name.split(' ')[0];renderGrid();
+  if(pend||(!firstAuth&&!wasIn)){
+    closeAll();toast(`Welcome${pend&&!pend.google?'':' back'}, ${name.split(' ')[0]}!`);
+    if(afterAuth){const f=afterAuth;afterAuth=null;setTimeout(f,350)}else setTimeout(openAcct,350);
+  }
   firstAuth=false;
 }
-function saveUser(){const u=S.user;if(!u)return;const key='dn_profile_'+u.uid,prof=store.get(key,{});prof.role=u.role;prof.phone=u.phone;prof.name=u.name;store.set(key,prof);store.set('dn_listings_'+u.uid,u.listings);store.set('dn_orders_'+u.uid,S.orders)}
 function acctClick(){S.user?openAcct():openAuth('signin')}
 function openAcct(){
   closeAll();const u=S.user;if(!u)return openAuth('signin');
   $('#acctTitle').textContent='Hi, '+u.name.split(' ')[0];
   $('#acctBody').innerHTML=`
     <div class="seg" style="margin-top:0"><button class="on" id="t1" onclick="acctTab(1)">Orders</button><button id="t2" onclick="acctTab(2)">${u.role==='seller'?'My listings':'Profile'}</button></div>
-    ${u.verified||u.google?'':`<div class="err on" style="background:var(--gold-l);color:#6b4a0c;border-color:#e6cf9b">Please verify your email (${u.email}). <button type="button" class="lnk" onclick="resendVerify(this)">Resend link</button></div>`}
+    ${u.verified||u.google?'':`<div class="err on" style="background:var(--gold-l);color:#6b4a0c;border-color:#e6cf9b">Please verify your email (${esc(u.email)}). <button type="button" class="lnk" onclick="resendVerify(this)">Resend link</button></div>`}
+    ${u.admin?`<button class="btn btn-lime w100" style="margin-bottom:14px" onclick="openAdmin()">Open admin panel</button>`:''}
     <div id="acctPane"></div>
     <button class="btn btn-line w100" style="margin-top:20px" onclick="signOut()">Sign out</button>`;
   acctTab(1);$('#acct').classList.add('on');$('#scrim').classList.add('on');
 }
-function acctTab(n){
-  const u=S.user;$('#t1').classList.toggle('on',n===1);$('#t2').classList.toggle('on',n===2);
-  if(n===1){$('#acctPane').innerHTML=S.orders.length?`<div class="orders">${S.orders.map(o=>`<div class="o"><div class="t"><span>${o.id}</span><span>${fmt(o.total)}</span></div><p class="note" style="margin:6px 0">${o.items}</p><div style="display:flex;justify-content:space-between;align-items:center"><span class="st">${o.status}</span><small style="color:var(--sage)">${o.date}</small></div></div>`).join('')}</div>`:'<div class="empty" style="padding:40px 10px">No orders yet.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Start shopping</a></div>';return}
-  if(u.role!=='seller'){$('#acctPane').innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${u.name}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${u.email}</p></div><div class="o"><small style="color:var(--sage)">Phone</small><p>${u.phone||'—'}</p></div><div class="o"><small style="color:var(--sage)">Signed in with</small><p>${u.google?'Google':'Email &amp; password'}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="S.user.role='seller';saveUser();openAcct();acctTab(2)">Upgrade to seller account</button>`;return}
-  $('#acctPane').innerHTML=`${u.listings.length?`<div class="orders">${u.listings.map(l=>`<div class="o"><div class="t"><span>${l.name}</span><span>${fmt(l.price)}</span></div><p class="note" style="margin:6px 0">per ${l.unit} · ${l.origin}</p><span class="st" style="background:#e3f5c4;color:#2f5a10">Live on marketplace</span></div>`).join('')}</div>`:''}
+const loadingHTML='<div class="empty" style="padding:40px 10px"><span class="spin" style="display:inline-block"></span></div>';
+const when=o=>{const d=o.createdAt;try{return (d&&d.toDate?d.toDate():new Date(d)).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}catch(e){return''}};
+function orderCard(o,opts={}){
+  const items=(o.items||[]).map(i=>`${i.qty} × ${esc(i.name)}`).join(', ');
+  return `<div class="o"><div class="t"><span>${esc(shortId(o.id))}</span><span>${fmt(o.total)}</span></div>
+  <p class="note" style="margin:6px 0">${items}</p>
+  ${opts.admin?`<p class="note" style="margin:0 0 6px">${esc(o.buyerName)} · ${esc(o.buyerEmail)} · ${esc(o.phone)}<br>${esc(o.ship)} · ${esc(o.address)} ${esc(o.state)} · ${esc(o.payMethod)}${o.payRef?` · ref ${esc(o.payRef)}`:''}</p>`:''}
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">${badge(o.status)}<small style="color:var(--sage)">${when(o)}</small></div>
+  ${!opts.admin&&!opts.seller&&o.status==='awaiting_payment'&&PAYSTACK_PK?`<button class="btn btn-lime btn-sm w100" style="margin-top:10px" onclick="payOrder('${esc(o.id)}',${+o.total},'${esc(o.buyerEmail)}')">Pay now</button>`:''}
+  ${opts.admin?`<select class="inp" style="height:40px;margin-top:10px" onchange="setOrderStatus('${esc(o.id)}',this.value)">${Object.keys(STATUS).map(k=>`<option value="${k}" ${k===o.status?'selected':''}>${STATUS[k][0]}</option>`).join('')}</select>`:''}
+  </div>`;
+}
+async function acctTab(n){
+  const u=S.user;$('#t1').classList.toggle('on',n===1);$('#t2').classList.toggle('on',n===2);const pane=$('#acctPane');
+  if(n===1){
+    pane.innerHTML=loadingHTML;
+    try{const list=await db.myOrders(u.uid);S.orders=list;
+      let html=list.length?`<div class="orders">${list.map(o=>orderCard(o)).join('')}</div>`:'<div class="empty" style="padding:40px 10px">No orders yet.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Start shopping</a></div>';
+      if(u.role==='seller'){const so=await db.sellerOrders(u.uid);if(so.length)html+=`<h4 style="font-weight:500;margin:20px 0 10px">Orders for my produce</h4><div class="orders">${so.map(o=>orderCard(o,{seller:true})).join('')}</div>`}
+      pane.innerHTML=html;
+    }catch(e){console.warn(e);pane.innerHTML='<div class="empty">Could not load orders. Please try again.</div>'}
+    return;
+  }
+  if(u.role!=='seller'){pane.innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${esc(u.name)}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${esc(u.email)}</p></div><div class="o"><small style="color:var(--sage)">Phone</small><p>${esc(u.phone||'—')}</p></div><div class="o"><small style="color:var(--sage)">Signed in with</small><p>${u.google?'Google':'Email &amp; password'}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="becomeSeller(this)">Become a seller</button>`;return}
+  pane.innerHTML=loadingHTML;
+  let mine=[];try{mine=await db.myProducts(u.uid)}catch(e){console.warn(e)}
+  const st={pending:['Awaiting DOOTS approval','#f3e6c8','#7a5610'],live:['Live on marketplace','#e3f5c4','#2f5a10'],rejected:['Not approved','#fdecea','#8a1c12'],hidden:['Hidden','#eee','#555']};
+  pane.innerHTML=`${mine.length?`<div class="orders">${mine.map(l=>{const v=st[l.status]||st.pending;return`<div class="o"><div class="t"><span>${esc(l.name)}</span><span>${fmt(l.price)}</span></div><p class="note" style="margin:6px 0">per ${esc(l.unit)} · ${esc(l.origin)} · ${esc(l.stock)}</p><div style="display:flex;justify-content:space-between;align-items:center"><span class="st" style="background:${v[1]};color:${v[2]}">${v[0]}</span><button class="lnk" onclick="delListing('${esc(l.id)}')">Remove</button></div></div>`}).join('')}</div>`:''}
   <form onsubmit="return addListing(event)" style="background:#fff;border-radius:var(--r-md);padding:18px">
     <h4 style="font-weight:500;margin-bottom:14px">List new produce</h4>
-    <div class="f"><label>Commodity</label><select class="inp" id="l_name"><option>Cocoa Beans</option><option>Soya Beans</option><option>Sesame Seeds</option><option>Raw Cashew Nuts</option><option>Maize</option><option>Other</option></select></div>
-    <div class="two"><div class="f"><label>Price (₦)</label><input class="inp" id="l_price" type="number" min="1" required placeholder="e.g. 450000"></div>
-    <div class="f"><label>Per</label><select class="inp" id="l_unit"><option>50kg bag</option><option>80kg bag</option><option>tonne</option></select></div></div>
-    <div class="two"><div class="f"><label>Quantity available</label><input class="inp" id="l_qty" type="number" min="1" required></div>
-    <div class="f"><label>Location</label><input class="inp" id="l_loc" required placeholder="Town, State"></div></div>
-    <button class="btn btn-dark w100">Publish listing</button>
-    <p class="note">Listings go live after a DOOTS quality inspection. Payouts are made to your verified bank account.</p>
+    <div class="err" id="lErr" role="alert"></div>
+    <div class="f"><label for="l_name">Commodity</label><select class="inp" id="l_name">${Object.keys(COMMODITIES).map(c=>`<option>${c}</option>`).join('')}</select></div>
+    <div class="f"><label for="l_grade">Grade / description</label><input class="inp" id="l_grade" maxlength="80" placeholder="e.g. Grade 1, sun-dried"></div>
+    <div class="two"><div class="f"><label for="l_price">Price (₦)</label><input class="inp" id="l_price" type="number" min="1" required placeholder="e.g. 450000"></div>
+    <div class="f"><label for="l_unit">Per</label><select class="inp" id="l_unit"><option>50kg bag</option><option>80kg bag</option><option>100kg bag</option><option>tonne</option><option>crate</option><option>basket</option></select></div></div>
+    <div class="two"><div class="f"><label for="l_qty">Quantity available</label><input class="inp" id="l_qty" type="number" min="1" required></div>
+    <div class="f"><label for="l_moq">Minimum order</label><input class="inp" id="l_moq" type="number" min="1" value="1" required></div></div>
+    <div class="f"><label for="l_loc">Location</label><input class="inp" id="l_loc" required maxlength="60" placeholder="Town, State"></div>
+    <div class="f"><label for="l_img">Photo link (optional)</label><input class="inp" id="l_img" type="url" placeholder="https://…"></div>
+    <button class="btn btn-dark w100" id="lBtn">Submit for approval</button>
+    <p class="note">DOOTS reviews every listing before it goes live. Payouts are made to your verified bank account after delivery.</p>
   </form>`;
 }
-function addListing(e){
-  e.preventDefault();const u=S.user;const name=$('#l_name').value;
-  const base=products.find(p=>p.name.startsWith(name.split(' ')[0]));
-  const p={id:Date.now(),name,grade:`Listed by ${u.name}`,cat:base?base.cat:'grain',img:base?base.img:'',price:+$('#l_price').value,unit:$('#l_unit').value,moq:1,origin:$('#l_loc').value,seller:u.name,export:false,stock:`Available · ${$('#l_qty').value} units`,desc:`Listed on the DOOTS marketplace by ${u.name}.`,specs:[['Seller',u.name],['Location',$('#l_loc').value],['Quantity',$('#l_qty').value],['Inspection','Pending']]};
-  products.unshift(p);u.listings.unshift(p);saveUser();renderGrid();acctTab(2);toast('Listing published to the marketplace');return false;
+async function becomeSeller(btn){busy(btn,true,'Updating…');try{await db.setUser(S.user.uid,{role:'seller'});S.user.role='seller';openAcct();acctTab(2);toast('You can now list produce')}catch(e){busy(btn,false);toast('Could not update your account. Try again.')}}
+async function addListing(e){
+  e.preventDefault();const u=S.user;const el=$('#lErr');const err=m=>{el.textContent=m;el.classList.toggle('on',!!m)};err('');
+  const name=$('#l_name').value,c=COMMODITIES[name]||['grain',''],price=+$('#l_price').value,qty=+$('#l_qty').value,moq=+$('#l_moq').value,loc=$('#l_loc').value.trim(),url=$('#l_img').value.trim();
+  if(!(price>0)||!(qty>0)||!(moq>0)||!loc)return err('Please fill in price, quantity, minimum order and location.'),false;
+  if(url&&!/^https:\/\//.test(url))return err('Photo link must start with https://'),false;
+  const unit=$('#l_unit').value;
+  const p={name,grade:$('#l_grade').value.trim()||`Listed by ${u.name}`,cat:c[0],img:url||c[1],price,unit,moq,origin:loc,seller:u.name,sellerUid:u.uid,export:false,
+    stock:`Available · ${qty} ${unit}${qty>1?'s':''}`,desc:`Listed on the DOOTS marketplace by ${u.name}.`,specs:[['Location',loc],['Available',String(qty)],['Minimum order',String(moq)],['Inspection','By DOOTS before dispatch']],status:'pending',official:false};
+  const b=$('#lBtn');busy(b,true,'Submitting…');
+  try{await db.addProduct(p);toast('Listing submitted. DOOTS will review it shortly.');acctTab(2)}catch(e2){console.warn(e2);busy(b,false);err('Could not submit your listing. Please try again.')}
+  return false;
 }
+async function delListing(id){if(!confirmInline('Remove this listing?'))return;try{await db.delProduct(id);products=products.filter(p=>p.id!==id);renderGrid();acctTab(2);toast('Listing removed')}catch(e){toast('Could not remove listing')}}
+function confirmInline(){return true}
 async function signOut(){closeAll();if(window.fb){try{await fb.signOut()}catch(e){toast('Could not sign out. Try again.')}}else{S.user=null;$('#acctLbl').textContent='Sign in'}}
 async function resendVerify(btn){busy(btn,true,'Sending…');try{await fb.verify();toast('Verification email sent');}catch(e){toast(authMsg(e))}busy(btn,false)}
+
+/* ADMIN */
+let adminTab='pending';
+function openAdmin(tab){
+  if(!isAdmin())return;adminTab=tab||adminTab;
+  openModal(`<div class="mpad"><h3>Admin panel</h3><p class="note" style="margin:0">Manage products, approve seller listings and track orders.</p>
+  <div class="seg"><button type="button" class="${adminTab==='pending'?'on':''}" onclick="openAdmin('pending')">Approvals</button><button type="button" class="${adminTab==='products'?'on':''}" onclick="openAdmin('products')">Products</button><button type="button" class="${adminTab==='orders'?'on':''}" onclick="openAdmin('orders')">Orders</button></div>
+  <div id="adminPane">${loadingHTML}</div></div>`,'lg');
+  renderAdmin();
+}
+async function renderAdmin(){
+  const pane=$('#adminPane');if(!pane)return;
+  try{
+    if(adminTab==='orders'){const os=await db.allOrders();pane.innerHTML=os.length?`<div class="orders">${os.map(o=>orderCard(o,{admin:true})).join('')}</div><p class="note">Before marking an order <b>Paid</b>, confirm the amount and reference in your Paystack dashboard.</p>`:'<div class="empty">No orders yet.</div>';return}
+    const all=await db.allProducts();
+    if(adminTab==='pending'){
+      const pend=all.filter(p=>p.status==='pending');
+      pane.innerHTML=pend.length?`<div class="orders">${pend.map(p=>`<div class="o"><div class="t"><span>${esc(p.name)}</span><span>${fmt(p.price)} / ${esc(p.unit)}</span></div><p class="note" style="margin:6px 0">${esc(p.seller)} · ${esc(p.origin)} · ${esc(p.stock)} · min ${+p.moq||1}<br>${esc(p.grade)}</p>${safeUrl(p.img)?`<img ${rs(p.img,'200px')} alt="" style="width:120px;height:80px;object-fit:cover;border-radius:8px;margin:6px 0">`:''}<div style="display:flex;gap:8px"><button class="btn btn-dark btn-sm" onclick="setProduct('${esc(p.id)}',{status:'live'},this)">Approve</button><button class="btn btn-line btn-sm" onclick="setProduct('${esc(p.id)}',{status:'rejected'},this)">Reject</button></div></div>`).join('')}</div>`:'<div class="empty">No listings waiting for approval.</div>';
+      return;
+    }
+    pane.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-line btn-sm" onclick="importStarter(this)">Import starter catalogue</button></div>
+    ${all.length?`<div class="orders">${all.sort((a,b)=>a.name>b.name?1:-1).map(p=>`<div class="o"><div class="t"><span>${esc(p.name)} <small style="color:var(--sage);font-weight:400">· ${esc(p.seller)}</small></span><span>${esc(p.status)}</span></div>
+      <div class="two" style="margin-top:10px;gap:8px"><div class="f" style="margin:0"><label>Price (₦) / ${esc(p.unit)}</label><input class="inp" style="height:42px" type="number" min="1" value="${+p.price}" id="ap_${esc(p.id)}"></div><div class="f" style="margin:0"><label>Stock note</label><input class="inp" style="height:42px" value="${esc(p.stock)}" id="as_${esc(p.id)}"></div></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn btn-dark btn-sm" onclick="saveProduct('${esc(p.id)}',this)">Save</button>
+      <button class="btn btn-line btn-sm" onclick="setProduct('${esc(p.id)}',{status:'${p.status==='live'?'hidden':'live'}'},this)">${p.status==='live'?'Hide':'Make live'}</button>
+      <button class="btn btn-sm" style="color:#8a1c12" onclick="adminDelete('${esc(p.id)}',this)">Delete</button></div></div>`).join('')}</div>`:'<div class="empty">No products in the database yet. Click <b>Import starter catalogue</b> to add the 10 starter products.</div>'}`;
+  }catch(e){console.warn(e);pane.innerHTML='<div class="empty">Could not load admin data. Check you are signed in with an admin email.</div>'}
+}
+async function setProduct(id,patch,btn){busy(btn,true);try{await db.setProduct(id,patch);toast('Saved');await loadProducts();renderAdmin()}catch(e){console.warn(e);busy(btn,false);toast('Could not save')}}
+async function saveProduct(id,btn){const price=+document.getElementById('ap_'+id).value,stock=document.getElementById('as_'+id).value.trim();if(!(price>0))return toast('Enter a valid price');setProduct(id,{price,stock},btn)}
+async function adminDelete(id,btn){busy(btn,true);try{await db.delProduct(id);toast('Deleted');await loadProducts();renderAdmin()}catch(e){busy(btn,false);toast('Could not delete')}}
+async function importStarter(btn){busy(btn,true,'Importing…');try{await db.importStarter(STARTER);toast('Starter catalogue imported');await loadProducts();renderAdmin()}catch(e){console.warn(e);busy(btn,false);toast('Import failed: are you signed in as admin?')}}
+async function setOrderStatus(id,status){try{await db.updateOrder(id,{status});toast('Order updated')}catch(e){toast('Could not update order')}}
 
 /* MISC */
 function sendContact(e){e.preventDefault();toast('Thanks! Our team will reply within 1 business day.');e.target.reset();return false}
@@ -1030,16 +1156,37 @@ const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)retu
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 renderGrid();renderSellers();updateCart();
+if(PAYSTACK_PK.startsWith('pk_live'))$('#demo').style.display='none';
 </script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup,signInWithRedirect,getRedirectResult,GoogleAuthProvider,updateProfile,sendEmailVerification,sendPasswordResetEmail,signOut,setPersistence,browserLocalPersistence} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import {getFirestore,collection,doc,getDoc,getDocs,setDoc,addDoc,updateDoc,deleteDoc,query,where,serverTimestamp,writeBatch} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 const app=initializeApp({apiKey:"AIzaSyDpkz3wRVcnhrJJVNfNnWqwPaNP6wLnRko",authDomain:"doots-nutod.firebaseapp.com",projectId:"doots-nutod",storageBucket:"doots-nutod.firebasestorage.app",messagingSenderId:"15984881202",appId:"1:15984881202:web:6397bc06866ed2ad5e162b"});
 const auth=getAuth(app);auth.useDeviceLanguage();
+const fs=getFirestore(app);
 setPersistence(auth,browserLocalPersistence).catch(()=>{});
 const gp=new GoogleAuthProvider();gp.setCustomParameters({prompt:'select_account'});
+const rows=snap=>snap.docs.map(d=>({id:d.id,...d.data()}));
+const byNew=a=>a.sort((x,y)=>{const t=o=>o.createdAt&&o.createdAt.toMillis?o.createdAt.toMillis():Date.parse(o.createdAt||0)||0;return t(y)-t(x)});
+window.db={
+  liveProducts:async()=>rows(await getDocs(query(collection(fs,'products'),where('status','==','live')))),
+  allProducts:async()=>rows(await getDocs(collection(fs,'products'))),
+  myProducts:async uid=>byNew(rows(await getDocs(query(collection(fs,'products'),where('sellerUid','==',uid))))),
+  addProduct:p=>addDoc(collection(fs,'products'),{...p,createdAt:serverTimestamp()}),
+  setProduct:(id,patch)=>updateDoc(doc(fs,'products',id),{...patch,updatedAt:serverTimestamp()}),
+  delProduct:id=>deleteDoc(doc(fs,'products',id)),
+  async importStarter(list){const b=writeBatch(fs);list.forEach(p=>{const {id,...rest}=p;b.set(doc(fs,'products',id),{...rest,createdAt:serverTimestamp()})});await b.commit()},
+  async getUser(uid){const d=await getDoc(doc(fs,'users',uid));return d.exists()?d.data():null},
+  setUser:(uid,data)=>setDoc(doc(fs,'users',uid),data,{merge:true}),
+  async createOrder(o){const r=await addDoc(collection(fs,'orders'),{...o,createdAt:serverTimestamp()});return r.id},
+  updateOrder:(id,patch)=>updateDoc(doc(fs,'orders',id),patch),
+  myOrders:async uid=>byNew(rows(await getDocs(query(collection(fs,'orders'),where('buyerUid','==',uid))))),
+  sellerOrders:async uid=>byNew(rows(await getDocs(query(collection(fs,'orders'),where('sellerUids','array-contains',uid))))),
+  allOrders:async()=>byNew(rows(await getDocs(collection(fs,'orders'))))
+};
 window.fb={
-  async signUp(email,pw,name){const c=await createUserWithEmailAndPassword(auth,email,pw);await updateProfile(c.user,{displayName:name});try{await sendEmailVerification(c.user)}catch(e){}window.onAuth(auth.currentUser);return c},
+  async signUp(email,pw,name){const c=await createUserWithEmailAndPassword(auth,email,pw);await updateProfile(c.user,{displayName:name});try{await sendEmailVerification(c.user)}catch(e){}return c},
   signIn:(email,pw)=>signInWithEmailAndPassword(auth,email,pw),
   async google(){try{return await signInWithPopup(auth,gp)}catch(e){if(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment')return signInWithRedirect(auth,gp);throw e}},
   reset:email=>sendPasswordResetEmail(auth,email),
@@ -1048,6 +1195,7 @@ window.fb={
 };
 getRedirectResult(auth).catch(e=>window.toast&&toast(window.authMsg(e)));
 onAuthStateChanged(auth,u=>window.onAuth(u));
+window.loadProducts();
 </script>
 </body>
 </html>

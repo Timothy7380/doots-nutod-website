@@ -32,10 +32,9 @@ input,select,textarea{font:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
 .wrap{width:min(1240px,100% - 32px);margin-inline:auto}
 .serif{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
-.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:99px;background:#fff;color:var(--ink)}
-.tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--leaf)}
-.tag.dark{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#e8efe2}
-.tag.dark::before{background:var(--lime)}
+.tag{display:inline-block;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(18px,1.6vw,24px);line-height:1.2;letter-spacing:0;color:var(--leaf)}
+.tag.dark{color:#dfe9d6}
+.pilltag{display:inline-flex;align-items:center;gap:8px;font-size:13px;padding:6px 14px;border:1px solid var(--line);border-radius:99px;background:#fff;color:var(--ink)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:50px;padding:0 24px;border-radius:99px;font-weight:500;font-size:15px;transition:.2s;white-space:nowrap}
 .btn-lime{background:var(--lime);color:var(--forest)}
 .btn-lime:hover{background:var(--lime-d)}
@@ -324,6 +323,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 
 /* large screens */
 @media (min-width:1700px){
+  .tag{font-size:26px}
   .wrap{width:min(1480px,100% - 96px)}
   .hero h1{font-size:100px;max-width:1150px}
   h2{font-size:64px}
@@ -547,7 +547,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
       </div>
     </div>
     <div class="paycard rv">
-      <div class="hd"><span class="tag">Order #DN-20481</span><span class="st">In escrow</span></div>
+      <div class="hd"><span class="pilltag">Order #DN-20481</span><span class="st">In escrow</span></div>
       <small style="color:var(--sage)">Amount secured</small>
       <div class="amt">₦9,600,000</div>
       <small style="color:var(--sage)">20 × 50kg Cocoa Beans · Grade 1</small>
@@ -786,7 +786,7 @@ function openModal(html,sm){document.querySelectorAll('.drawer').forEach(d=>d.cl
 function openProduct(id){
   const p=products.find(x=>x.id===id);
   openModal(`<div class="pd"><div class="im">${img(p)}</div><div class="tx">
-    <span class="tag">${p.stock}</span><h3>${p.name}</h3><p style="color:var(--sage)">${p.grade}</p>
+    <span class="pilltag">${p.stock}</span><h3>${p.name}</h3><p style="color:var(--sage)">${p.grade}</p>
     <p style="margin-top:14px;font-size:15px">${p.desc}</p>
     <div class="spec">${p.specs.map(s=>`<div><small>${s[0]}</small>${s[1]}</div>`).join('')}</div>
     <div class="tot"><span>Sold by</span><span class="ver">${CHECK} ${p.seller}</span></div>

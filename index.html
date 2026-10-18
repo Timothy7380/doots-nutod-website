@@ -321,6 +321,24 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 .note{font-size:12px;color:var(--sage);margin-top:10px;line-height:1.5}
 .mobnav{display:none}
 
+
+/* auth */
+.pw{position:relative}
+.pw .inp{padding-right:52px}
+.eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:10px;display:grid;place-items:center;color:var(--sage)}
+.eye:hover{color:var(--forest);background:rgba(18,48,18,.06)}
+.eye:focus-visible{outline:2px solid var(--leaf);outline-offset:1px}
+.eye svg{width:20px;height:20px}
+.gbtn{width:100%;height:50px;border-radius:99px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;gap:12px;font-weight:500;font-size:15px;transition:.2s}
+.gbtn:hover{border-color:#b9c0b4;box-shadow:0 2px 10px -4px rgba(0,0,0,.15)}
+.gbtn:disabled,.btn:disabled{opacity:.7;cursor:progress}
+.or{display:flex;align-items:center;gap:12px;color:var(--sage);font-size:13px;margin:18px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.err{display:none;font-size:13px;padding:12px 14px;border-radius:var(--r-sm);background:#fdecea;color:#8a1c12;border:1px solid #f5c6c0;margin-bottom:14px}
+.err.on{display:block}
+.lnk{color:var(--leaf);font-size:13px;font-weight:500;text-decoration:underline;text-underline-offset:2px}
+.btn .spin,.gbtn .spin{width:18px;height:18px;border-width:2.5px}
+.btn-dark .spin{border-color:rgba(255,255,255,.3);border-top-color:#fff}
 /* large screens */
 @media (min-width:1700px){
   .tag{font-size:26px}
@@ -851,7 +869,7 @@ function pay(){
   setTimeout(()=>{
     const id='DN-'+Math.floor(20000+Math.random()*79999);
     const items=S.cart.map(i=>{const p=products.find(x=>x.id===i.id);return`${i.qty} × ${p.name}`}).join(', ');
-    S.orders.unshift({id,items,total:co.total,status:co.pay==='escrow'?'In escrow':'Paid · Processing',date:new Date().toLocaleDateString('en-GB')});
+    S.orders.unshift({id,items,total:co.total,status:co.pay==='escrow'?'In escrow':'Paid · Processing',date:new Date().toLocaleDateString('en-GB')});saveUser();
     S.cart=[];updateCart();
     openModal(`<div class="mpad ok"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5 9-10"/></svg></div>
     <div class="stepper" style="max-width:200px;margin:0 auto 20px"><span class="on"></span><span class="on"></span><span class="on"></span></div>
@@ -861,43 +879,106 @@ function pay(){
   },1600);
 }
 
-/* AUTH */
+/* AUTH (Firebase) */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const EYE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.6 5.1A10.9 10.9 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.9 8.4 2 12 2 12s3.5 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="m3 3 18 18"/></svg>';
+const GLOGO='<svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3a12 12 0 0 1-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>';
+const AUTH_ERR={'auth/invalid-credential':'Incorrect email or password.','auth/wrong-password':'Incorrect email or password.','auth/user-not-found':'No account found with that email.','auth/invalid-login-credentials':'Incorrect email or password.','auth/email-already-in-use':'An account with this email already exists. Try signing in instead.','auth/weak-password':'Password must be at least 6 characters.','auth/invalid-email':'Please enter a valid email address.','auth/too-many-requests':'Too many attempts. Please wait a moment and try again.','auth/network-request-failed':'Network error. Check your connection and try again.','auth/popup-closed-by-user':'Google sign-in was closed before finishing.','auth/cancelled-popup-request':'Google sign-in was cancelled.','auth/unauthorized-domain':'This website address is not yet authorised for sign-in.','auth/operation-not-allowed':'This sign-in method is not enabled yet.'};
+const authMsg=e=>AUTH_ERR[e&&e.code]||'Something went wrong. Please try again.';window.authMsg=authMsg;
 let authRole='buyer';
+function pwField(id,label,ph,auto){return `<div class="f"><label for="${id}">${label}</label><div class="pw"><input class="inp" id="${id}" type="password" required minlength="6" placeholder="${ph}" autocomplete="${auto}"><button type="button" class="eye" aria-label="Show password" aria-pressed="false" onclick="togglePw('${id}',this)">${EYE}</button></div></div>`}
+function togglePw(id,btn){const i=document.getElementById(id);const show=i.type==='password';i.type=show?'text':'password';btn.innerHTML=show?EYE_OFF:EYE;btn.setAttribute('aria-label',show?'Hide password':'Show password');btn.setAttribute('aria-pressed',show);i.focus({preventScroll:true});const v=i.value.length;try{i.setSelectionRange(v,v)}catch(e){}}
+function authErr(m){const el=$('#authErr');if(!el)return;el.textContent=m||'';el.classList.toggle('on',!!m)}
+function busy(btn,on,label){if(!btn)return;btn.disabled=on;if(on){btn.dataset.l=btn.innerHTML;btn.innerHTML='<span class="spin"></span>'+(label?' '+label:'')}else if(btn.dataset.l)btn.innerHTML=btn.dataset.l}
 function openAuth(mode='signin',role='buyer'){
   authRole=role;
+  if(mode==='reset')return openReset();
   const up=mode==='signup';
   openModal(`<div class="mpad"><img src="assets/logo.png" alt="" style="height:54px;margin-bottom:18px">
   <h3>${up?'Create your account':'Welcome back'}</h3><p class="note" style="margin:0">${up?'Buy produce, track orders and get paid as a seller.':'Sign in to track orders and manage listings.'}</p>
-  <div class="seg"><button class="${!up?'on':''}" onclick="openAuth('signin')">Sign in</button><button class="${up?'on':''}" onclick="openAuth('signup','${role}')">Create account</button></div>
-  <form onsubmit="return doAuth(event,${up})">
+  <div class="seg"><button type="button" class="${!up?'on':''}" onclick="openAuth('signin')">Sign in</button><button type="button" class="${up?'on':''}" onclick="openAuth('signup','${role}')">Create account</button></div>
+  <button type="button" class="gbtn" id="gBtn" onclick="googleAuth()">${GLOGO}<span>${up?'Sign up with Google':'Continue with Google'}</span></button>
+  <div class="or"><span>or use your email</span></div>
+  <div class="err" id="authErr" role="alert"></div>
+  <form onsubmit="return doAuth(event,${up})" novalidate>
     ${up?`<span class="lbl" style="display:block;margin-bottom:8px">I want to</span>
     <div class="two" style="margin-bottom:14px">
       <label class="opt" style="margin:0"><input type="radio" name="role" value="buyer" ${role==='buyer'?'checked':''}><span><b>Buy produce</b></span></label>
       <label class="opt" style="margin:0"><input type="radio" name="role" value="seller" ${role==='seller'?'checked':''}><span><b>Sell produce</b></span></label>
     </div>
-    <div class="f"><label>Full name / Business name</label><input class="inp" id="a_name" required></div>
-    <div class="f"><label>Phone</label><input class="inp" id="a_phone" type="tel" required></div>`:''}
-    <div class="f"><label>Email</label><input class="inp" id="a_email" type="email" required></div>
-    <div class="f"><label>Password</label><input class="inp" id="a_pw" type="password" required minlength="6"></div>
-    <button class="btn btn-dark w100" style="margin-top:6px">${up?'Create account':'Sign in'}</button>
+    <div class="f"><label for="a_name">Full name / Business name</label><input class="inp" id="a_name" required autocomplete="name"></div>
+    <div class="f"><label for="a_phone">Phone</label><input class="inp" id="a_phone" type="tel" required autocomplete="tel" placeholder="080…"></div>`:''}
+    <div class="f"><label for="a_email">Email</label><input class="inp" id="a_email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+    ${pwField('a_pw','Password',up?'At least 6 characters':'Your password',up?'new-password':'current-password')}
+    ${up?'':`<div style="text-align:right;margin:-6px 0 12px"><button type="button" class="lnk" onclick="openReset()">Forgot password?</button></div>`}
+    <button class="btn btn-dark w100" id="authBtn" style="margin-top:6px">${up?'Create account':'Sign in'}</button>
+    ${up?'<p class="note" style="text-align:center">We’ll send a link to verify your email address.</p>':''}
   </form></div>`,true);
 }
-function doAuth(e,up){
-  e.preventDefault();
-  const email=$('#a_email').value;
-  const role=up?document.querySelector('input[name=role]:checked').value:'buyer';
-  const name=up?$('#a_name').value:email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-  S.user={name,email,role,listings:[]};
-  $('#acctLbl').textContent=name.split(' ')[0];
-  closeAll();toast(up?`Welcome to DOOTS, ${name.split(' ')[0]}!`:`Signed in as ${name}`);
-  setTimeout(openAcct,350);return false;
+function openReset(){
+  const em=$('#a_email')?$('#a_email').value:'';
+  openModal(`<div class="mpad"><h3>Reset your password</h3><p class="note" style="margin:0 0 20px">Enter your account email and we’ll send you a link to set a new password.</p>
+  <div class="err" id="authErr" role="alert"></div>
+  <form onsubmit="return doReset(event)" novalidate><div class="f"><label for="a_email">Email</label><input class="inp" id="a_email" type="email" required autocomplete="email" value="${em}"></div>
+  <button class="btn btn-dark w100" id="authBtn">Send reset link</button>
+  <button type="button" class="btn w100" style="margin-top:6px;color:var(--sage)" onclick="openAuth('signin')">← Back to sign in</button></form></div>`,true);
 }
+function needFb(){if(window.fb)return true;authErr('Sign-in is still loading. Please try again in a moment.');return false}
+async function doReset(e){
+  e.preventDefault();authErr('');const email=$('#a_email').value.trim();
+  if(!/^\S+@\S+\.\S+$/.test(email))return authErr(AUTH_ERR['auth/invalid-email']),false;
+  if(!needFb())return false;const b=$('#authBtn');busy(b,true,'Sending…');
+  try{await fb.reset(email);closeAll();toast('If that email has an account, a reset link is on its way.')}
+  catch(err){busy(b,false);authErr(authMsg(err))}
+  return false;
+}
+async function doAuth(e,up){
+  e.preventDefault();authErr('');
+  const email=$('#a_email').value.trim(),pw=$('#a_pw').value;
+  if(up&&!$('#a_name').value.trim())return authErr('Please enter your name.'),false;
+  if(up&&!$('#a_phone').value.trim())return authErr('Please enter your phone number.'),false;
+  if(!/^\S+@\S+\.\S+$/.test(email))return authErr(AUTH_ERR['auth/invalid-email']),false;
+  if(pw.length<6)return authErr(AUTH_ERR['auth/weak-password']),false;
+  if(!needFb())return false;
+  const b=$('#authBtn');busy(b,true,up?'Creating account…':'Signing in…');
+  try{
+    if(up){
+      const name=$('#a_name').value.trim(),phone=$('#a_phone').value.trim(),role=document.querySelector('input[name=role]:checked').value;
+      pendingProfile={name,phone,role};
+      await fb.signUp(email,pw,name);
+    }else await fb.signIn(email,pw);
+  }catch(err){pendingProfile=null;busy(b,false);authErr(authMsg(err))}
+  return false;
+}
+async function googleAuth(){
+  authErr('');if(!needFb())return;const b=$('#gBtn');busy(b,true,'Opening Google…');
+  if(authRole)pendingProfile={role:authRole,google:true};
+  try{await fb.google()}catch(err){pendingProfile=null;busy(b,false);if(err.code!=='auth/popup-closed-by-user')authErr(authMsg(err))}
+}
+let pendingProfile=null,firstAuth=true;
+function onAuth(fu){
+  const wasIn=!!S.user;
+  if(!fu){S.user=null;$('#acctLbl').textContent='Sign in';if(wasIn)toast('Signed out');firstAuth=false;return}
+  const key='dn_profile_'+fu.uid,prof=store.get(key,{});
+  if(pendingProfile){if(pendingProfile.google){if(!prof.role)prof.role=pendingProfile.role}else Object.assign(prof,pendingProfile);store.set(key,prof)}
+  const name=fu.displayName||prof.name||fu.email.split('@')[0];
+  S.user={uid:fu.uid,name,email:fu.email,phone:prof.phone||'',role:prof.role||'buyer',verified:fu.emailVerified,google:fu.providerData.some(p=>p.providerId==='google.com'),listings:store.get('dn_listings_'+fu.uid,[])};
+  const saved=store.get('dn_orders_'+fu.uid,[]);S.orders=[...S.orders.filter(o=>!saved.some(x=>x.id===o.id)),...saved];store.set('dn_orders_'+fu.uid,S.orders);
+  S.user.listings.forEach(l=>{if(!products.some(p=>p.id===l.id))products.unshift(l)});renderGrid();
+  $('#acctLbl').textContent=name.split(' ')[0];
+  const justIn=!!pendingProfile;pendingProfile=null;
+  if(justIn||(!firstAuth&&!wasIn)){closeAll();toast(`Welcome${justIn&&!wasIn?'':' back'}, ${name.split(' ')[0]}!`);setTimeout(openAcct,350)}
+  firstAuth=false;
+}
+function saveUser(){const u=S.user;if(!u)return;const key='dn_profile_'+u.uid,prof=store.get(key,{});prof.role=u.role;prof.phone=u.phone;prof.name=u.name;store.set(key,prof);store.set('dn_listings_'+u.uid,u.listings);store.set('dn_orders_'+u.uid,S.orders)}
 function acctClick(){S.user?openAcct():openAuth('signin')}
 function openAcct(){
   closeAll();const u=S.user;if(!u)return openAuth('signin');
   $('#acctTitle').textContent='Hi, '+u.name.split(' ')[0];
   $('#acctBody').innerHTML=`
     <div class="seg" style="margin-top:0"><button class="on" id="t1" onclick="acctTab(1)">Orders</button><button id="t2" onclick="acctTab(2)">${u.role==='seller'?'My listings':'Profile'}</button></div>
+    ${u.verified||u.google?'':`<div class="err on" style="background:var(--gold-l);color:#6b4a0c;border-color:#e6cf9b">Please verify your email (${u.email}). <button type="button" class="lnk" onclick="resendVerify(this)">Resend link</button></div>`}
     <div id="acctPane"></div>
     <button class="btn btn-line w100" style="margin-top:20px" onclick="signOut()">Sign out</button>`;
   acctTab(1);$('#acct').classList.add('on');$('#scrim').classList.add('on');
@@ -905,7 +986,7 @@ function openAcct(){
 function acctTab(n){
   const u=S.user;$('#t1').classList.toggle('on',n===1);$('#t2').classList.toggle('on',n===2);
   if(n===1){$('#acctPane').innerHTML=S.orders.length?`<div class="orders">${S.orders.map(o=>`<div class="o"><div class="t"><span>${o.id}</span><span>${fmt(o.total)}</span></div><p class="note" style="margin:6px 0">${o.items}</p><div style="display:flex;justify-content:space-between;align-items:center"><span class="st">${o.status}</span><small style="color:var(--sage)">${o.date}</small></div></div>`).join('')}</div>`:'<div class="empty" style="padding:40px 10px">No orders yet.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Start shopping</a></div>';return}
-  if(u.role!=='seller'){$('#acctPane').innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${u.name}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${u.email}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="S.user.role='seller';acctTab(2)">Upgrade to seller account</button>`;return}
+  if(u.role!=='seller'){$('#acctPane').innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${u.name}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${u.email}</p></div><div class="o"><small style="color:var(--sage)">Phone</small><p>${u.phone||'—'}</p></div><div class="o"><small style="color:var(--sage)">Signed in with</small><p>${u.google?'Google':'Email &amp; password'}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="S.user.role='seller';saveUser();openAcct();acctTab(2)">Upgrade to seller account</button>`;return}
   $('#acctPane').innerHTML=`${u.listings.length?`<div class="orders">${u.listings.map(l=>`<div class="o"><div class="t"><span>${l.name}</span><span>${fmt(l.price)}</span></div><p class="note" style="margin:6px 0">per ${l.unit} · ${l.origin}</p><span class="st" style="background:#e3f5c4;color:#2f5a10">Live on marketplace</span></div>`).join('')}</div>`:''}
   <form onsubmit="return addListing(event)" style="background:#fff;border-radius:var(--r-md);padding:18px">
     <h4 style="font-weight:500;margin-bottom:14px">List new produce</h4>
@@ -922,9 +1003,10 @@ function addListing(e){
   e.preventDefault();const u=S.user;const name=$('#l_name').value;
   const base=products.find(p=>p.name.startsWith(name.split(' ')[0]));
   const p={id:Date.now(),name,grade:`Listed by ${u.name}`,cat:base?base.cat:'grain',img:base?base.img:'',price:+$('#l_price').value,unit:$('#l_unit').value,moq:1,origin:$('#l_loc').value,seller:u.name,export:false,stock:`Available · ${$('#l_qty').value} units`,desc:`Listed on the DOOTS marketplace by ${u.name}.`,specs:[['Seller',u.name],['Location',$('#l_loc').value],['Quantity',$('#l_qty').value],['Inspection','Pending']]};
-  products.unshift(p);u.listings.unshift(p);renderGrid();acctTab(2);toast('Listing published to the marketplace');return false;
+  products.unshift(p);u.listings.unshift(p);saveUser();renderGrid();acctTab(2);toast('Listing published to the marketplace');return false;
 }
-function signOut(){S.user=null;$('#acctLbl').textContent='Sign in';closeAll();toast('Signed out')}
+async function signOut(){closeAll();if(window.fb){try{await fb.signOut()}catch(e){toast('Could not sign out. Try again.')}}else{S.user=null;$('#acctLbl').textContent='Sign in'}}
+async function resendVerify(btn){busy(btn,true,'Sending…');try{await fb.verify();toast('Verification email sent');}catch(e){toast(authMsg(e))}busy(btn,false)}
 
 /* MISC */
 function sendContact(e){e.preventDefault();toast('Thanks! Our team will reply within 1 business day.');e.target.reset();return false}
@@ -949,6 +1031,24 @@ const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)retu
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 renderGrid();renderSellers();updateCart();
+</script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import {getAuth,onAuthStateChanged,createUserWithEmailAndPassword,signInWithEmailAndPassword,signInWithPopup,signInWithRedirect,getRedirectResult,GoogleAuthProvider,updateProfile,sendEmailVerification,sendPasswordResetEmail,signOut,setPersistence,browserLocalPersistence} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+const app=initializeApp({apiKey:"AIzaSyDpkz3wRVcnhrJJVNfNnWqwPaNP6wLnRko",authDomain:"doots-nutod.firebaseapp.com",projectId:"doots-nutod",storageBucket:"doots-nutod.firebasestorage.app",messagingSenderId:"15984881202",appId:"1:15984881202:web:6397bc06866ed2ad5e162b"});
+const auth=getAuth(app);auth.useDeviceLanguage();
+setPersistence(auth,browserLocalPersistence).catch(()=>{});
+const gp=new GoogleAuthProvider();gp.setCustomParameters({prompt:'select_account'});
+window.fb={
+  async signUp(email,pw,name){const c=await createUserWithEmailAndPassword(auth,email,pw);await updateProfile(c.user,{displayName:name});try{await sendEmailVerification(c.user)}catch(e){}window.onAuth(auth.currentUser);return c},
+  signIn:(email,pw)=>signInWithEmailAndPassword(auth,email,pw),
+  async google(){try{return await signInWithPopup(auth,gp)}catch(e){if(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment')return signInWithRedirect(auth,gp);throw e}},
+  reset:email=>sendPasswordResetEmail(auth,email),
+  verify:()=>sendEmailVerification(auth.currentUser),
+  signOut:()=>signOut(auth)
+};
+getRedirectResult(auth).catch(e=>window.toast&&toast(window.authMsg(e)));
+onAuthStateChanged(auth,u=>window.onAuth(u));
 </script>
 </body>
 </html>

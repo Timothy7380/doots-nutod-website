@@ -227,10 +227,25 @@ blockquote .serif{color:var(--leaf)}
 .vm p{font-size:14px;color:var(--sage)}
 
 /* GALLERY */
-.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:12px;margin-top:48px}
-.gal img{width:100%;height:100%;object-fit:cover;border-radius:var(--r-md)}
-.gal .a{grid-column:span 2;grid-row:span 2}
-.gal .b{grid-column:span 2}
+.mtabs{margin:40px 0 20px;width:max-content;max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.mtabs button{flex:none}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mtile{position:relative;aspect-ratio:3/4;border-radius:var(--r-md);overflow:hidden;background:#dfe4d8;cursor:pointer;border:0;padding:0;display:block;width:100%}
+.mtile img,.mtile video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.mtile:hover img,.mtile:hover video{transform:scale(1.04)}
+.mtile .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;background:linear-gradient(transparent,rgba(8,22,8,.78));color:#fff;font-size:13px;text-align:left;line-height:1.35}
+.mtile .kind{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;color:var(--forest)}
+.mtile .kind svg{width:14px;height:14px}
+.mtile:focus-visible{outline:3px solid var(--leaf);outline-offset:2px}
+.lbox{position:fixed;inset:0;z-index:130;background:rgba(6,16,6,.94);display:none;align-items:center;justify-content:center;flex-direction:column;padding:56px 16px 24px}
+.lbox.on{display:flex}
+.lb-stage{max-width:min(92vw,560px);max-height:calc(100svh - 150px);display:flex;align-items:center;justify-content:center}
+.lb-stage img,.lb-stage video{max-width:100%;max-height:calc(100svh - 150px);border-radius:14px;display:block;background:#000}
+.lb-cap{color:#dfe9d6;font-size:14px;margin-top:14px;text-align:center;max-width:560px}
+.lb-x{position:absolute;top:14px;right:16px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:28px;line-height:1}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:34px;line-height:1}
+.lb-prev{left:16px}.lb-next{right:16px}
+.lb-x:hover,.lb-nav:hover{background:rgba(255,255,255,.25)}
 
 /* CONTACT / FOOTER */
 .contact{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -348,7 +363,6 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
   h2{font-size:64px}
   .lead,.hero p{font-size:19px}
   .statement h2{font-size:54px}
-  .gal{grid-auto-rows:240px}
 }
 /* short landscape screens */
 @media (max-height:560px) and (orientation:landscape){
@@ -380,7 +394,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
   .fcols{grid-template-columns:1fr 1fr}
   .pd{grid-template-columns:1fr}
   .pd .im{min-height:260px;max-height:300px}
-  .gal{grid-template-columns:repeat(2,1fr)}
+  .mgrid{grid-template-columns:repeat(3,1fr)}
   .mobnav{position:fixed;inset:0;z-index:100;background:var(--forest);color:#fff;padding:24px;display:flex;flex-direction:column;transform:translateY(-100%);transition:transform .35s,visibility 0s .35s;overflow-y:auto;visibility:hidden}
   .mobnav.on{transform:none;visibility:visible;transition:transform .35s}
   .fphoto{max-width:520px;width:100%}
@@ -404,7 +418,9 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
   .price{font-size:15px}
   .add{width:38px;height:38px}
   .prod .pill.ex{display:none}
-  .gal{grid-auto-rows:140px}
+  .mgrid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .mtile .cap{font-size:12px;padding:22px 10px 9px}
+  .lb-nav{top:auto;bottom:18px;transform:none}
   .marks{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
   .mark{font-size:17px}
   .sellcta .in{padding:28px}
@@ -636,24 +652,27 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
   </div>
 </section>
 
-<!-- GALLERY -->
-<section style="padding-top:0">
+<!-- MEDIA GALLERY -->
+<section style="padding-top:0" id="gallery">
   <div class="wrap">
     <div class="split rv">
-      <div><span class="tag">On the Ground</span><h2 style="margin-top:18px">From Our Farms <span class="serif">&amp; Partners</span></h2></div>
-      <p class="lead">Drone-assisted spraying, nursery operations, farmer training and trade missions, including the AfCFTA Intra-African Trade Fair 2025.</p>
+      <div><span class="tag">From the Field</span><h2 style="margin-top:18px">See Our Produce <span class="serif">Up Close</span></h2></div>
+      <p class="lead">Real photos and short clips from our farms, warehouse and loading bays: quality checks, fresh stock and trucks heading out to buyers.</p>
     </div>
-    <div class="gal rv">
-      <img decoding="async" class="a" sizes="(max-width:1020px) 100vw, 640px" loading="lazy" src="assets/drone-960.webp" srcset="assets/drone-480.webp 480w, assets/drone-960.webp 960w, assets/drone-1440.webp 1440w, assets/drone-1800.webp 1800w" alt="Agricultural drone spraying crops">
-      <img decoding="async" class="b" sizes="(max-width:1020px) 100vw, 640px" loading="lazy" src="assets/cocoa_tree-960.webp" srcset="assets/cocoa_tree-480.webp 480w, assets/cocoa_tree-960.webp 960w, assets/cocoa_tree-1440.webp 1440w, assets/cocoa_tree-1800.webp 1800w" alt="Cocoa pods on the tree">
-      <img decoding="async" sizes="(max-width:1020px) 50vw, 320px" loading="lazy" src="assets/palm-653.webp" srcset="assets/palm-480.webp 480w, assets/palm-653.webp 653w" alt="Harvested palm fruit">
-      <img decoding="async" sizes="(max-width:1020px) 50vw, 320px" loading="lazy" src="assets/expo-935.webp" srcset="assets/expo-480.webp 480w, assets/expo-935.webp 935w" alt="Delegation at AfCFTA Marketplace">
-      <img decoding="async" class="b" sizes="(max-width:1020px) 100vw, 640px" loading="lazy" src="assets/tomato-1046.webp" srcset="assets/tomato-480.webp 480w, assets/tomato-1046.webp 1046w" alt="Fresh tomatoes in crates">
-      <img decoding="async" sizes="(max-width:1020px) 50vw, 320px" loading="lazy" src="assets/greenhouse-1000.webp" srcset="assets/greenhouse-480.webp 480w, assets/greenhouse-1000.webp 1000w" alt="Nursery greenhouse">
-      <img decoding="async" sizes="(max-width:1020px) 50vw, 320px" loading="lazy" src="assets/trade-684.webp" srcset="assets/trade-480.webp 480w, assets/trade-684.webp 684w" alt="DOOTS team at IATF 2025" style="object-position:top">
+    <div class="tabs mtabs" id="mtabs" role="tablist" aria-label="Filter gallery">
+      <button class="on" data-c="all">All</button><button data-c="cocoa">Cocoa</button><button data-c="sesame">Sesame</button><button data-c="soya">Soya</button><button data-c="quality">Quality checks</button><button data-c="warehouse">Warehouse</button><button data-c="logistics">Logistics</button>
     </div>
+    <div class="mgrid" id="mgrid"></div>
+    <div style="text-align:center;margin-top:28px"><button class="btn btn-line" id="mmore" onclick="mediaMore()">See more</button></div>
   </div>
 </section>
+<div class="lbox" id="lbox" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <button class="lb-x" onclick="lbClose()" aria-label="Close">&times;</button>
+  <button class="lb-nav lb-prev" onclick="lbGo(-1)" aria-label="Previous">&#8249;</button>
+  <div class="lb-stage" id="lbStage"></div>
+  <button class="lb-nav lb-next" onclick="lbGo(1)" aria-label="Next">&#8250;</button>
+  <p class="lb-cap" id="lbCap"></p>
+</div>
 
 <!-- CONTACT -->
 <section id="contact" style="padding-top:0">
@@ -1132,6 +1151,60 @@ async function saveProduct(id,btn){const price=+document.getElementById('ap_'+id
 async function adminDelete(id,btn){busy(btn,true);try{await db.delProduct(id);toast('Deleted');await loadProducts();renderAdmin()}catch(e){busy(btn,false);toast('Could not delete')}}
 async function importStarter(btn){busy(btn,true,'Importing…');try{await db.importStarter(STARTER);toast('Starter catalogue imported');await loadProducts();renderAdmin()}catch(e){console.warn(e);busy(btn,false);toast('Import failed: are you signed in as admin?')}}
 async function setOrderStatus(id,status){try{await db.updateOrder(id,{status});toast('Order updated')}catch(e){toast('Could not update order')}}
+
+
+/* MEDIA GALLERY */
+const MEDIA=[
+ {t:'v',f:'v04',c:'soya',cap:'Soya beans: clean, uniform grain'},
+ {t:'p',f:'p02',c:'cocoa',cap:'Ripening cocoa pods on our partner farms'},
+ {t:'v',f:'v05',c:'quality',cap:'Sampling bags with a grain probe before dispatch'},
+ {t:'v',f:'v07',c:'sesame',cap:'Sesame seeds, cleaned and bagged'},
+ {t:'p',f:'p06',c:'cocoa',cap:'Freshly harvested cocoa pods'},
+ {t:'v',f:'v02',c:'logistics',cap:'Loading a truck for delivery'},
+ {t:'p',f:'p08',c:'sesame',cap:'Weighing a sesame sample'},
+ {t:'v',f:'v01',c:'warehouse',cap:'Bagged stock in our warehouse'},
+ {t:'p',f:'p10',c:'soya',cap:'Soya beans in hand'},
+ {t:'v',f:'v08',c:'logistics',cap:'Stacking bags on the truck'},
+ {t:'p',f:'p05',c:'warehouse',cap:'Stock ready for buyers'},
+ {t:'v',f:'v06',c:'quality',cap:'Checking grain quality bag by bag'},
+ {t:'p',f:'p01',c:'cocoa',cap:'Cocoa trees heavy with pods'},
+ {t:'v',f:'v03',c:'logistics',cap:'Moving bags to the loading bay'},
+ {t:'p',f:'p07',c:'sesame',cap:'Sesame seed close-up'},
+ {t:'v',f:'v10',c:'warehouse',cap:'Stacked bags at the depot'},
+ {t:'p',f:'p03',c:'cocoa',cap:'Purple cocoa variety on the tree'},
+ {t:'v',f:'v11',c:'logistics',cap:'Our team loading for dispatch'},
+ {t:'p',f:'p09',c:'sesame',cap:'Sorted sesame ready for bagging'},
+ {t:'v',f:'v09',c:'logistics',cap:'Truck loaded and ready to go'},
+ {t:'p',f:'p04',c:'sesame',cap:'Hulled sesame seeds'},
+ {t:'p',f:'p11',c:'logistics',cap:'Loading bags onto a truck'}
+];
+const PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+const CAM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg>';
+const MG={cat:'all',shown:12,list:[],i:0};
+const mPoster=m=>m.t==='v'?`media/${m.f}-poster.webp`:`media/${m.f}-480.webp`;
+const vio=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){if(!v.src)v.src=v.dataset.src;const pr=v.play();if(pr)pr.catch(()=>{})}else v.pause()}),{threshold:.35}):null;
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function renderMedia(){
+  MG.list=MEDIA.filter(m=>MG.cat==='all'||m.c===MG.cat);
+  const show=MG.list.slice(0,MG.shown);
+  $('#mgrid').innerHTML=show.map((m,i)=>`<button class="mtile" onclick="lbOpen(${i})" aria-label="${esc(m.cap)}${m.t==='v'?' (video)':''}">
+    ${m.t==='v'?`<video muted loop playsinline preload="none" poster="${mPoster(m)}" data-src="media/${m.f}.mp4" aria-hidden="true"></video>`:`<img src="${mPoster(m)}" srcset="media/${m.f}-480.webp 480w, media/${m.f}-1080.webp 1080w" sizes="(max-width:640px) 50vw, 25vw" alt="" loading="lazy" decoding="async">`}
+    <span class="kind">${m.t==='v'?PLAY:CAM}</span><span class="cap">${esc(m.cap)}</span></button>`).join('');
+  $('#mmore').style.display=MG.list.length>MG.shown?'':'none';
+  if(vio&&!reduceMotion)document.querySelectorAll('#mgrid video').forEach(v=>vio.observe(v));
+}
+function mediaMore(){MG.shown+=12;renderMedia()}
+$('#mtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;MG.cat=b.dataset.c;MG.shown=12;document.querySelectorAll('#mtabs button').forEach(x=>x.classList.toggle('on',x===b));renderMedia()});
+function lbOpen(i){MG.i=i;document.querySelectorAll('#mgrid video').forEach(v=>v.pause());lbShow();$('#lbox').classList.add('on');document.body.style.overflow='hidden'}
+function lbShow(){const m=MG.list[MG.i];if(!m)return;
+  $('#lbStage').innerHTML=m.t==='v'?`<video src="media/${m.f}.mp4" poster="${mPoster(m)}" controls autoplay muted loop playsinline></video>`:`<img src="media/${m.f}-1080.webp" alt="${esc(m.cap)}">`;
+  $('#lbCap').textContent=`${m.cap} · ${MG.i+1} / ${MG.list.length}`}
+function lbGo(d){MG.i=(MG.i+d+MG.list.length)%MG.list.length;lbShow()}
+function lbClose(){$('#lbox').classList.remove('on');$('#lbStage').innerHTML='';document.body.style.overflow=''}
+$('#lbox').addEventListener('click',e=>{if(e.target.id==='lbox')lbClose()});
+document.addEventListener('keydown',e=>{if(!$('#lbox').classList.contains('on'))return;if(e.key==='Escape')lbClose();if(e.key==='ArrowRight')lbGo(1);if(e.key==='ArrowLeft')lbGo(-1)});
+(()=>{let x0=null;const lb=$('#lbox');lb.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)lbGo(dx<0?1:-1);x0=null},{passive:true})})();
+renderMedia();
 
 /* MISC */
 function sendContact(e){e.preventDefault();toast('Thanks! Our team will reply within 1 business day.');e.target.reset();return false}

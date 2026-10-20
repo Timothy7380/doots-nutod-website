@@ -464,7 +464,6 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 </head>
 <body>
 
-<div class="demo" id="demo"><b>Test mode</b> · <span class="dl">Prices are placeholders and payments run in test mode. No real money is charged.</span><span class="ds">Test prices &amp; payments</span></div>
 
 <!-- NAV -->
 <header class="nav" id="nav">
@@ -710,7 +709,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
       <p class="lead">Real photos and short clips from our farms, warehouse and loading bays: quality checks, fresh stock and trucks heading out to buyers.</p>
     </div>
     <div class="tabs mtabs" id="mtabs" role="tablist" aria-label="Filter gallery">
-      <button class="on" data-c="all">All</button><button data-c="cocoa">Cocoa</button><button data-c="sesame">Sesame</button><button data-c="soya">Soya</button><button data-c="cashew">Cashew</button><button data-c="financing">Input financing</button><button data-c="quality">Quality checks</button><button data-c="warehouse">Warehouse</button><button data-c="logistics">Logistics</button>
+      <button class="on" data-c="all">All</button><button data-c="cocoa">Cocoa</button><button data-c="sesame">Sesame</button><button data-c="soya">Soya</button><button data-c="cashew">Cashew</button><button data-c="grains">Maize &amp; sorghum</button><button data-c="financing">Input financing</button><button data-c="quality">Quality checks</button><button data-c="warehouse">Warehouse</button><button data-c="logistics">Logistics</button>
     </div>
     <div class="mgrid" id="mgrid"></div>
     <div style="text-align:center;margin-top:28px"><button class="btn btn-line" id="mmore" onclick="mediaMore()">See more</button></div>
@@ -812,12 +811,14 @@ const STARTER=[
  {id:'raw-cashew-nuts',name:'Raw Cashew Nuts',grade:'In-shell · KOR 47–49 lbs',cat:'cash',img:'assets/cashew.jpg',price:82000,unit:'80kg bag',moq:5,origin:'Oyo / Kwara',export:true,stock:'Seasonal · Pre-order',desc:'Raw cashew nuts sourced from partner farms in Oyo and Kwara, graded by out-turn (KOR) and nut count.',specs:[['Out-turn (KOR)','47–49 lbs'],['Nut count','≤ 200 / kg'],['Moisture','≤ 10%'],['Packaging','80kg jute bag']]},
  {id:'palm-fruit-bunches',name:'Palm Fruit Bunches',grade:'Fresh fruit bunches · Tenera',cat:'cash',img:'assets/palm.jpg',price:350000,unit:'tonne',moq:1,origin:'Oyo',export:false,stock:'In stock',desc:'Freshly harvested Tenera palm fruit bunches for oil mills.',specs:[['Variety','Tenera'],['Delivery','Within 48 hrs'],['Min. order','1 tonne'],['Loading','Truck']]},
  {id:'maize-yellow',name:'Maize (Yellow)',grade:'Dried & shelled',cat:'grain',img:'assets/maize.jpg',price:38000,unit:'50kg bag',moq:10,origin:'Oyo',export:false,stock:'In stock · 900 bags',desc:'Dry yellow maize for feed mills and food processors.',specs:[['Moisture','≤ 13%'],['Broken grains','≤ 3%'],['Aflatoxin','Tested'],['Packaging','50kg PP bag']]},
+ {id:'maize-white',name:'Maize (White)',grade:'Dried & shelled · Food grade',cat:'grain',img:'assets/maize_white.jpg',price:40000,unit:'50kg bag',moq:10,origin:'Kaduna / Kwara',export:false,stock:'In stock',desc:'Clean white maize for flour mills, food processors and feed producers.',specs:[['Moisture','≤ 13%'],['Broken grains','≤ 3%'],['Aflatoxin','Tested'],['Packaging','50kg PP bag']]},
+ {id:'sorghum-red',name:'Sorghum (Red)',grade:'Guinea corn · Cleaned',cat:'grain',img:'assets/sorghum.jpg',price:36000,unit:'50kg bag',moq:10,origin:'Kaduna / Kano',export:true,stock:'In stock',desc:'Red sorghum (guinea corn) for breweries, feed mills and food processing.',specs:[['Moisture','≤ 12%'],['Foreign matter','≤ 2%'],['Variety','Red'],['Packaging','50kg PP bag']]},
  {id:'cassava-tubers',name:'Cassava Tubers',grade:'Fresh · Processing grade',cat:'fresh',img:'assets/cassava.jpg',price:120000,unit:'tonne',moq:2,origin:'Oyo / Ogun',export:false,stock:'In stock',desc:'Fresh cassava roots for garri, starch and flour processing.',specs:[['Age','12–14 months'],['Starch','High'],['Delivery','Within 24 hrs'],['Loading','Truck']]},
  {id:'pineapples',name:'Pineapples',grade:'Sweet · Smooth cayenne',cat:'fresh',img:'assets/pineapple.jpg',price:28000,unit:'crate (20 pcs)',moq:5,origin:'Ogun',export:false,stock:'In stock',desc:'Sweet, juicy pineapples for retail, juice and hospitality buyers.',specs:[['Size','1.2–1.8kg'],['Brix','14–16°'],['Pack','Crate of 20'],['Delivery','Same/next day']]},
  {id:'fresh-tomatoes',name:'Fresh Tomatoes',grade:'Greenhouse grown',cat:'fresh',img:'assets/tomato.jpg',price:42000,unit:'crate (25kg)',moq:3,origin:'Ibadan',export:false,stock:'In stock',desc:'Firm, ripe tomatoes from our greenhouse partners in Ibadan.',specs:[['Variety','Roma'],['Weight','25kg crate'],['Grown','Greenhouse'],['Delivery','Next day']]},
  {id:'bell-hot-peppers',name:'Bell & Hot Peppers',grade:'Mixed colours',cat:'fresh',img:'assets/pepper.jpg',price:36000,unit:'basket (20kg)',moq:2,origin:'Ibadan',export:false,stock:'In stock',desc:'Assorted bell peppers and scotch bonnets, harvested to order.',specs:[['Mix','Red · Yellow · Green'],['Weight','20kg'],['Grown','Greenhouse'],['Delivery','Next day']]}
 ].map(p=>({...p,seller:'DOOTS Nutod',sellerUid:'',official:true,status:'live'}));
-const COMMODITIES={'Cocoa Beans':['cash','assets/cocoa.jpg'],'Soya Beans':['grain','assets/soya.jpg'],'Sesame Seeds':['grain','assets/sesame.jpg'],'Raw Cashew Nuts':['cash','assets/cashew.jpg'],'Maize':['grain','assets/maize.jpg'],'Palm Fruit':['cash','assets/palm.jpg'],'Cassava':['fresh','assets/cassava.jpg'],'Pineapples':['fresh','assets/pineapple.jpg'],'Tomatoes':['fresh','assets/tomato.jpg'],'Peppers':['fresh','assets/pepper.jpg'],'Other':['grain','']};
+const COMMODITIES={'Cocoa Beans':['cash','assets/cocoa.jpg'],'Soya Beans':['grain','assets/soya.jpg'],'Sesame Seeds':['grain','assets/sesame.jpg'],'Raw Cashew Nuts':['cash','assets/cashew.jpg'],'Maize':['grain','assets/maize.jpg'],'Maize (White)':['grain','assets/maize_white.jpg'],'Sorghum':['grain','assets/sorghum.jpg'],'Palm Fruit':['cash','assets/palm.jpg'],'Cassava':['fresh','assets/cassava.jpg'],'Pineapples':['fresh','assets/pineapple.jpg'],'Tomatoes':['fresh','assets/tomato.jpg'],'Peppers':['fresh','assets/pepper.jpg'],'Other':['grain','']};
 
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const S={cart:store.get('dn_cart',[]),user:null,orders:[],cat:'all',q:'',catalogue:'loading'};
@@ -826,7 +827,7 @@ const fmt=n=>'₦'+Math.round(+n||0).toLocaleString('en-NG');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=u=>/^(https:\/\/|assets\/)[^\s"'<>]+$/.test(u||'')?u:'';
-const IMGW={"cashew":[480,617],"cashew_hand":[480,617],"cassava":[480,960,1280],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1920,2560],"maize":[480,710],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
+const IMGW={"cashew":[480,617],"cashew_hand":[480,617],"cassava":[480,960,1280],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1920,2560],"maize":[480,960],"maize_white":[480,762],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"sorghum":[480,810],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
 function rs(path,sizes){path=safeUrl(path);const n=path.replace(/^assets\/|\.jpg$/g,'');const w=IMGW[n];if(!w)return `src="${esc(path)}"`;return `src="assets/${n}-${w[Math.min(1,w.length-1)]}.webp" srcset="${w.map(x=>`assets/${n}-${x}.webp ${x}w`).join(', ')}" sizes="${sizes}"`}
 const img=(p,cls='')=>pimg(p)?`<img ${rs(pimg(p),'(max-width:640px) 50vw, (max-width:1020px) 34vw, 300px')} alt="${esc(p.name)}" loading="lazy" decoding="async" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
 const FALLBACK_IMG={'raw-cashew-nuts':'assets/cashew.jpg','cassava-tubers':'assets/cassava.jpg'};
@@ -1194,7 +1195,7 @@ async function renderAdmin(){
       pane.innerHTML=pend.length?`<div class="orders">${pend.map(p=>`<div class="o"><div class="t"><span>${esc(p.name)}</span><span>${fmt(p.price)} / ${esc(p.unit)}</span></div><p class="note" style="margin:6px 0">${esc(p.seller)} · ${esc(p.origin)} · ${esc(p.stock)} · min ${+p.moq||1}<br>${esc(p.grade)}</p>${safeUrl(p.img)?`<img ${rs(p.img,'200px')} alt="" style="width:120px;height:80px;object-fit:cover;border-radius:8px;margin:6px 0">`:''}<div style="display:flex;gap:8px"><button class="btn btn-dark btn-sm" onclick="setProduct('${esc(p.id)}',{status:'live'},this)">Approve</button><button class="btn btn-line btn-sm" onclick="setProduct('${esc(p.id)}',{status:'rejected'},this)">Reject</button></div></div>`).join('')}</div>`:'<div class="empty">No listings waiting for approval.</div>';
       return;
     }
-    pane.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-line btn-sm" onclick="importStarter(this)">Import starter catalogue</button></div>
+    pane.innerHTML=`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px"><button class="btn btn-line btn-sm" onclick="importStarter(this)">Add missing starter products</button></div>
     ${all.length?`<div class="orders">${all.sort((a,b)=>a.name>b.name?1:-1).map(p=>`<div class="o"><div class="t"><span>${esc(p.name)} <small style="color:var(--sage);font-weight:400">· ${esc(p.seller)}</small></span><span>${esc(p.status)}</span></div>
       <div class="two" style="margin-top:10px;gap:8px"><div class="f" style="margin:0"><label>Price (₦) / ${esc(p.unit)}</label><input class="inp" style="height:42px" type="number" min="1" value="${+p.price}" id="ap_${esc(p.id)}"></div><div class="f" style="margin:0"><label>Stock note</label><input class="inp" style="height:42px" value="${esc(p.stock)}" id="as_${esc(p.id)}"></div></div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn btn-dark btn-sm" onclick="saveProduct('${esc(p.id)}',this)">Save</button>
@@ -1205,12 +1206,27 @@ async function renderAdmin(){
 async function setProduct(id,patch,btn){busy(btn,true);try{await db.setProduct(id,patch);toast('Saved');await loadProducts();renderAdmin()}catch(e){console.warn(e);busy(btn,false);toast('Could not save')}}
 async function saveProduct(id,btn){const price=+document.getElementById('ap_'+id).value,stock=document.getElementById('as_'+id).value.trim();if(!(price>0))return toast('Enter a valid price');setProduct(id,{price,stock},btn)}
 async function adminDelete(id,btn){busy(btn,true);try{await db.delProduct(id);toast('Deleted');await loadProducts();renderAdmin()}catch(e){busy(btn,false);toast('Could not delete')}}
-async function importStarter(btn){busy(btn,true,'Importing…');try{await db.importStarter(STARTER);toast('Starter catalogue imported');await loadProducts();renderAdmin()}catch(e){console.warn(e);busy(btn,false);toast('Import failed: are you signed in as admin?')}}
+async function importStarter(btn){busy(btn,true,'Importing…');try{const n=await db.importStarter(STARTER);toast(n?`Added ${n} starter product${n>1?'s':''}`:'All starter products are already in the database');await loadProducts();renderAdmin()}catch(e){console.warn(e);busy(btn,false);toast('Import failed: are you signed in as admin?')}}
 async function setOrderStatus(id,status){try{await db.updateOrder(id,{status});toast('Order updated')}catch(e){toast('Could not update order')}}
 
 
 /* MEDIA GALLERY */
 const MEDIA=[
+ {t:'v',f:'v18',c:'warehouse',cap:'Forklift moving stock in our warehouse'},
+ {t:'p',f:'g05',c:'grains',cap:'Yellow maize, clean and dry'},
+ {t:'p',f:'g01',c:'cashew',cap:'Raw cashew spread out to dry'},
+ {t:'v',f:'v20',c:'logistics',cap:'Loading bags onto a truck at the warehouse'},
+ {t:'p',f:'g07',c:'grains',cap:'Red sorghum (guinea corn)'},
+ {t:'p',f:'g04',c:'quality',cap:'Sampling maize with a probe'},
+ {t:'v',f:'v17',c:'warehouse',cap:'Bagged produce stacked high'},
+ {t:'p',f:'g10',c:'grains',cap:'White maize, food grade'},
+ {t:'p',f:'g02',c:'cashew',cap:'Sorting raw cashew by hand'},
+ {t:'v',f:'v21',c:'logistics',cap:'Loading a truck for delivery'},
+ {t:'p',f:'g06',c:'grains',cap:'Yellow maize close-up'},
+ {t:'p',f:'g09',c:'logistics',cap:'Tractor hauling produce from the farm'},
+ {t:'v',f:'v19',c:'warehouse',cap:'Forklift at work in the warehouse'},
+ {t:'p',f:'g03',c:'cashew',cap:'Cashew drying under cover'},
+ {t:'p',f:'g08',c:'grains',cap:'Hand-checked sorghum grain'},
  {t:'v',f:'v13',c:'cashew',cap:'Raw cashew nuts, sorted and ready'},
  {t:'p',f:'q04',c:'financing',cap:'Crop protection inputs for smallholder farmers'},
  {t:'v',f:'v14',c:'cashew',cap:'Cashew drying in the sun'},
@@ -1303,7 +1319,6 @@ const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)retu
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 renderGrid();renderSellers();updateCart();
-if(PAYSTACK_PK.startsWith('pk_live'))$('#demo').style.display='none';
 </script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
@@ -1326,7 +1341,7 @@ window.db={
   addProduct:p=>addDoc(collection(fs,'products'),{...specsOut(p),createdAt:serverTimestamp()}),
   setProduct:(id,patch)=>updateDoc(doc(fs,'products',id),{...patch,updatedAt:serverTimestamp()}),
   delProduct:id=>deleteDoc(doc(fs,'products',id)),
-  async importStarter(list){const b=writeBatch(fs);list.forEach(p=>{const {id,...rest}=specsOut(p);b.set(doc(fs,'products',id),{...rest,createdAt:serverTimestamp()})});await b.commit()},
+  async importStarter(list){const have=new Set((await getDocs(collection(fs,'products'))).docs.map(d=>d.id));const add=list.filter(p=>!have.has(p.id));if(!add.length)return 0;const b=writeBatch(fs);add.forEach(p=>{const {id,...rest}=specsOut(p);b.set(doc(fs,'products',id),{...rest,createdAt:serverTimestamp()})});await b.commit();return add.length},
   async getUser(uid){const d=await getDoc(doc(fs,'users',uid));return d.exists()?d.data():null},
   setUser:(uid,data)=>setDoc(doc(fs,'users',uid),data,{merge:true}),
   async createOrder(o){const r=await addDoc(collection(fs,'orders'),{...o,createdAt:serverTimestamp()});return r.id},

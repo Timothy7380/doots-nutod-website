@@ -712,7 +712,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
       <button class="on" data-c="all">All</button><button data-c="cocoa">Cocoa</button><button data-c="sesame">Sesame</button><button data-c="soya">Soya</button><button data-c="cashew">Cashew</button><button data-c="grains">Maize &amp; sorghum</button><button data-c="financing">Input financing</button><button data-c="quality">Quality checks</button><button data-c="warehouse">Warehouse</button><button data-c="logistics">Logistics</button>
     </div>
     <div class="mgrid" id="mgrid"></div>
-    <div style="text-align:center;margin-top:28px"><button class="btn btn-line" id="mmore" onclick="mediaMore()">See more</button></div>
+    <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:28px"><button class="btn btn-line" id="mmore" onclick="mediaMore()">See more</button><button class="btn btn-line" id="mless" onclick="mediaLess()">Show less</button></div>
   </div>
 </section>
 <div class="lbox" id="lbox" role="dialog" aria-modal="true" aria-label="Media viewer">
@@ -1272,10 +1272,11 @@ function renderMedia(){
   $('#mgrid').innerHTML=show.map((m,i)=>`<button class="mtile" onclick="lbOpen(${i})" aria-label="${esc(m.cap)}${m.t==='v'?' (video)':''}">
     ${m.t==='v'?`<video muted loop playsinline preload="none" poster="${mPoster(m)}" data-src="media/${m.f}.mp4" aria-hidden="true"></video>`:`<img src="${mPoster(m)}" srcset="media/${m.f}-480.webp 480w, media/${m.f}-1080.webp 1080w" sizes="(max-width:640px) 50vw, 25vw" alt="" loading="lazy" decoding="async">`}
     <span class="kind">${m.t==='v'?PLAY:CAM}</span><span class="cap">${esc(m.cap)}</span></button>`).join('');
-  $('#mmore').style.display=MG.list.length>MG.shown?'':'none';
+  $('#mmore').style.display=MG.list.length>MG.shown?'':'none';$('#mless').style.display=MG.shown>12&&MG.list.length>12?'':'none';
   if(vio&&!reduceMotion)document.querySelectorAll('#mgrid video').forEach(v=>vio.observe(v));
 }
 function mediaMore(){MG.shown+=12;renderMedia()}
+function mediaLess(){MG.shown=12;renderMedia();const g=document.getElementById('mtabs');const y=g.getBoundingClientRect().top+scrollY-100;if(y<scrollY)scrollTo({top:y,behavior:'smooth'})}
 $('#mtabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;MG.cat=b.dataset.c;MG.shown=12;document.querySelectorAll('#mtabs button').forEach(x=>x.classList.toggle('on',x===b));renderMedia()});
 function lbOpen(i){MG.i=i;document.querySelectorAll('#mgrid video').forEach(v=>v.pause());lbShow();$('#lbox').classList.add('on');document.body.style.overflow='hidden'}
 function lbShow(){const m=MG.list[MG.i];if(!m)return;

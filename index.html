@@ -1134,7 +1134,7 @@ async function acctTab(n){
     }catch(e){console.warn(e);pane.innerHTML='<div class="empty">Could not load orders. Please try again.</div>'}
     return;
   }
-  if(u.role!=='seller'){pane.innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${esc(u.name)}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${esc(u.email)}</p></div><div class="o"><small style="color:var(--sage)">Phone</small><p>${esc(u.phone||'—')}</p></div><div class="o"><small style="color:var(--sage)">Signed in with</small><p>${u.google?'Google':'Email &amp; password'}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="becomeSeller(this)">Become a seller</button>`;return}
+  if(u.role!=='seller'){pane.innerHTML=`<div class="orders"><div class="o"><small style="color:var(--sage)">Name</small><p>${esc(u.name)}</p></div><div class="o"><small style="color:var(--sage)">Email</small><p>${esc(u.email)}</p></div><div class="o"><small style="color:var(--sage)">Phone</small><p>${esc(u.phone||'—')}</p></div><div class="o"><small style="color:var(--sage)">Signed in with</small><p>${u.google?'Google':'Email &amp; password'}</p></div><div class="o"><small style="color:var(--sage)">Account type</small><p>Buyer</p></div></div><button class="btn btn-dark w100" onclick="switchRole('seller',this)">Become a seller</button>`;return}
   pane.innerHTML=loadingHTML;
   let mine=[];try{mine=await db.myProducts(u.uid)}catch(e){console.warn(e)}
   const st={pending:['Awaiting DOOTS approval','#f3e6c8','#7a5610'],live:['Live on marketplace','#e3f5c4','#2f5a10'],rejected:['Not approved','#fdecea','#8a1c12'],hidden:['Hidden','#eee','#555']};
@@ -1152,9 +1152,12 @@ async function acctTab(n){
     <div class="f"><label for="l_img">Photo link (optional)</label><input class="inp" id="l_img" type="url" placeholder="https://…"></div>
     <button class="btn btn-dark w100" id="lBtn">Submit for approval</button>
     <p class="note">DOOTS reviews every listing before it goes live. Payouts are made to your verified bank account after delivery.</p>
-  </form>`;
+  </form>
+  <div class="orders" style="margin-top:16px"><div class="o"><small style="color:var(--sage)">Account type</small><p>Seller</p>
+  <button class="lnk" style="margin-top:6px" onclick="switchRole('buyer',this)">Switch back to a buyer account</button>
+  <p class="note" style="margin:6px 0 0">Your existing listings stay on the marketplace. You can switch to selling again any time.</p></div></div>`;
 }
-async function becomeSeller(btn){busy(btn,true,'Updating…');try{await db.setUser(S.user.uid,{role:'seller'});S.user.role='seller';openAcct();acctTab(2);toast('You can now list produce')}catch(e){busy(btn,false);toast('Could not update your account. Try again.')}}
+async function switchRole(role,btn){busy(btn,true,'Updating…');try{await db.setUser(S.user.uid,{role});S.user.role=role;openAcct();acctTab(2);toast(role==='seller'?'You can now list produce':'Switched to a buyer account')}catch(e){busy(btn,false);toast('Could not update your account. Try again.')}}
 async function addListing(e){
   e.preventDefault();const u=S.user;const el=$('#lErr');const err=m=>{el.textContent=m;el.classList.toggle('on',!!m)};err('');
   const name=$('#l_name').value,c=COMMODITIES[name]||['grain',''],price=+$('#l_price').value,qty=+$('#l_qty').value,moq=+$('#l_moq').value,loc=$('#l_loc').value.trim(),url=$('#l_img').value.trim();

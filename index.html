@@ -355,6 +355,27 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 .lnk{color:var(--leaf);font-size:13px;font-weight:500;text-decoration:underline;text-underline-offset:2px}
 .btn .spin,.gbtn .spin{width:18px;height:18px;border-width:2.5px}
 .btn-dark .spin{border-color:rgba(255,255,255,.3);border-top-color:#fff}
+
+/* financing */
+.fin{display:grid;grid-template-columns:.9fr 1.1fr;background:var(--forest);color:#e9f0e3;border-radius:var(--r-lg);overflow:hidden}
+.fin-media{position:relative;min-height:520px}
+.fin-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fin-vid{position:absolute;right:18px;bottom:18px;width:34%;aspect-ratio:9/16;object-fit:cover;border-radius:16px;border:3px solid rgba(255,255,255,.85);box-shadow:0 18px 40px -12px rgba(0,0,0,.6);background:#123012}
+.fin-tx{padding:56px 52px}
+.fin-tx h2 .serif{color:var(--lime)}
+.fin-tx .lead{color:#b9c8b3;margin-top:18px;max-width:560px}
+.fin-steps{list-style:none;counter-reset:s;display:grid;gap:14px;margin-top:28px}
+.fin-steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;column-gap:14px;align-items:start}
+.fin-steps li::before{content:counter(s);grid-row:span 2;width:40px;height:40px;border-radius:50%;background:rgba(205,242,76,.14);color:var(--lime);display:grid;place-items:center;font-weight:600}
+.fin-steps b{font-weight:500;color:#fff}
+.fin-steps span{font-size:14px;color:#a9b9a3}
+.fin-partner{display:flex;gap:12px;align-items:center;margin-top:26px;padding:14px 16px;border-radius:var(--r-md);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.fin-partner small{display:block;font-size:12px;color:#a9b9a3}
+.fin-partner b{font-weight:500;color:#fff}
+@media (max-width:1020px){.fin{grid-template-columns:1fr}.fin-media{min-height:360px}.fin-tx{padding:40px 28px}}
+@media (max-width:640px){.fin-media{min-height:300px}.fin-vid{width:38%}.fin-tx{padding:30px 20px}}
+.credit{font-size:11px;color:var(--sage);margin-top:10px}
+.credit a{text-decoration:underline}
 /* large screens */
 @media (min-width:1700px){
   .tag{font-size:26px}
@@ -481,6 +502,8 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
   <a href="#top" onclick="toggleMob(false)">Home</a>
   <a href="#shop" onclick="toggleMob(false)">Shop produce</a>
   <a href="#marketplace" onclick="toggleMob(false)">Marketplace</a>
+  <a href="#financing" onclick="toggleMob(false)">Input financing</a>
+  <a href="#gallery" onclick="toggleMob(false)">Gallery</a>
   <a href="#payments" onclick="toggleMob(false)">Payments</a>
   <a href="#about" onclick="toggleMob(false)">About us</a>
   <a href="#contact" onclick="toggleMob(false)">Contact</a>
@@ -622,6 +645,33 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
   </div>
 </section>
 
+<!-- AGRI-INPUT FINANCING -->
+<section id="financing" style="padding-top:0">
+  <div class="wrap">
+    <div class="fin rv">
+      <div class="fin-media">
+        <img src="media/q04-1080.webp" srcset="media/q04-480.webp 480w, media/q04-1080.webp 1080w" sizes="(max-width:1020px) 100vw, 40vw" alt="Crop protection inputs packed for smallholder farmers" loading="lazy" decoding="async">
+        <video class="fin-vid" muted loop playsinline preload="none" poster="media/v15-poster.webp" data-src="media/v15.mp4" aria-hidden="true"></video>
+      </div>
+      <div class="fin-tx">
+        <span class="tag dark">Agri-Input Financing</span>
+        <h2 style="margin-top:18px">Financing Smallholder Farmers <span class="serif">to Grow More</span></h2>
+        <p class="lead">We finance quality farm inputs, such as seeds, fertiliser and crop protection, for smallholder farmers and outgrower groups. With the right inputs at planting time, farmers boost their production and raise their household incomes.</p>
+        <ol class="fin-steps">
+          <li><b>Apply</b><span>Individual farmers, cooperatives and outgrower networks apply with their farm details.</span></li>
+          <li><b>Get inputs</b><span>Approved farmers receive the inputs they need, delivered in time for the season.</span></li>
+          <li><b>Grow &amp; sell</b><span>We support farmers through the season and provide a market for their harvest.</span></li>
+        </ol>
+        <div class="fin-partner"><span class="ver" style="color:var(--lime)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg></span><div><small>Currently financing</small><b>Nigeria Soya Outgrowers Network (NSON)</b></div></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:26px">
+          <button class="btn btn-lime" onclick="finApply('farmer')">Apply for input financing <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+          <button class="btn btn-ghost" onclick="finApply('partner')">Partner or invest with us</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- STATS -->
 <div class="wrap">
   <div class="stats rv">
@@ -660,7 +710,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
       <p class="lead">Real photos and short clips from our farms, warehouse and loading bays: quality checks, fresh stock and trucks heading out to buyers.</p>
     </div>
     <div class="tabs mtabs" id="mtabs" role="tablist" aria-label="Filter gallery">
-      <button class="on" data-c="all">All</button><button data-c="cocoa">Cocoa</button><button data-c="sesame">Sesame</button><button data-c="soya">Soya</button><button data-c="quality">Quality checks</button><button data-c="warehouse">Warehouse</button><button data-c="logistics">Logistics</button>
+      <button class="on" data-c="all">All</button><button data-c="cocoa">Cocoa</button><button data-c="sesame">Sesame</button><button data-c="soya">Soya</button><button data-c="cashew">Cashew</button><button data-c="financing">Input financing</button><button data-c="quality">Quality checks</button><button data-c="warehouse">Warehouse</button><button data-c="logistics">Logistics</button>
     </div>
     <div class="mgrid" id="mgrid"></div>
     <div style="text-align:center;margin-top:28px"><button class="btn btn-line" id="mmore" onclick="mediaMore()">See more</button></div>
@@ -696,7 +746,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
         <div class="two">
           <div class="f"><label for="cp">Phone</label><input class="inp" id="cp" type="tel"></div>
           <div class="f"><label for="ct">I’m interested in</label>
-            <select class="inp" id="ct"><option>Bulk / export order</option><option>Selling my produce</option><option>Partnership</option><option>Consultancy &amp; training</option><option>Other</option></select></div>
+            <select class="inp" id="ct"><option>Bulk / export order</option><option>Selling my produce</option><option>Agri-input financing</option><option>Partnership</option><option>Consultancy &amp; training</option><option>Other</option></select></div>
         </div>
         <div class="f"><label for="cm">Message</label><textarea class="inp" id="cm" placeholder="Commodity, quantity, destination…" required></textarea></div>
         <button class="btn btn-dark w100">Send message</button>
@@ -715,10 +765,10 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
         <form class="news" onsubmit="event.preventDefault();toast('Subscribed to market updates');this.reset()"><input class="inp" type="email" placeholder="Email for price updates" required aria-label="Email"><button class="btn btn-lime btn-sm" style="height:50px">Subscribe</button></form>
       </div>
       <div><h5>Shop</h5><a href="#shop" onclick="setCat('cash')">Cocoa beans</a><a href="#shop" onclick="setCat('grain')">Soya beans</a><a href="#shop" onclick="setCat('grain')">Sesame seeds</a><a href="#shop" onclick="setCat('cash')">Cashew nuts</a></div>
-      <div><h5>Company</h5><a href="#about">About us</a><a href="#marketplace">Marketplace</a><a href="#payments">DOOTS Pay</a><a href="#contact">Contact</a></div>
+      <div><h5>Company</h5><a href="#about">About us</a><a href="#marketplace">Marketplace</a><a href="#financing">Input financing</a><a href="#gallery">Gallery</a><a href="#payments">DOOTS Pay</a><a href="#contact">Contact</a></div>
       <div><h5>Account</h5><a href="#" onclick="event.preventDefault();openAuth('signin')">Sign in</a><a href="#" onclick="event.preventDefault();openAuth('signup','buyer')">Create account</a><a href="#" onclick="event.preventDefault();openAuth('signup','seller')">Sell on DOOTS</a><a href="#" onclick="event.preventDefault();openCart()">Cart</a></div>
     </div>
-    <div class="fbot"><span>© 2026 DOOTS Nutod Nigeria Limited · RC 7251206</span><span>Ibadan, Oyo State, Nigeria</span></div>
+    <div class="fbot"><span>© 2026 DOOTS Nutod Nigeria Limited · RC 7251206 · Cassava photo: <a href="https://commons.wikimedia.org/wiki/File:Cassava_roots.jpg" target="_blank" rel="noopener" style="text-decoration:underline">MEvalyn</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener" style="text-decoration:underline">CC BY-SA 4.0</a></span><span>Ibadan, Oyo State, Nigeria</span></div>
   </div>
 </footer>
 
@@ -759,7 +809,7 @@ const STARTER=[
  {id:'cocoa-beans',name:'Cocoa Beans',grade:'Grade 1 · Fermented & sun-dried',cat:'cash',img:'assets/cocoa.jpg',price:480000,unit:'50kg bag',moq:1,origin:'Ondo / Oyo',export:true,stock:'In stock · 120 bags',desc:'Well-fermented, sun-dried Nigerian cocoa beans with low moisture and high bean count, ideal for processors and exporters.',specs:[['Moisture','≤ 7.5%'],['Bean count','≤ 100 / 100g'],['Defects','< 3%'],['Packaging','50kg jute bag']]},
  {id:'soya-beans',name:'Soya Beans',grade:'Machine-cleaned · Feed & food grade',cat:'grain',img:'assets/soya.jpg',price:46000,unit:'50kg bag',moq:5,origin:'Oyo / Kwara',export:true,stock:'In stock · 400 bags',desc:'Clean, uniform soya beans for oil milling, feed mills and food processing. Bulk and container loads available.',specs:[['Moisture','≤ 12%'],['Oil content','18–20%'],['Foreign matter','≤ 2%'],['Packaging','50kg PP bag']]},
  {id:'sesame-seeds',name:'Sesame Seeds',grade:'Natural white / mixed · Sortex cleaned',cat:'grain',img:'assets/sesame.jpg',price:96000,unit:'50kg bag',moq:5,origin:'Nasarawa / Benue',export:true,stock:'In stock · 260 bags',desc:'High-oil sesame seeds cleaned for export. Popular with buyers in Asia and the Middle East.',specs:[['Purity','99%'],['Oil content','≥ 48%'],['Moisture','≤ 6%'],['Packaging','50kg PP bag']]},
- {id:'raw-cashew-nuts',name:'Raw Cashew Nuts',grade:'In-shell · KOR 47–49 lbs',cat:'cash',img:'',price:82000,unit:'80kg bag',moq:5,origin:'Oyo / Kwara',export:true,stock:'Seasonal · Pre-order',desc:'Raw cashew nuts sourced from partner farms in Oyo and Kwara, graded by out-turn (KOR) and nut count.',specs:[['Out-turn (KOR)','47–49 lbs'],['Nut count','≤ 200 / kg'],['Moisture','≤ 10%'],['Packaging','80kg jute bag']]},
+ {id:'raw-cashew-nuts',name:'Raw Cashew Nuts',grade:'In-shell · KOR 47–49 lbs',cat:'cash',img:'assets/cashew.jpg',price:82000,unit:'80kg bag',moq:5,origin:'Oyo / Kwara',export:true,stock:'Seasonal · Pre-order',desc:'Raw cashew nuts sourced from partner farms in Oyo and Kwara, graded by out-turn (KOR) and nut count.',specs:[['Out-turn (KOR)','47–49 lbs'],['Nut count','≤ 200 / kg'],['Moisture','≤ 10%'],['Packaging','80kg jute bag']]},
  {id:'palm-fruit-bunches',name:'Palm Fruit Bunches',grade:'Fresh fruit bunches · Tenera',cat:'cash',img:'assets/palm.jpg',price:350000,unit:'tonne',moq:1,origin:'Oyo',export:false,stock:'In stock',desc:'Freshly harvested Tenera palm fruit bunches for oil mills.',specs:[['Variety','Tenera'],['Delivery','Within 48 hrs'],['Min. order','1 tonne'],['Loading','Truck']]},
  {id:'maize-yellow',name:'Maize (Yellow)',grade:'Dried & shelled',cat:'grain',img:'assets/maize.jpg',price:38000,unit:'50kg bag',moq:10,origin:'Oyo',export:false,stock:'In stock · 900 bags',desc:'Dry yellow maize for feed mills and food processors.',specs:[['Moisture','≤ 13%'],['Broken grains','≤ 3%'],['Aflatoxin','Tested'],['Packaging','50kg PP bag']]},
  {id:'cassava-tubers',name:'Cassava Tubers',grade:'Fresh · Processing grade',cat:'fresh',img:'assets/cassava.jpg',price:120000,unit:'tonne',moq:2,origin:'Oyo / Ogun',export:false,stock:'In stock',desc:'Fresh cassava roots for garri, starch and flour processing.',specs:[['Age','12–14 months'],['Starch','High'],['Delivery','Within 24 hrs'],['Loading','Truck']]},
@@ -767,7 +817,7 @@ const STARTER=[
  {id:'fresh-tomatoes',name:'Fresh Tomatoes',grade:'Greenhouse grown',cat:'fresh',img:'assets/tomato.jpg',price:42000,unit:'crate (25kg)',moq:3,origin:'Ibadan',export:false,stock:'In stock',desc:'Firm, ripe tomatoes from our greenhouse partners in Ibadan.',specs:[['Variety','Roma'],['Weight','25kg crate'],['Grown','Greenhouse'],['Delivery','Next day']]},
  {id:'bell-hot-peppers',name:'Bell & Hot Peppers',grade:'Mixed colours',cat:'fresh',img:'assets/pepper.jpg',price:36000,unit:'basket (20kg)',moq:2,origin:'Ibadan',export:false,stock:'In stock',desc:'Assorted bell peppers and scotch bonnets, harvested to order.',specs:[['Mix','Red · Yellow · Green'],['Weight','20kg'],['Grown','Greenhouse'],['Delivery','Next day']]}
 ].map(p=>({...p,seller:'DOOTS Nutod',sellerUid:'',official:true,status:'live'}));
-const COMMODITIES={'Cocoa Beans':['cash','assets/cocoa.jpg'],'Soya Beans':['grain','assets/soya.jpg'],'Sesame Seeds':['grain','assets/sesame.jpg'],'Raw Cashew Nuts':['cash',''],'Maize':['grain','assets/maize.jpg'],'Palm Fruit':['cash','assets/palm.jpg'],'Cassava':['fresh','assets/cassava.jpg'],'Pineapples':['fresh','assets/pineapple.jpg'],'Tomatoes':['fresh','assets/tomato.jpg'],'Peppers':['fresh','assets/pepper.jpg'],'Other':['grain','']};
+const COMMODITIES={'Cocoa Beans':['cash','assets/cocoa.jpg'],'Soya Beans':['grain','assets/soya.jpg'],'Sesame Seeds':['grain','assets/sesame.jpg'],'Raw Cashew Nuts':['cash','assets/cashew.jpg'],'Maize':['grain','assets/maize.jpg'],'Palm Fruit':['cash','assets/palm.jpg'],'Cassava':['fresh','assets/cassava.jpg'],'Pineapples':['fresh','assets/pineapple.jpg'],'Tomatoes':['fresh','assets/tomato.jpg'],'Peppers':['fresh','assets/pepper.jpg'],'Other':['grain','']};
 
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const S={cart:store.get('dn_cart',[]),user:null,orders:[],cat:'all',q:'',catalogue:'loading'};
@@ -776,9 +826,12 @@ const fmt=n=>'₦'+Math.round(+n||0).toLocaleString('en-NG');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=u=>/^(https:\/\/|assets\/)[^\s"'<>]+$/.test(u||'')?u:'';
-const IMGW={"cassava":[480,1000],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1812],"maize":[480,710],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
+const IMGW={"cashew":[480,617],"cashew_hand":[480,617],"cassava":[480,960,1280],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1812],"maize":[480,710],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
 function rs(path,sizes){path=safeUrl(path);const n=path.replace(/^assets\/|\.jpg$/g,'');const w=IMGW[n];if(!w)return `src="${esc(path)}"`;return `src="assets/${n}-${w[Math.min(1,w.length-1)]}.webp" srcset="${w.map(x=>`assets/${n}-${x}.webp ${x}w`).join(', ')}" sizes="${sizes}"`}
-const img=(p,cls='')=>safeUrl(p.img)?`<img ${rs(p.img,'(max-width:640px) 50vw, (max-width:1020px) 34vw, 300px')} alt="${esc(p.name)}" loading="lazy" decoding="async" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
+const img=(p,cls='')=>pimg(p)?`<img ${rs(pimg(p),'(max-width:640px) 50vw, (max-width:1020px) 34vw, 300px')} alt="${esc(p.name)}" loading="lazy" decoding="async" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
+const FALLBACK_IMG={'raw-cashew-nuts':'assets/cashew.jpg','cassava-tubers':'assets/cassava.jpg'};
+const PHOTO_CREDIT={'assets/cassava.jpg':'Photo: <a href="https://commons.wikimedia.org/wiki/File:Cassava_roots.jpg" target="_blank" rel="noopener">MEvalyn</a> / Wikimedia Commons, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>'};
+const pimg=p=>safeUrl(p.img)||FALLBACK_IMG[p.id]||((COMMODITIES[p.name]||[])[1])||'';
 const isAdmin=()=>!!(S.user&&S.user.admin);
 const pById=id=>products.find(x=>x.id===id);
 
@@ -847,7 +900,7 @@ function openProduct(id){
   const p=pById(id);if(!p)return;const specs=(p.specs||[]).filter(s=>s&&s[0]);
   openModal(`<div class="pd"><div class="im">${img(p)}</div><div class="tx">
     <span class="pilltag">${esc(p.stock||'Available')}</span><h3>${esc(p.name)}</h3><p style="color:var(--sage)">${esc(p.grade)}</p>
-    <p style="margin-top:14px;font-size:15px">${esc(p.desc)}</p>
+    <p style="margin-top:14px;font-size:15px">${esc(p.desc)}</p>${PHOTO_CREDIT[pimg(p)]?`<p class="credit">${PHOTO_CREDIT[pimg(p)]}</p>`:''}
     ${specs.length?`<div class="spec">${specs.map(s=>`<div><small>${esc(s[0])}</small>${esc(s[1])}</div>`).join('')}</div>`:'<div style="height:16px"></div>'}
     <div class="tot"><span>Sold by</span><span class="ver">${CHECK} ${esc(p.seller)}</span></div>
     <div class="tot"><span>Origin</span><span>${esc(p.origin)}</span></div>
@@ -1155,6 +1208,16 @@ async function setOrderStatus(id,status){try{await db.updateOrder(id,{status});t
 
 /* MEDIA GALLERY */
 const MEDIA=[
+ {t:'v',f:'v13',c:'cashew',cap:'Raw cashew nuts, sorted and ready'},
+ {t:'p',f:'q04',c:'financing',cap:'Crop protection inputs for smallholder farmers'},
+ {t:'v',f:'v14',c:'cashew',cap:'Cashew drying in the sun'},
+ {t:'p',f:'q06',c:'cashew',cap:'Checking raw cashew quality by hand'},
+ {t:'v',f:'v15',c:'financing',cap:'Packing input packs for farmers'},
+ {t:'v',f:'v16',c:'cashew',cap:'Bagging cashew at the drying yard'},
+ {t:'p',f:'q02',c:'financing',cap:'Input boxes ready for distribution'},
+ {t:'v',f:'v12',c:'cashew',cap:'Close look at raw cashew nuts'},
+ {t:'p',f:'q03',c:'financing',cap:'Inputs loaded for delivery to farmers'},
+ {t:'p',f:'q01',c:'financing',cap:'Stocked farm inputs'},
  {t:'v',f:'v04',c:'soya',cap:'Soya beans: clean, uniform grain'},
  {t:'p',f:'p02',c:'cocoa',cap:'Ripening cocoa pods on our partner farms'},
  {t:'v',f:'v05',c:'quality',cap:'Sampling bags with a grain probe before dispatch'},
@@ -1206,6 +1269,8 @@ document.addEventListener('keydown',e=>{if(!$('#lbox').classList.contains('on'))
 (()=>{let x0=null;const lb=$('#lbox');lb.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)lbGo(dx<0?1:-1);x0=null},{passive:true})})();
 renderMedia();
 
+function finApply(kind){$('#ct').value=kind==='partner'?'Partnership':'Agri-input financing';$('#cm').value=kind==='partner'?'Hello, we are interested in partnering on / funding agri-input financing for smallholder farmers.':'Hello, I would like to apply for agri-input financing.\nName of farmer / group: \nLocation (town, state): \nCrop: \nFarm size (hectares): \nNumber of farmers (if a group): \nInputs needed: ';document.getElementById('contact').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('#cn').focus({preventScroll:true}),600)}
+(()=>{const v=document.querySelector('.fin-vid');if(!v||!vio||reduceMotion)return;vio.observe(v)})();
 /* MISC */
 function sendContact(e){e.preventDefault();toast('Thanks! Our team will reply within 1 business day.');e.target.reset();return false}
 let tt;function toast(t){$('#toastT').textContent=t;$('#toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('#toast').classList.remove('on'),2600)}

@@ -86,7 +86,7 @@ header.nav{position:absolute;left:0;right:0;z-index:40;padding-top:22px}
 /* HERO */
 .hero{padding:120px 0 0;position:relative;min-height:100svh;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;border-radius:0 0 var(--r-lg) var(--r-lg)}
 .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,30,10,.45) 0%,rgba(10,30,10,.05) 30%,rgba(10,30,10,.35) 60%,rgba(8,26,8,.85) 100%)}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,26,8,.55) 0%,rgba(8,26,8,.15) 55%,rgba(8,26,8,0) 75%),linear-gradient(180deg,rgba(10,30,10,.45) 0%,rgba(10,30,10,.05) 30%,rgba(10,30,10,.35) 60%,rgba(8,26,8,.85) 100%)}
 .hero .wrap{position:relative;z-index:2}
 .hero h1{font-size:clamp(42px,6.4vw,86px);max-width:1000px}
 .hero p{max-width:520px;margin:22px 0 32px;color:rgba(255,255,255,.85);font-size:17px}
@@ -511,7 +511,7 @@ footer{background:var(--forest);color:#c9d6c1;margin-top:110px;border-radius:var
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <img decoding="async" src="assets/hero-960.webp" srcset="assets/hero-480.webp 480w, assets/hero-960.webp 960w, assets/hero-1440.webp 1440w, assets/hero-1812.webp 1812w" alt="DOOTS Nutod plantation nursery in Ibadan" sizes="100vw" fetchpriority="high">
+  <img decoding="async" src="assets/hero-960.webp" srcset="assets/hero-480.webp 480w, assets/hero-960.webp 960w, assets/hero-1440.webp 1440w, assets/hero-1920.webp 1920w, assets/hero-2560.webp 2560w" alt="Ripe cocoa pods growing on a cocoa tree" sizes="100vw" fetchpriority="high" style="object-position:68% 45%">
   <div class="wrap">
     <span class="tag dark">Ibadan · Nigeria · Est. 2023</span>
     <h1 style="margin-top:20px">Premium Nigerian Produce for <span class="serif">Global Markets</span></h1>
@@ -826,7 +826,7 @@ const fmt=n=>'₦'+Math.round(+n||0).toLocaleString('en-NG');
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=u=>/^(https:\/\/|assets\/)[^\s"'<>]+$/.test(u||'')?u:'';
-const IMGW={"cashew":[480,617],"cashew_hand":[480,617],"cassava":[480,960,1280],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1812],"maize":[480,710],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
+const IMGW={"cashew":[480,617],"cashew_hand":[480,617],"cassava":[480,960,1280],"cocoa":[480,960,1100],"cocoa_tree":[480,960,1440,1800],"drone":[480,960,1440,1800],"expo":[480,935],"farmer":[480,600],"field":[480,960,1516],"founder":[480,960,1100],"greenhouse":[480,1000],"hero":[480,960,1440,1920,2560],"maize":[480,710],"palm":[480,653],"pepper":[480,900],"pineapple":[480,995],"sacks":[480,1000],"seedlings":[480,1000],"sesame":[480,906],"silo":[480,1000],"soya":[480,1000],"tomato":[480,1046],"trade":[480,684],"training":[480,960,1200]};
 function rs(path,sizes){path=safeUrl(path);const n=path.replace(/^assets\/|\.jpg$/g,'');const w=IMGW[n];if(!w)return `src="${esc(path)}"`;return `src="assets/${n}-${w[Math.min(1,w.length-1)]}.webp" srcset="${w.map(x=>`assets/${n}-${x}.webp ${x}w`).join(', ')}" sizes="${sizes}"`}
 const img=(p,cls='')=>pimg(p)?`<img ${rs(pimg(p),'(max-width:640px) 50vw, (max-width:1020px) 34vw, 300px')} alt="${esc(p.name)}" loading="lazy" decoding="async" class="${cls}">`:`<div class="ph-none ${cls}"><div>${ICON_CASHEW}<span>Photo coming soon</span></div></div>`;
 const FALLBACK_IMG={'raw-cashew-nuts':'assets/cashew.jpg','cassava-tubers':'assets/cassava.jpg'};

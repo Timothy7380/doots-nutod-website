@@ -1282,9 +1282,15 @@ const nav=$('#nav');
 const secs=['top','shop','marketplace','payments','about','contact'].map(id=>document.getElementById(id));
 addEventListener('scroll',()=>{
   nav.classList.toggle('solid',scrollY>innerHeight*.8);
-  let cur='top';secs.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.4)cur=s.id});
-  document.querySelectorAll('#navpill a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+  setActive();
 },{passive:true});
+let navLock=0;
+function setActive(id){
+  if(!id){if(Date.now()<navLock)return;let best=-Infinity;id='top';secs.forEach(s=>{if(!s)return;const t=s.getBoundingClientRect().top;if(t<innerHeight*.4&&t>best){best=t;id=s.id}})}
+  document.querySelectorAll('#navpill a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+id));
+}
+document.querySelectorAll('#navpill a').forEach(a=>a.addEventListener('click',()=>{navLock=Date.now()+900;setActive(a.getAttribute('href').slice(1))}));
+addEventListener('scrollend',()=>{navLock=0;setActive()});
 
 // reveal + counters
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(!en.isIntersecting)return;en.target.classList.add('in');

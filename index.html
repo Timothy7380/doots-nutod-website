@@ -1306,15 +1306,18 @@ const fs=getFirestore(app);
 setPersistence(auth,browserLocalPersistence).catch(()=>{});
 const gp=new GoogleAuthProvider();gp.setCustomParameters({prompt:'select_account'});
 const rows=snap=>snap.docs.map(d=>({id:d.id,...d.data()}));
+// Firestore can't store nested arrays: save specs as [{k,v}], read back as [[k,v]]
+const specsOut=p=>({...p,specs:(p.specs||[]).map(x=>Array.isArray(x)?{k:String(x[0]??''),v:String(x[1]??'')}:x)});
+const specsIn=list=>list.map(p=>({...p,specs:(p.specs||[]).map(x=>Array.isArray(x)?x:[x.k,x.v])}));
 const byNew=a=>a.sort((x,y)=>{const t=o=>o.createdAt&&o.createdAt.toMillis?o.createdAt.toMillis():Date.parse(o.createdAt||0)||0;return t(y)-t(x)});
 window.db={
-  liveProducts:async()=>rows(await getDocs(query(collection(fs,'products'),where('status','==','live')))),
-  allProducts:async()=>rows(await getDocs(collection(fs,'products'))),
-  myProducts:async uid=>byNew(rows(await getDocs(query(collection(fs,'products'),where('sellerUid','==',uid))))),
-  addProduct:p=>addDoc(collection(fs,'products'),{...p,createdAt:serverTimestamp()}),
+  liveProducts:async()=>specsIn(rows(await getDocs(query(collection(fs,'products'),where('status','==','live'))))),
+  allProducts:async()=>specsIn(rows(await getDocs(collection(fs,'products')))),
+  myProducts:async uid=>byNew(specsIn(rows(await getDocs(query(collection(fs,'products'),where('sellerUid','==',uid)))))),
+  addProduct:p=>addDoc(collection(fs,'products'),{...specsOut(p),createdAt:serverTimestamp()}),
   setProduct:(id,patch)=>updateDoc(doc(fs,'products',id),{...patch,updatedAt:serverTimestamp()}),
   delProduct:id=>deleteDoc(doc(fs,'products',id)),
-  async importStarter(list){const b=writeBatch(fs);list.forEach(p=>{const {id,...rest}=p;b.set(doc(fs,'products',id),{...rest,createdAt:serverTimestamp()})});await b.commit()},
+  async importStarter(list){const b=writeBatch(fs);list.forEach(p=>{const {id,...rest}=specsOut(p);b.set(doc(fs,'products',id),{...rest,createdAt:serverTimestamp()})});await b.commit()},
   async getUser(uid){const d=await getDoc(doc(fs,'users',uid));return d.exists()?d.data():null},
   setUser:(uid,data)=>setDoc(doc(fs,'users',uid),data,{merge:true}),
   async createOrder(o){const r=await addDoc(collection(fs,'orders'),{...o,createdAt:serverTimestamp()});return r.id},

@@ -811,10 +811,12 @@ const X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width
 
 // ===== CONFIG =====
 // Paystack PUBLIC key (pk_test_… for testing, pk_live_… for real payments). Never put the secret key here.
-const PAYSTACK_PK='';
+const PAYSTACK_PK='pk_live_93bc9b8e7724cabb84c0b4face261441fbe59184';
 // Accounts that can open the Admin panel (must sign in with this verified email)
 const ADMIN_EMAILS=['timmyberry738@gmail.com','dootsnutodnigerialimited@gmail.com'];
 const FEE_RATE=0.015;
+// Mirrors Paystack NG local fee: 1.5% + ₦100 (₦100 waived under ₦2,500), capped at ₦2,000
+function payFee(sub){if(sub<=0)return 0;const flat=sub>=2500?100:0;return Math.min(2000,Math.ceil((sub+flat)/(1-FEE_RATE)-sub))}
 
 // Starter catalogue: imported into the database from the Admin panel. Prices are placeholders for the client to confirm.
 const STARTER=[
@@ -894,7 +896,7 @@ function addToCart(id,qty=1){
 }
 function setQty(id,d){const it=S.cart.find(x=>x.id===id);const p=pById(id);if(!it||!p)return;it.qty=Math.max(+p.moq||1,it.qty+d);saveCart();updateCart()}
 function rmItem(id){S.cart=S.cart.filter(x=>x.id!==id);saveCart();updateCart()}
-function totals(){const sub=S.cart.reduce((s,i)=>{const p=pById(i.id);return s+(p?p.price*i.qty:0)},0);const fee=Math.round(sub*FEE_RATE);return{sub,fee,total:sub+fee}}
+function totals(){const sub=S.cart.reduce((s,i)=>{const p=pById(i.id);return s+(p?p.price*i.qty:0)},0);const fee=payFee(sub);return{sub,fee,total:sub+fee}}
 function updateCart(){
   const n=S.cart.reduce((s,i)=>s+i.qty,0);const b=$('#cartCount');b.textContent=n;b.dataset.n=n;
   if(!S.cart.length){$('#cartBody').innerHTML='<div class="empty" style="padding:60px 10px">Your cart is empty.<br><br><a href="#shop" class="btn btn-dark btn-sm" onclick="closeAll()">Browse produce</a></div>';$('#cartFt').innerHTML='';return}
@@ -903,7 +905,7 @@ function updateCart(){
     <div class="qty"><button onclick="setQty('${esc(p.id)}',-1)" aria-label="Decrease">−</button><span>${i.qty}</span><button onclick="setQty('${esc(p.id)}',1)" aria-label="Increase">+</button></div></div>
     <button class="rm" onclick="rmItem('${esc(p.id)}')">Remove</button></div>`}).join('');
   const t=totals();
-  $('#cartFt').innerHTML=`<div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div><div class="tot"><span>Payment processing (1.5%)</span><span>${fmt(t.fee)}</span></div><div class="tot big"><span>Total</span><span>${fmt(t.total)}</span></div><button class="btn btn-dark w100" onclick="checkout()">Checkout securely</button><p class="note">Delivery is quoted separately. Export orders can be invoiced in USD.</p>`;
+  $('#cartFt').innerHTML=`<div class="tot"><span>Subtotal</span><span>${fmt(t.sub)}</span></div><div class="tot"><span>Payment processing (max ₦2,000)</span><span>${fmt(t.fee)}</span></div><div class="tot big"><span>Total</span><span>${fmt(t.total)}</span></div><button class="btn btn-dark w100" onclick="checkout()">Checkout securely</button><p class="note">Delivery is quoted separately. Export orders can be invoiced in USD.</p>`;
 }
 function openCart(){closeAll();updateCart();$('#cart').classList.add('on');$('#scrim').classList.add('on')}
 function closeAll(){document.querySelectorAll('.drawer,.scrim,.modal').forEach(e=>e.classList.remove('on'))}
